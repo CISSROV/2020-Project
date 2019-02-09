@@ -1,0 +1,34 @@
+# 
+# Version: 1.0
+#
+# S: Server
+# C: Client
+# 
+# Each line should end with a newline: '\n'
+# 
+
+{ Connection established }
+S: HELLO CLIENT
+C: HELLO SERVER
+S: Motor names
+S: { list of motor names in json }
+C: OK
+
+C: { sends json }
+(repeats)
+
+C or S: { stops connection }
+
+
+######
+
+the json files should contain a dict object like this:
+{
+    'idName1' : ['direction', 'power'],
+    'idName2' : ['direction', 'power'],
+    'idName3' : ['direction', 'power'],
+    ...
+}
+including each motor that should be changed
+!!! IMPORTANT !!! no '\n' should be in the json. It is used to differentiate between json files
+!!! IMPORTANT !!! direction needs to be 0 or 1, power needs to be 0 <= power <= 100
