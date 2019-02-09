@@ -12,7 +12,7 @@ GPIO.setwarnings(False)
 GPIO.setup(IN1,GPIO.OUT)
 GPIO.setup(IN2,GPIO.OUT)
 
-GPIO.output(IN1, LOW);
+GPIO.output(IN1, LOW)
 
 p = GPIO.PWM(IN2, 50)
 p.start(50)
