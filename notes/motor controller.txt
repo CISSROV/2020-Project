@@ -1,0 +1,24 @@
+Notes for the small motor controllers
+
+Basic code to make them run:
+
+int IN1 = 9; // <- labeled on the controller
+int IN2 = 10; // <- labeled on the controller
+
+void setup() {
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+
+  digitalWrite(IN1, HIGH); // <- controls the direction of rotation
+}
+
+void loop() {
+  analogWrite(IN2, 205);
+  /* 
+   * 2nd argument should be between 0-255
+   * It controls speed
+   * If IN1 is HIGH, then 255 is stop and 0 is max speed
+   * If IN1 is LOW, then 0 is stop and 255 is max speed
+   * 
+   */
+}
