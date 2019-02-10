@@ -5,7 +5,7 @@ import json # useful methods: loads, dumps, JSONDecodeError
 
 from sys import implementation, stderr, argv
 
-#### Version: 1.1
+#### Version: 1.2
 #### Uses motorControlProtocol Version 1.0
 #### if updates are made to this file or the protocol, please update version numbers
 
@@ -74,11 +74,25 @@ class motor:
         # motor should be type RPi.GPIO.PWN
         # direction should be 'HIGH' or 'LOW'
         # power should be 0 <= power <= 100
+        
+        if isinstance(direction, str):
+            if (not direction.isalnum()):
+                print('direction arg is not norminal: Expected int')
+                return
+            direction = int(direction)
+        if isinstance(power, str):
+            if (not power.isalnum()):
+                print('power arg is not norminal: Expected int')
+                return
+            power = int(power)
+        
         if direction not in [0, 1]:
-            raise ValueError('direction arg is not norminal: Expectd 0 or 1, but got {0}'.format(direction))
+            print('direction arg is not norminal: Expectd 0 or 1, but got {0}'.format(direction), file=stderr)
+            return
         if power < 0 or power > 100:
-            raise ValueError('power arg is not norminal: Expectd in range [0, 100], but got {0}'.format(direction))
-
+            print('power arg is not norminal: Expectd in range [0, 100], but got {0}'.format(direction), file=stderr)
+            return
+    
         if direction == GPIO.HIGH:
             power = 100 - power
 
@@ -113,7 +127,14 @@ class masterMotorControl:
         '''
 
         self.sock = socket.socket()
-        self.sock.bind((ip, PORT))
+        try:
+            global PORT
+            self.sock.bind((ip, PORT))
+        except OSError as e:
+            print(e, file=stderr)
+            PORT += 1
+            self.sock.bind((ip, PORT))
+            
         print("Bound socket. IP: {0}, Port: {1}".format(ip, PORT))
 
         self.client = None
@@ -146,11 +167,14 @@ class masterMotorControl:
         data = self.client.recv(len(msg))
         if msg != data:
             raise ValueError('Did not receive proper answer, instead got this: {0}'.format(data.decode()))
+
         self.client.send(b'Motor names\n')
+        print('Motor names send')
 
         # 3rd line
         tmp = json.dumps(list(self.motors.keys()))
         self.client.send(tmp.encode())
+        self.client.send(b'\n')
 
         # 4th line
         msg = b'OK\n'
@@ -195,7 +219,7 @@ class masterMotorControl:
         # call this after _run() to clean up
         try:
             for idname in self.motors:
-                self.motors[idname].cleanup()
+                self.motors[idname].cleanup() 
         finally:
             GPIO.cleanup()
             self.sock.close()
