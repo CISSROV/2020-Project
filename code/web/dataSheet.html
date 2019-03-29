@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ROV Data Output</title>
+    <style type="text/css">
+        table, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+            min-width: 160px;
+        }
+        th {
+            text-align: left;
+        }
+        table#dataTable tr:nth-child(even) {
+            background-color: #bbb;
+        }
+        table#dataTable tr:nth-child(odd) {
+            background-color: #fff;
+        }
+        table#dataTable th {
+            color: white;
+            background-color: black;
+        }
+        #dataTable {
+            width: 100%;
+        }
+        #title {
+            text-align: center;
+        }
+        body {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="title">ROV Data Output</h1>
+    <table id="dataTable">
+        <tr>
+            <th>Time</th>
+            <th>Temperature (&deg;C)</th>
+        </tr>
+    </table>
+    <script type="text/javascript" src="dataGetter.js"></script>
+</body>
+</html>
