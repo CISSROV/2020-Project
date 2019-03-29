@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python3.4
 
 from os import system
 system('sudo modprobe w1-gpio')
