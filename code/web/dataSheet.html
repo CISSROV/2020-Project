@@ -33,10 +33,40 @@
         body {
             background-color: #eee;
         }
+        #controls {
+            display: block;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 7px;
+            border: none;
+            background-color: #008CBA; 
+            color: white;
+            font-size: 12px;
+        }
+
+        #live {
+            color: red;
+            float: right;
+            display: inline;
+            margin-top: -30px;
+            margin-right: 20px;
+            margin-bottom: 0px;
+        }
     </style>
 </head>
 <body>
     <h1 id="title">ROV Data Output</h1>
+    <div id="controls">
+        <button id="stop" onclick="stopUpdating()">
+            Stop Updating Data
+        </button>
+        <button id="start" onclick="startUpdating()" hidden>
+            Start Updating Data
+        </button>
+    </div>
+    <p id="live">Live Data</p>
     <table id="dataTable">
         <tr>
             <th>Time</th>
