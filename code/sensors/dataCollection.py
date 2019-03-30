@@ -3,6 +3,9 @@ import tempSensor
 import time
 import json
 
+# Fetch data every x seconds
+pause = 10.0 # in seconds
+
 f = open('data.json','w')
 f.write('[]') # reset the data
 f.close()
@@ -28,4 +31,4 @@ while True:
         print(e)
     
     print(time.ctime())
-    time.sleep(10.0 - ((time.time() - starttime) % 10.0))
+    time.sleep(pause - ((time.time() - starttime) % pause))
