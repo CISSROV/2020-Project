@@ -2,61 +2,10 @@
 <html>
 <head>
     <title>ROV Data Output</title>
-    <style type="text/css">
-        table, th {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 15px;
-            min-width: 160px;
-        }
-        th {
-            text-align: left;
-        }
-        table#dataTable tr:nth-child(even) {
-            background-color: #bbb;
-        }
-        table#dataTable tr:nth-child(odd) {
-            background-color: #fff;
-        }
-        table#dataTable th {
-            color: white;
-            background-color: black;
-        }
-        #dataTable {
-            width: 100%;
-        }
-        #title {
-            text-align: center;
-        }
-        body {
-            background-color: #eee;
-        }
-        #controls {
-            display: block;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 7px;
-            border: none;
-            background-color: #008CBA; 
-            color: white;
-            font-size: 12px;
-        }
-
-        #live {
-            color: red;
-            float: right;
-            display: inline;
-            margin-top: -30px;
-            margin-right: 20px;
-            margin-bottom: 0px;
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
+    <!--#85cdf3;-->
     <h1 id="title">ROV Data Output</h1>
     <div id="controls">
         <button id="stop" onclick="stopUpdating()">
@@ -64,6 +13,12 @@
         </button>
         <button id="start" onclick="startUpdating()" hidden>
             Start Updating Data
+        </button>
+        <button id="compress" onclick="compress()">
+            Compressed View
+        </button>
+        <button id="decompress" onclick="decompress()" hidden>
+            Uncompressed View
         </button>
     </div>
     <p id="live">Live Data</p>
@@ -73,6 +28,7 @@
             <th>Temperature (&deg;C)</th>
         </tr>
     </table>
+    <h3 class="error" id="dataError" hidden>An unknown error has occured while attempting to fetch data.json</h3>
     <script type="text/javascript" src="dataGetter.js"></script>
 </body>
 </html>
