@@ -1,8 +1,8 @@
 #!/bin/bash
 
 cd /var/www/scripts
-nohup sudo python3.4 dataCollector.py > out.log &
+nohup sudo python3.4 dataCollection.py > out.log &
 
-tmp=$(pgrep -f "sudo python3.4 dataCollector.py")
+tmp=$(pgrep -f "sudo python3.4 dataCollection.py")
 
 echo "PID: $tmp"
