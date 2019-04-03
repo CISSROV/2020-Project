@@ -3,6 +3,9 @@ import tempSensor
 import time
 import json
 import os
+
+import sys
+sys.path.append('/home/pi/Adafruit_Python_BNO055')
 from Adafruit_BNO055 import BNO055
 
 # Fetch data every x seconds
