@@ -17,7 +17,9 @@ function getData() {
             for (x in myObj.reverse()) 
             {
                 txt += '<tr><td>' + myObj[x][0] + '</td><td>' + myObj[x][1] + '</td>'
-                txt += '<td>' + myObj[x][2] + '</td><td>' + myObj[x][3] + '</td></tr>'
+                txt += '<td>' + myObj[x][2] + '</td><td>' + myObj[x][3] + '</td>'
+                txt += '<td>' + myObj[x][4] + '</td><td>' + myObj[x][5] + '</td>'
+                txt += '<td>' + myObj[x][6] + '</td></tr>'
             }
             document.getElementById('dataTable').innerHTML = txt
 
