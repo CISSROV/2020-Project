@@ -95,7 +95,7 @@
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(this.responseText)
-                if (this.responseText.indexOf('error') != -1) {
+                if (this.responseText.toLowerCase().indexOf('error') != -1) {
                     // an error has occured
                     button.disabled = false
                     button.innerText = "Start"
