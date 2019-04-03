@@ -29,13 +29,11 @@ if status == 0x01:
 
 # Print BNO055 software revision and other diagnostic data.
 sw, bl, accel, mag, gyro = bno.get_revision()
-if not silent: 
-    print('Software version:   {0}'.format(sw))
-    print('Bootloader version: {0}'.format(bl))
-    print('Accelerometer ID:   0x{0:02X}'.format(accel))
-    print('Magnetometer ID:    0x{0:02X}'.format(mag))
-    print('Gyroscope ID:       0x{0:02X}\n'.format(gyro))
-
+print('Software version:   {0}'.format(sw))
+print('Bootloader version: {0}'.format(bl))
+print('Accelerometer ID:   0x{0:02X}'.format(accel))
+print('Magnetometer ID:    0x{0:02X}'.format(mag))
+print('Gyroscope ID:       0x{0:02X}\n'.format(gyro))
 
 # ---------------------------
 # ---- JSON & Main Loop -----
@@ -67,11 +65,16 @@ while True:
     heading, roll, pitch = bno.read_euler()
     sys, gyro, accel, mag = bno.get_calibration_status()
     x,y,z = bno.read_magnetometer()
+    magField = pow(x ** 2 + y ** 2 + z ** 2, 0.5) 
+    magField = magField / 100 # 100 microTesla = 1 Gauss
+    
     x,y,z = bno.read_linear_acceleration()
 
     internalTemp = bno.read_temp()
 
-    localCopy.append([t, externalTemp, coreTemp, internalTemp])
+    localCopy.append([t, externalTemp, coreTemp, round(internalTemp, 2), \
+                      round(heading, 2), round(roll, 2), round(pitch, 2), \
+                      round(magField, 4), round(x, 3), round(y, 3), round(z, 3)])
 
     try:
         f = open(fileName,'w')
