@@ -2,6 +2,7 @@
 import tempSensor
 import time
 import json
+import os
 
 # Fetch data every x seconds
 pause = 10.0 # in seconds
@@ -21,9 +22,14 @@ while True:
     t = time.localtime()
     t = ':'.join([str(i).zfill(2) for i in [t.tm_hour, t.tm_min, t.tm_sec]])
     
-    value = tempSensor.getTemp()
+    externalTemp = tempSensor.getTemp()
+    
+    coreTemp = os.popen('/opt/vc/bin/vcgencmd measure_temp').read()
+    coreTemp = [coreTemp.index('=')+1:-2]
+    
+    internalTemp = 0
 
-    localCopy.append([t, value])
+    localCopy.append([t, externalTemp, coreTemp, internalTemp])
 
     try:
         f = open(fileName,'w')
