@@ -11,7 +11,9 @@ function getData() {
             myObj = JSON.parse(this.responseText)
             txt = ''
             txt += '<tr><th>Time</th><th>External Temp (&deg;C)</th>'
-            txt += '<th>Core Temp (&deg;C)</th><th>Internal Temp (&deg;C)</th></tr>'
+            txt += '<th>Core Temp (&deg;C)</th><th>Internal Temp (&deg;C)</th>
+            txt += '<th>Heading</th><th>Roll</th><th>Pitch</th><th>Magnetic Field</th>'
+            txt += '<th>Acc<sub>x</sub></th><th>Acc<sub>y</sub></th><th>Acc<sub>z</sub></th></tr>'
             for (x in myObj.reverse()) 
             {
                 txt += '<tr><td>' + myObj[x][0] + '</td><td>' + myObj[x][1] + '</td>'
