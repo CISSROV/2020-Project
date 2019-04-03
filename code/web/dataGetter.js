@@ -35,7 +35,7 @@ function getData() {
     xmlhttp.open('GET', 'data.json', true)
     xmlhttp.send()
     //console.log('Update!')
-}
+} 
 
 function stopUpdating() {
     clearInterval(intervalID)
