@@ -25,7 +25,7 @@ while True:
     externalTemp = tempSensor.getTemp()
     
     coreTemp = os.popen('/opt/vc/bin/vcgencmd measure_temp').read()
-    coreTemp = [coreTemp.index('=')+1:-2]
+    coreTemp = coreTemp[coreTemp.index('=')+1:-2]
     
     internalTemp = 0
 
