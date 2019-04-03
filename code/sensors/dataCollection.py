@@ -6,7 +6,9 @@ import json
 # Fetch data every x seconds
 pause = 10.0 # in seconds
 
-f = open('data.json','w')
+fileName = '/var/www/html/data.json'
+
+f = open(fileName,'w')
 f.write('[]') # reset the data
 f.close()
 
@@ -24,8 +26,9 @@ while True:
     localCopy.append([t, value])
 
     try:
-        f = open('data.json','w')
+        f = open(fileName,'w')
         json.dump(localCopy, f, indent=4)
+        f.write('\n')
         f.close()
     except IOError as e:
         print(e)
