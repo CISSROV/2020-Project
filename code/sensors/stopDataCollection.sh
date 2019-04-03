@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tmp=$(pgrep -f "sudo python3.4 dataCollector.py")
+tmp=$(pgrep -f "sudo python3.4 dataCollection.py")
 
 
 if [ -z $tmp ]
