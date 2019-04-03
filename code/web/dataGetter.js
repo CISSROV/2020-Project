@@ -9,11 +9,13 @@ function getData() {
     xmlhttp.onreadystatechange = function() {
         if ( this.readyState == 4 && this.status == 200 ) {
             myObj = JSON.parse(this.responseText)
-            txt = '<table id="dataTable">'
-            txt += '<tr><th>Time</th><th>Temperature (&deg;C)</th></tr>'
+            txt = ''
+            txt += '<tr><th>Time</th><th>External Temp (&deg;C)</th>'
+            txt += '<th>Core Temp (&deg;C)</th><th>Internal Temp (&deg;C)</th></tr>'
             for (x in myObj.reverse()) 
             {
-                txt += '<tr><td>' + myObj[x][0] + '</td><td>' + myObj[x][1] + '</td></tr>'
+                txt += '<tr><td>' + myObj[x][0] + '</td><td>' + myObj[x][1] + '</td>'
+                txt += '<td>' + myObj[x][2] + '</td><td>' + myObj[x][3] + '</td></tr>'
             }
             document.getElementById('dataTable').innerHTML = txt
 
@@ -34,14 +36,14 @@ function getData() {
 }
 
 function stopUpdating() {
-    clearInterval( intervalID )
+    clearInterval(intervalID)
     document.getElementById('live').style['display'] = 'none'
     document.getElementById('stop').hidden = true
     document.getElementById('start').hidden = false
 }
 
 function startUpdating() {
-    intervalID = setInterval (getData, 10000)
+    intervalID = setInterval(getData, 10000)
     document.getElementById('live').style['display'] = 'inline'
     document.getElementById('stop').hidden = false
     document.getElementById('start').hidden = true
@@ -73,4 +75,6 @@ function decompress() {
 
 
 getData()
-intervalID = setInterval ( getData, 10000 )
+intervalID = setInterval (getData, 10000)
+
+
