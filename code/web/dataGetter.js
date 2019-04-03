@@ -3,6 +3,7 @@
 
 var intervalID = 0
 var compressed = false;
+var pause = 5000 // in microsec
 
 function getData() {
     xmlhttp = new XMLHttpRequest()
@@ -49,7 +50,7 @@ function stopUpdating() {
 }
 
 function startUpdating() {
-    intervalID = setInterval(getData, 10000)
+    intervalID = setInterval(getData, pause)
     document.getElementById('live').style['display'] = 'inline'
     document.getElementById('stop').hidden = false
     document.getElementById('start').hidden = true
@@ -81,6 +82,4 @@ function decompress() {
 
 
 getData()
-intervalID = setInterval (getData, 10000)
-
-
+intervalID = setInterval (getData, pause)
