@@ -8,8 +8,13 @@ import sys
 sys.path.append('/home/pi/Adafruit_Python_BNO055')
 from Adafruit_BNO055 import BNO055
 
+silent = True
+if len(sys.argv) >= 2:
+    if (sys.argv[1] == '-v'):
+        silent = False
+
 # Fetch data every x seconds
-pause = 10.0 # in seconds
+pause = 5 # in seconds
 
 # ---------------------------
 # ---- Gyro Startup Code ----
@@ -79,6 +84,8 @@ while True:
                       round(heading, 2), round(roll, 2), round(pitch, 2), \
                       round(magField, 4), round(x, 3), round(y, 3), round(z, 3)])
 
+    if not silent:
+        print(localCopy[-1])
     try:
         f = open(fileName,'w')
         json.dump(localCopy, f, indent=4)
