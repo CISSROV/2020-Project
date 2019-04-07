@@ -11,9 +11,27 @@
     </style>
 </head>
 <body>
-    <div id='banner'>
-        <h1 id="title">ROV Status & Control</h1>
+    <div id='banner' style="height: 80px">
+        <div id="dropdown">
+            <a href="/">
+                <img src="logo.png">
+            </a>
+            <div id="dropdownContent">
+                <a href="dataSheet.html">
+                    <p>Data Sheet</p>
+                </a>
+                <a href="video.html">
+                    <p>Video Feed</p>
+                </a>
+                <a href="status.html">
+                    <p>Status</p>
+                </a>
+            </div>
+        </div>
+    
+        <h1 id="title">ROV Menu</h1>
     </div>
+
     <div style="text-align: center;">
         <div style="display: inline-block;">
             <a href="dataSheet.html">
@@ -22,7 +40,6 @@
                     <p>Displays data from the robot's sensor in a table</p>
                 </div>
             </a>
-
             <a href="video.html">
                 <div class='box'>
                     <h3>Video Feed</h3>
