@@ -91,7 +91,7 @@
                 var term = 'id="PID"'
                 txt = txt.slice(txt.indexOf(term) + term.length + 6)
                 txt = txt.slice(0, txt.indexOf('</p>'))
-                console.log(txt)
+                //console.log(txt)
                 pid.innerText = txt
                 if (txt == 'None') {
                     status.innerText = "Not Running"
@@ -120,17 +120,15 @@
         var status = document.getElementById('startDataCollectionStatus')
         var otherStatus = document.getElementById('dataCollectionStatus')
         var button = document.getElementById('startDataCollectionButton')
-        button.disabled = true
         button.innerText = "Running"
         status.innerHTML = "Starting..."
         
         xmlhttp = new XMLHttpRequest()
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText)
+                //console.log(this.responseText)
                 if (this.responseText.toLowerCase().indexOf('error') != -1) {
                     // an error has occured
-                    button.disabled = false
                     button.innerText = "Start"
                     otherStatus.innerHTML = "?"
                     status.innerHTML = "Error in Shell"
