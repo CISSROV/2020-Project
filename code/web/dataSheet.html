@@ -3,11 +3,32 @@
 <head>
     <title>ROV Data Output</title>
     <link rel="stylesheet" href="dataSheet.css">
+    <link rel="stylesheet" href="mainTheme.css">
     <meta http-equiv="cache-control" content="no-cache" />
 </head>
 <body>
+    <div id='banner' style="height: 80px">
+        <div id="dropdown">
+            <a href="/">
+                <img src="logo.png">
+            </a>
+            <div id="dropdownContent">
+                <a href="dataSheet.html">
+                    <p>Data Sheet</p>
+                </a>
+                <a href="video.html">
+                    <p>Video Feed</p>
+                </a>
+                <a href="status.html">
+                    <p>Status</p>
+                </a>
+            </div>
+        </div>
+        <h1 id="title">ROV Data Sheet</h1>
+    </div>
+
+
     <!--#85cdf3;-->
-    <h1 id="title">ROV Data Output</h1>
     <div id="controls">
         <button id="stop" onclick="stopUpdating()">
             Stop Updating Data
