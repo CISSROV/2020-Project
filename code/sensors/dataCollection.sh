@@ -2,11 +2,11 @@
 
 # This script combines startDataCollection.sh and stopDataCollection.sh into one file to reduce clutter
 
+cd /var/www/scripts
+
 if [[ $1 == 'start' ]]
 then
     echo "Startup!"
-
-    cd /var/www/scripts
 
     nohup sudo python3.4 dataCollection.py &
 
