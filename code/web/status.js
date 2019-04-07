@@ -77,7 +77,7 @@ function stopDataCollection() {
     var otherStatus = document.getElementById('dataCollectionStatus')
     var button = document.getElementById('stopDataCollectionButton')
     button.innerText = "Running"
-    status.innerHTML = "Starting..."
+    status.innerHTML = "Stopping..."
     
     xmlhttp = new XMLHttpRequest()
     xmlhttp.onreadystatechange = function() {
