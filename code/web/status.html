@@ -76,84 +76,16 @@
             <p>Status: <span id="startDataCollectionStatus">?</span></p>
             <p>Starts up dataCollection.py</p>
         </div>
+        <div class='box'>
+            <h3>stopDataCollection.sh</h3>
+            <button id='stopDataCollectionButton' onclick="stopDataCollection()">Stop</button>
+            <p>Status: <span id="stopDataCollectionStatus">?</span></p>
+            <p>Shuts down dataCollection.py</p>
+        </div>
     </div>
     <div id='dumpDiv'>
         <p id='dump'></p>
     </div>
-    <script type="text/javascript">
-    function checkPID() {
-        var pid = document.getElementById('dataCollectionPID')
-        var status = document.getElementById('dataCollectionStatus')
-        xmlhttp = new XMLHttpRequest()
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var txt = this.responseText
-                var term = 'id="PID"'
-                txt = txt.slice(txt.indexOf(term) + term.length + 6)
-                txt = txt.slice(0, txt.indexOf('</p>'))
-                //console.log(txt)
-                pid.innerText = txt
-                if (txt == 'None') {
-                    status.innerText = "Not Running"
-                }
-                else {
-                    status.innerText = "Running"
-                }
-            }
-            else {
-                if (this.readyState == 4) {
-                    pid.innerText = "?"
-                    status.innerText = "?"
-                    document.getElementById('dump').innerHTML = this.responseText
-                }
-            }
-        }
-        xmlhttp.open('GET', 'cgi-bin/statusDataCollection.py', true)
-        xmlhttp.send()
-
-    }
-
-    checkPID()
-    intervalID = setInterval (checkPID, 10000)
-
-    function startDataCollection() {
-        var status = document.getElementById('startDataCollectionStatus')
-        var otherStatus = document.getElementById('dataCollectionStatus')
-        var button = document.getElementById('startDataCollectionButton')
-        button.innerText = "Running"
-        status.innerHTML = "Starting..."
-        
-        xmlhttp = new XMLHttpRequest()
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                //console.log(this.responseText)
-                if (this.responseText.toLowerCase().indexOf('error') != -1) {
-                    // an error has occured
-                    button.innerText = "Start"
-                    otherStatus.innerHTML = "?"
-                    status.innerHTML = "Error in Shell"
-                    document.getElementById('dump').innerText = this.responseText
-                }
-                else {
-                    // no error
-                    otherStatus.innerHTML = "Starting..."
-                    status.innerHTML = "Task Complete"
-                    button.innerText = "Start"
-                }
-            }
-            else {
-                if (this.readyState == 4) {
-                    button.disabled = false
-                    button.innerText = "Start"
-                    otherStatus.innerHTML = "?"
-                    status.innerHTML = "Error " + this.status
-                    document.getElementById('dump').innerHTML = this.responseText
-                }
-            }
-        }
-        xmlhttp.open('GET', 'cgi-bin/startup.py', true)
-        xmlhttp.send()
-    }
-    </script>
+    <script type="text/javascript" src="status.js"></script>
 </body>
 </html>
