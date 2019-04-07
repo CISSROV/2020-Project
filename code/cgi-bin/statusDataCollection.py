@@ -8,7 +8,11 @@ result = f.read()
 f.close()
 if result.strip() == '':
     result = 'None'
-result = result.split()[0]
+result = result.split()
+if len(result) == 1:
+    result = 'None'
+else:
+    result = result[0]
 
 print('<h3>dataCollection Status</h3>')
 print('<p id="PID">PID: ' + str(result) + '</p>')
