@@ -56,6 +56,8 @@ function startDataCollection() {
                 otherStatus.innerHTML = "Starting..."
                 status.innerHTML = "Task Complete"
                 button.innerText = "Start"
+                document.getElementById('dump').innerHTML = this.responseText
+
             }
         }
         else {
@@ -95,6 +97,7 @@ function stopDataCollection() {
                 otherStatus.innerHTML = "Stopping..."
                 status.innerHTML = "Task Complete"
                 button.innerText = "Stop"
+                document.getElementById('dump').innerHTML = this.responseText
             }
         }
         else {
