@@ -35,8 +35,7 @@ else:
 # Fetch data every x seconds
 timeout = 5.0 # in seconds
 
-
-class WebSocketServerProtocol(WebSocketServerProtocol):
+class ServerProtocol(WebSocketServerProtocol):
 
     def onConnect(self, request):
         print('Client connecting: {0}'.format(request.peer))
@@ -55,12 +54,11 @@ class WebSocketServerProtocol(WebSocketServerProtocol):
 
         self.sendMessage(msg, isBinary)
 
-    
 
 log.startLogging(sys.stdout)
 
 server = WebSocketServerFactory(u'ws://127.0.0.1:5005')
-server.protocol = WebSocketServerProtocol
+server.protocol = ServerProtocol
 
 reactor.listenTCP(5005, server)
 reactor.run()
