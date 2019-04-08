@@ -5,7 +5,7 @@
 </head>
 <body>
     <script>
-      var ws = new WebSocket('ws://localhost:9000');
+      var ws = new WebSocket('ws://localhost:5005');
       ws.onmessage = function (event) {
         console.log(event.data);
       };
