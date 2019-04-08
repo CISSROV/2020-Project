@@ -82,4 +82,4 @@ function decompress() {
 
 
 getData()
-intervalID = setInterval (getData, pause)
+intervalID = setInterval(getData, pause)

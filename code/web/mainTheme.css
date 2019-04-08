@@ -17,6 +17,7 @@ body {
     min-height: 160px;
     vertical-align: top;
     color: black;
+    margin-bottom: 5px;
 }
 
 div.box h3 {
