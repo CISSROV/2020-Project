@@ -3,6 +3,14 @@
 <head>
     <title>ROV Display</title>
     <link rel="stylesheet" href="mainTheme.css">
+    <style type="text/css">
+        #heading {
+            min-height: 393px;
+        }
+        div#heading embed {
+            margin: 33px;
+        }
+    </style>
 </head>
 <body>
     <div id='banner' style="height: 80px">
@@ -28,10 +36,18 @@
     
         <h1 id="title">ROV Display</h1>
     </div>
-    <div id="heading" class="box">
-        <h3>Heading</h3>
-        <embed src="heading/heading.html" style="width:240px; height: 240px;">
-        <p>Running Demo Script</p>
+
+    <div style="text-align: center;">
+        <div id="heading" class="box">
+            <h3>Heading</h3>
+            <embed src="heading/heading.html" style="width:240px; height: 240px;">
+            <p>Status: Running Demo Script</p>
+        </div>
+        <div id="roll_pitch" class="box">
+            <h3>Artificial Horizon</h3>
+            <embed src="artificial_horizon/index.html" style="width:306px; height: 306px;">
+            <p>Status: Doing Nothing</p>
+        </div>
     </div>
 </body>
 </html>

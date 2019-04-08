@@ -69,7 +69,11 @@
 
         rotate(0)
         function spin() {
+            if (degs + 20 > 360) {
+                degs = -20
+            }
             rotate(degs + 20)
+
         }
         intervalID = setInterval(spin, 1000)
     </script>
