@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <!-- 
+        Image used under CC BY-SA 2.0
+        https://creativecommons.org/licenses/by-sa/2.0/deed.en
+
+        Author of image: Oona Räisänen, https://en.wikipedia.org/wiki/User:Mysid
+
+        Image: Heading indicator, https://commons.wikimedia.org/wiki/File:Heading_indicator.svg
+
+        The image has been modified by cutting it up into three pieces, the dial, the plane, and the center disk.
+    -->
+    <style type="text/css">
+
+        .dial {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        #heading_indicator.move {
+            transition: 1s;
+            transition-timing-function: linear;
+            transform: rotateZ(0deg) !important;
+        }
+        #heading_indicator {
+            left: 33px;
+            top: 33px;
+        }
+    </style>
+</head>
+<body>
+    <!--
+        html page has the size 240 x 240
+    -->
+    <img src="noplane.png" class="dial">
+    <img src="noplane_center.png" class="dial move" id="heading_indicator">
+    <img src="plane3.png" class="dial">
+
+    <script type="text/javascript">
+        // I really dislike this piece of code and how it does things. But, it works.
+        var indicator = document.getElementById('heading_indicator')
+        var degs = 0
+
+        function rotate(degree) {
+            if (degree < 0 || degree > 360) {
+                throw new Error('Degree Argument out of Range, got ' + degree)
+            }
+            if (degs - degree < -180) {// example: degs: 0 - degree: 350 = -350 < -180, degree -= 360, degree == -10
+                degree -= 360
+            }
+            if (degs - degree > 180) {// example: degs: 350 - degree: 0 = 350 > 180, degree += 360, degree == 360
+                degree += 360
+            }
+            var rules = document.styleSheets[0].rules
+
+            for (var i = 0; i < rules.length; i++) {
+                if (rules[i].selectorText == '#heading_indicator.move') {
+                    document.styleSheets[0].removeRule(i)
+                    break
+                }
+            }
+            document.styleSheets[0].insertRule('#heading_indicator.move {transition: 1s;transform: rotateZ(' + (degree) + 'deg) !important;}')
+            degs = degree
+        }
+
+        rotate(0)
+    </script>
+</body>
+</html>
