@@ -1,13 +1,31 @@
 <!DOCTYPE html>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="icon" type="image/png" href="icons/icon-128.png">
+    <style type="text/css">
+        #canvas {
+            position: absolute;
+            margin-left: 18px;
+            margin-top: 18px;
+        }
+        #top {
+            position: absolute;
+            margin-left: 0px;
+            margin-top: 0px;
+            width: 306px;
+            height: 306px;
+            background: transparent url(images/tool_320_2.png) no-repeat;
+        }
+    </style>
 
-<title>Artificial Horizon</title>
+    <title>Artificial Horizon</title>
+</head>
+<body>
+    <script src="RequestAnimationFrame.js"></script>
+    <script src="main.js"></script>
 
-<link rel="icon" type="image/png" href="icons/icon-128.png">
-<link href="main.css" rel="stylesheet" media="all" />
-
-<script src="RequestAnimationFrame.js"></script>
-<script src="main.js"></script>
-
-<canvas width="270" height="270" id="canvas"></canvas>
-<div id="top"></div>
+    <canvas width="270" height="270" id="canvas"></canvas>
+    <div id="top"></div>
+</body>
+</html>

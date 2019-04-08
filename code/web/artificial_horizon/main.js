@@ -16,7 +16,7 @@ var artificialHorizon = (function() {
 
     var diameter = 0, radius = 0;
 
-    var pitch = -Math.PI/12, roll = Math.PI/12;
+    var pitch = 0, roll = 0;//-Math.PI/12;
 
     var horizon, aspectRatio = 0;
     
@@ -156,32 +156,16 @@ var artificialHorizon = (function() {
     }
 
     return {
-
         initAndRun: function() {
 
             canvas = document.getElementById("canvas");
             context = canvas.getContext("2d");
 
-            var backgroundLoaded = false, topLoaded = false;
-            
-            var backgroundImage = new Image();
-            backgroundImage.onload = function() {
-                backgroundLoaded = true;
-                if (topLoaded) {
-                    run();
-                }
-            }
-            backgroundImage.src = "images/bg.jpg";
-
             var topImage = new Image();
             topImage.onload = function() {
-                topLoaded = true;
-                if (backgroundLoaded) {
-                    run();
-                }
+                run();
             }
             topImage.src = "images/tool_320.png";
-
         }
 
     };
