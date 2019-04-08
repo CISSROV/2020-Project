@@ -165,7 +165,7 @@ var artificialHorizon = (function() {
             topImage.onload = function() {
                 run();
             }
-            topImage.src = "images/tool_320.png";
+            topImage.src = "images/tool_320_2.png";
         }
 
     };
