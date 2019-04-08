@@ -1,10 +1,40 @@
-
 from autobahn.twisted.websocket import WebSocketServerProtocol, \
     WebSocketServerFactory
 
 import sys
 from twisted.python import log
 from twisted.internet import reactor
+from twisted.internet.defer import Deferred
+
+'''
+from twisted.internet import task, reactor
+
+timeout = 60.0 # Sixty seconds
+
+def doWork():
+    #do work here
+    pass
+
+l = task.LoopingCall(doWork)
+l.start(timeout) # call every sixty seconds
+
+reactor.run()
+'''
+
+import dataCollectionPieces as dataShards
+try:
+    dataShards.setup()
+except Exception as e:
+    print(e)
+    sys.exit(1)
+else:
+    print('Successful Gyroscope Startup')
+
+# then use getDataFragment()
+
+# Fetch data every x seconds
+timeout = 5.0 # in seconds
+
 
 class WebSocketServerProtocol(WebSocketServerProtocol):
 
