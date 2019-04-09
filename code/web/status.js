@@ -30,7 +30,7 @@ function checkPID() {
 }
 
 checkPID()
-intervalID = setInterval (checkPID, 10000)
+intervalID = setInterval(checkPID, 10000)
 
 /*
 function startDataCollection() {

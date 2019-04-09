@@ -27,48 +27,10 @@ function rotate(degree) {
     degs = degree
 }
 
-/*
-function spin() {
-    if (degs + 20 > 360) {
-        degs = -20
-    }
-    rotate(degs + 20)
+rotate(0)
 
-}
-intervalID = setInterval(spin, 1000)
-*/
-
-function getHost() {
-    // code for getting the hostname / domain name
-    var tmp = document.location.href
-    if (tmp.startsWith('http://')) {
-        tmp = tmp.slice('http://'.length)
-    }
-    else if (tmp.startsWith('https://')) {
-        tmp = tmp.slice('https://'.length)
-    }
-    else {
-        console.error('Weird URL start: ' + tmp)
-        return
-    }
-    return tmp.split('/',1)[0].split(':',1)[0]
-}
-
-var ws = null
-
-function connect() {
-    ws = new WebSocket('ws://' + getHost() + ':5005')
-    ws.onmessage = function (event) {
-        document.getElementById('error').hidden = true
-        try {
-            var data = JSON.parse(event.data)
-        }
-        catch {
-            console.error('JSON parse error')
-            document.getElementById('error').hidden = false
-            return
-        }
-        
+ window.addEventListener("load", function() {
+    connect(function(data) {
         var degree = data[4]
         if (typeof(degree) != 'number') {
             console.error('Got ' + degree + ', expected number')
@@ -77,17 +39,8 @@ function connect() {
         else {
             rotate(degree)
         }
-    }
-    ws.onerror = function (event) {
-        //console.log('Error')
-        document.getElementById('error').hidden = false
-        setTimeout(connect, 5000)
-    }
-    // doesn't display msg if connection is closed by server
-}
-
-rotate(0)
-connect()
+    })
+}, false);
 
 
 

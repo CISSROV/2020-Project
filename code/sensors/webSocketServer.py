@@ -83,7 +83,7 @@ class ServerFactory(WebSocketServerFactory):
             c.sendMessage(msg.encode('utf8'))
             print("message sent to {}".format(c.peer))
 
-log.startLogging(sys.stdout)
+log.startLogging(sys.stdout) # replace with log file
 
 server = ServerFactory(u'ws://127.0.0.1:5005')
 server.protocol = ServerProtocol

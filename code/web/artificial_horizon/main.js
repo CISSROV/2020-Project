@@ -171,55 +171,6 @@ function radians(degree) {
     return degree * Math.PI / 180
 }
 
-function getHost() {
-    // code for getting the hostname / domain name
-    var tmp = document.location.href
-    if (tmp.startsWith('http://')) {
-        tmp = tmp.slice('http://'.length)
-    }
-    else if (tmp.startsWith('https://')) {
-        tmp = tmp.slice('https://'.length)
-    }
-    else {
-        console.error('Weird URL start: ' + tmp)
-        return
-    }
-    return tmp.split('/',1)[0].split(':',1)[0]
-}
-
-var ws = null
-
-function connect() {
-    ws = new WebSocket('ws://' + getHost() + ':5005')
-    ws.onmessage = function (event) {
-        document.getElementById('error').hidden = true
-        try {
-            var data = JSON.parse(event.data)
-        }
-        catch {
-            console.error('JSON parse error')
-            document.getElementById('error').hidden = false
-            return
-        }
-        // 5 is roll, 6 is pitch
-        var roll_tmp = data[5]
-        var pitch_tmp = data[6]
-        if (typeof(roll_tmp) != 'number' || typeof(pitch_tmp) != 'number') {
-            console.error('Got ' + roll_tmp + ' and ' + pitch_tmp + ', expected numbers')
-            document.getElementById('error').hidden = false
-        }
-        else {
-            target_roll = radians(roll_tmp)
-            target_pitch = radians(pitch_tmp)
-        }
-    }
-    ws.onerror = function (event) {
-        //console.log('Error')
-        document.getElementById('error').hidden = false
-        setTimeout(connect, 5000)
-    }
-}   // doesn't display msg if connection is closed by server
-
 function adjustIDK() {
     // animation for sad people
     var step = 0.1
@@ -237,7 +188,19 @@ var intervalID = 0
 
 window.addEventListener("load", function() {
     initAndRun()
-    connect()
+    connect(function(data) {
+        // 5 is roll, 6 is pitch
+        var roll_tmp = data[5]
+        var pitch_tmp = data[6]
+        if (typeof(roll_tmp) != 'number' || typeof(pitch_tmp) != 'number') {
+            console.error('Got ' + roll_tmp + ' and ' + pitch_tmp + ', expected numbers')
+            document.getElementById('error').hidden = false
+        }
+        else {
+            target_roll = radians(roll_tmp)
+            target_pitch = radians(pitch_tmp)
+        }
+    })
     intervalID = setInterval(adjustIDK, 100)
 }, false);
 
