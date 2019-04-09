@@ -27,12 +27,12 @@ function checkPID() {
     }
     xmlhttp.open('GET', 'cgi-bin/statusDataCollection.py', true)
     xmlhttp.send()
-
 }
 
 checkPID()
 intervalID = setInterval (checkPID, 10000)
 
+/*
 function startDataCollection() {
     var status = document.getElementById('startDataCollectionStatus')
     var otherStatus = document.getElementById('dataCollectionStatus')
@@ -112,4 +112,4 @@ function stopDataCollection() {
     }
     xmlhttp.open('GET', 'cgi-bin/shutdown.py', true)
     xmlhttp.send()
-}
+}*/

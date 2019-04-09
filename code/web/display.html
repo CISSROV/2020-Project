@@ -10,6 +10,34 @@
         div#heading embed {
             margin: 33px;
         }
+        #dataSheet {
+            margin-top: -100px;
+            position: relative;
+        }
+        #grayPanel {
+            background-color: #ddd;
+            width: 100%;
+            height: 100px;
+            z-index: 1;
+            position: relative;
+            margin-top: -100px;
+        }
+        #secondBanner {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin: 0px 0px 8px 0px;
+        }
+        div#secondBanner p {
+            display: inline-block;
+            margin: 6px;
+        }
+        div#secondBanner div {
+            background-color: #fff;
+            display: inline-block;
+            border: 2px solid black;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -18,7 +46,7 @@
             <a href="/">
                 <img src="logo.png">
             </a>
-            <div id="dropdownContent">
+            <div id="dropdownContent" style="z-index: 3;">
                 <a href="dataSheet.html">
                     <p>Data Sheet</p>
                 </a>
@@ -36,8 +64,13 @@
     
         <h1 id="title">ROV Display</h1>
     </div>
-
-    <div style="text-align: center;">
+    <div id="secondBanner">
+        <div>
+            <p>PID: <span id="dataCollectionPID">?</span></p>
+            <p>Status: <span id="dataCollectionStatus">?</span></p>
+        </div>
+    </div>
+    <div style="text-align: center; position: relative; z-index: 2;">
         <div id="heading" class="box">
             <h3>Heading</h3>
             <embed src="heading/heading.html" style="width:240px; height: 240px;">
@@ -48,6 +81,43 @@
         </div>
     </div>
 
-    <!--<embed src="dataSheet.html" style="width: 100%; height: 100%"></embed>-->
+    <div id="grayPanel"></div>
+    <div id="dataSheet">
+        <object data="dataSheet.html" style="width: 100%; height: 500px"></object>
+    </div>
+    <script type="text/javascript">
+        function checkPID() {
+            var pid = document.getElementById('dataCollectionPID')
+            var status = document.getElementById('dataCollectionStatus')
+            xmlhttp = new XMLHttpRequest()
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var txt = this.responseText
+                    var term = 'id="PID"'
+                    txt = txt.slice(txt.indexOf(term) + term.length + 6)
+                    txt = txt.slice(0, txt.indexOf('</p>'))
+                    //console.log(txt)
+                    pid.innerText = txt
+                    if (txt == 'None') {
+                        status.innerText = "Not Running"
+                    }
+                    else {
+                        status.innerText = "Running"
+                    }
+                }
+                else {
+                    if (this.readyState == 4) {
+                        pid.innerText = "?"
+                        status.innerText = "?"
+                    }
+                }
+            }
+            xmlhttp.open('GET', 'cgi-bin/statusDataCollection.py', true)
+            xmlhttp.send()
+        }
+
+        checkPID()
+        intervalID = setInterval (checkPID, 10000)
+    </script>
 </body>
 </html>

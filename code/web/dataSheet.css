@@ -56,35 +56,13 @@ div#controls button {
     border: none;
     color: white;
     font-size: 12px;
+    border-radius: 5px;
 }
 
 div#controls button:hover {
     background-color: #0BACCB;
     box-shadow: 3px 3px 5px grey;
     cursor: pointer;
-}
-
-#start, #stop {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    margin-right: -2px;
-}
-
-#compress, #decompress {
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    margin-left: -2px;
-    border-left: 1px solid black !important;
-}
-
-/* Live Data Indicator */
-#live {
-    color: red;
-    float: right;
-    display: inline;
-    margin-top: -30px;
-    margin-right: 20px;
-    margin-bottom: 0px;
 }
 
 /* Error class */

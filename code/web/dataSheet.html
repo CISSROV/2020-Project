@@ -33,12 +33,6 @@
 
     <!--#85cdf3;-->
     <div id="controls">
-        <button id="stop" onclick="stopUpdating()">
-            Stop Updating Data
-        </button>
-        <button id="start" onclick="startUpdating()" hidden>
-            Start Updating Data
-        </button>
         <button id="compress" onclick="compress()">
             Compressed View
         </button>
@@ -46,7 +40,6 @@
             Uncompressed View
         </button>
     </div>
-    <p id="live">Live Data</p>
     <div style="overflow-x:auto">
     <table id="dataTable">
         <tr>
@@ -64,7 +57,8 @@
         </tr>
     </table>
     </div>
-    <h3 class="error" id="dataError" hidden>An unknown error has occured while attempting to fetch data.json</h3>
-    <script type="text/javascript" src="dataGetter.js"></script>
+    <h3 class="error" id="dataError" hidden>An unknown error has occured while attempting connect or process received data</h3>
+    <script type="text/javascript" src="dataGetterNew.js"></script>
+    <!-- dataGetterNew.js is websocket based -->
 </body>
 </html>
