@@ -1,5 +1,8 @@
 // This code is for fetching data to be displayed in a table in json
-// The json should be a list of lists with two entries, i.e. like a x by 2 array 
+
+// 
+// NOTE: With the recent switch over to websockets, this code does NOT work anymore and will NOT be further developed
+// 
 
 var intervalID = 0
 var compressed = false;
