@@ -55,7 +55,7 @@ function connect() {
         
         var degree = data[4]
         if (typeof(degree) != 'number') {
-            console.error('Got ' + event.data + ', expected number')
+            console.error('Got ' + degree + ', expected number')
             document.getElementById('error').hidden = false
         }
         else {
