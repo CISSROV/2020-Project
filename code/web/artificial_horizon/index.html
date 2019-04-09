@@ -20,6 +20,20 @@
             height: 306px;
             background: transparent url(images/tool_320_2.png) no-repeat;
         }
+        #error {
+            color: red;
+            background-color: rgba(0,0,0,0.8);
+            width: 160px;
+            height: 80px;
+            text-align: center;
+            vertical-align: middle;
+            position: absolute;
+            left: 73px;
+            top: 113px;
+            margin: 0px;
+            border-radius: 5px;
+            border: 2px solid red;
+        }
     </style>
 
     <title>Artificial Horizon</title>
@@ -30,5 +44,9 @@
 
     <canvas width="270" height="270" id="canvas"></canvas>
     <div id="top"></div>
+
+    <div id="error" hidden>
+        <h1>ERROR</h1>
+    </div>
 </body>
 </html>
