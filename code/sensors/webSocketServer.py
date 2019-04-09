@@ -7,19 +7,6 @@ from twisted.internet import task, reactor
 from twisted.internet.defer import Deferred
 
 '''
-timeout = 60.0 # Sixty seconds
-
-def doWork():
-    #do work here
-    pass
-
-l = task.LoopingCall(doWork)
-l.start(timeout) # call every sixty seconds
-
-reactor.run()
-'''
-
-'''
 import dataCollectionPieces as dataShards
 try:
     dataShards.setup()
@@ -30,14 +17,6 @@ else:
     print('Successful Gyroscope Startup')
 '''
 
-i = 0
-
-def pseudoGetData():
-    global i
-    i += 1
-    print(i)
-    return i;
-
 # then use getDataFragment()
 
 # Fetch data every x seconds
@@ -47,14 +26,14 @@ class ServerProtocol(WebSocketServerProtocol):
 
     def onConnect(self, request):
         #print(request.path, request.protocols)
-        print('Client connecting: {0}'.format(request.peer))
+        print('Client connecting & registering: {0}'.format(request.peer))
         self.factory.register(self)
 
     def onOpen(self):
         print('WebSocket connection open')
 
     def onClose(self, wasClean, code, reason):
-        print('WebSocket connection closed: {0}'.format(reason))
+        print('WebSocket connection closed & unregistering: {0}'.format(reason))
         self.factory.unregister(self)
 
     def onMessage(self, msg, isBinary):
@@ -66,12 +45,7 @@ class ServerProtocol(WebSocketServerProtocol):
         #msg = s.encode('utf8')
         self.sendMessage(msg, isBinary)
 
-class BroadcastServerFactory(WebSocketServerFactory):
-
-    """
-    Simple broadcast server broadcasting any message it receives to all
-    currently connected clients.
-    """
+class ServerFactory(WebSocketServerFactory):
 
     def __init__(self, url):
         WebSocketServerFactory.__init__(self, url)
@@ -79,12 +53,10 @@ class BroadcastServerFactory(WebSocketServerFactory):
 
     def register(self, client):
         if client not in self.clients:
-            print("registered client {}".format(client.peer))
             self.clients.append(client)
 
     def unregister(self, client):
         if client in self.clients:
-            print("unregistered client {}".format(client.peer))
             self.clients.remove(client)
 
     def broadcast(self):
@@ -96,7 +68,7 @@ class BroadcastServerFactory(WebSocketServerFactory):
 
 log.startLogging(sys.stdout)
 
-server = BroadcastServerFactory(u'ws://127.0.0.1:5006')
+server = ServerFactory(u'ws://127.0.0.1:5006')
 server.protocol = ServerProtocol
 
 reactor.listenTCP(5006, server)
