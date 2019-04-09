@@ -20,7 +20,8 @@ else:
 # then use getDataFragment()
 
 # !!! important !!! <- the serial connection must be set up BEFORE the twisted stuff 
-# because upon hitting an error it must shutdown the program and should not be ingored or handled
+# because upon hitting an error it must shutdown the program and should not be ingored or silenced
+# if handled it must call sys.exit or something else to terminate the program
 
 i = 0
 def pseudoGetDataFragment():

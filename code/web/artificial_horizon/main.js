@@ -15,6 +15,7 @@ var canvas, context;
 var diameter = 0, radius = 0;
 
 var pitch = 0, roll = 0;//-Math.PI/12; // just set this to update the display
+var target_pitch = 0, target_roll = 0;
 
 var horizon, aspectRatio = 0;
 
@@ -35,6 +36,9 @@ function draw() {
     radius = diameter / 2;
 
     radius_mul_kappa = radius * KAPPA;
+
+    //roll = target_roll
+    //pitch = target_pitch
     
     // calculate horizon
     horizon = getHorizon(pitch);
@@ -189,8 +193,8 @@ function connect() {
             document.getElementById('error').hidden = false
         }
         else {
-            roll = radians(roll_tmp)
-            pitch = radians(pitch_tmp)
+            target_roll = radians(roll_tmp)
+            target_pitch = radians(pitch_tmp)
         }
     }
     ws.onerror = function (event) {
@@ -200,9 +204,25 @@ function connect() {
     }
 }   // doesn't display msg if connection is closed by server
 
+function adjustIDK() {
+    // animation for sad people
+    var step = 0.1
+    if (Math.abs(target_roll - roll) < step) {
+        roll = target_roll
+    }
+    if (Math.abs(target_pitch - pitch) < step) {
+        pitch = target_pitch
+    }
+    roll += Math.sign(target_roll - roll) * step
+    pitch += Math.sign(target_pitch - pitch) * step
+}
+
+var intervalID = 0
+
 window.addEventListener("load", function() {
     initAndRun()
     connect()
+    intervalID = setInterval(adjustIDK, 100)
 }, false);
 
 
