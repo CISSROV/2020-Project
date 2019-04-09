@@ -1,7 +1,7 @@
 from autobahn.twisted.websocket import WebSocketServerProtocol, \
     WebSocketServerFactory
 
-import sys
+import sys, time, json
 from twisted.python import log
 from twisted.internet import task, reactor
 from twisted.internet.defer import Deferred
@@ -18,6 +18,22 @@ else:
 '''
 
 # then use getDataFragment()
+
+# !!! important !!! <- the serial connection must be set up BEFORE the twisted stuff 
+# because upon hitting an error it must shutdown the program and should not be ingored or handled
+
+i = 0
+def pseudoGetDataFragment():
+    global i
+
+    i += 10
+    t = time.localtime()
+    t = ':'.join([str(i).zfill(2) for i in [t.tm_hour, t.tm_min, t.tm_sec]])
+
+    return [t, i, i, i, i, i, i, i, i, i, i]
+    # [t, externalTemp, coreTemp, round(internalTemp, 2), \
+    #                  round(heading, 2), round(roll, 2), round(pitch, 2), \
+    #                  round(magField, 4), round(x, 3), round(y, 3), round(z, 3)]
 
 # Fetch data every x seconds
 timeout = 5.0 # in seconds
@@ -60,7 +76,7 @@ class ServerFactory(WebSocketServerFactory):
             self.clients.remove(client)
 
     def broadcast(self):
-        msg = str(pseudoGetData())
+        msg = json.dumps(pseudoGetDataFragment())
         print("broadcasting message '{}' ..".format(msg))
         for c in self.clients:
             c.sendMessage(msg.encode('utf8'))
@@ -68,12 +84,14 @@ class ServerFactory(WebSocketServerFactory):
 
 log.startLogging(sys.stdout)
 
-server = ServerFactory(u'ws://127.0.0.1:5006')
+server = ServerFactory(u'ws://127.0.0.1:5005')
 server.protocol = ServerProtocol
 
-reactor.listenTCP(5006, server)
+reactor.listenTCP(5005, server)
+
+time.sleep(abs(time.time() % -5)) # wait till the next whole 5 seconds
+starttime = time.time()
 
 l = task.LoopingCall(server.broadcast)
 l.start(timeout)
-
 reactor.run()

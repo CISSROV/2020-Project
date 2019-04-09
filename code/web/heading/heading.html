@@ -19,6 +19,20 @@
             left: 0px;
             top: 0px;
         }
+        #error {
+            color: red;
+            background-color: rgba(0,0,0,0.8);
+            width: 160px;
+            height: 80px;
+            text-align: center;
+            vertical-align: middle;
+            position: absolute;
+            left: 40px;
+            top: 80px;
+            margin: 0px;
+            border-radius: 5px;
+            border: 2px solid red;
+        }
         #heading_indicator.move {
             transition: 1s;
             transition-timing-function: linear;
@@ -37,6 +51,9 @@
     <img src="noplane.png" class="dial">
     <img src="noplane_center.png" class="dial move" id="heading_indicator">
     <img src="plane3.png" class="dial">
+    <div id="error" hidden>
+        <h1>ERROR</h1>
+    </div>
 
     <script src="heading.js"></script>
 </body>

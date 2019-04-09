@@ -4,10 +4,12 @@
     <title></title>
 </head>
 <body>
+    <p id="data"></p>
     <script>
-      var ws = new WebSocket('ws://localhost:5006');
+      var ws = new WebSocket('ws://localhost:5005');
       ws.onmessage = function (event) {
         console.log(event.data);
+        document.getElementById('data').innerText = event.data
       };
     </script>
 </body>

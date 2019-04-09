@@ -53,7 +53,7 @@ f = open(fileName,'w')
 f.write('[]') # reset the data
 f.close()
 
-time.sleep(abs(time.time() % -10)) # wait till the next whole 10 seconds
+time.sleep(abs(time.time() % -5)) # wait till the next whole 5 seconds
 starttime = time.time()
 
 localCopy = []

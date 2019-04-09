@@ -6,6 +6,7 @@ var degs = 0
 
 function rotate(degree) {
     if (degree < 0 || degree > 360) {
+        document.getElementById('error').hidden = false
         throw new Error('Degree Argument out of Range, got ' + degree)
     }
     if (degs - degree < -180) {// example: degs: 0 - degree: 350 = -350 < -180, degree -= 360, degree == -10
@@ -26,7 +27,7 @@ function rotate(degree) {
     degs = degree
 }
 
-rotate(0)
+/*
 function spin() {
     if (degs + 20 > 360) {
         degs = -20
@@ -35,3 +36,43 @@ function spin() {
 
 }
 intervalID = setInterval(spin, 1000)
+*/
+
+var ws = null
+
+function connect() {
+    ws = new WebSocket('ws://localhost:5005')
+    ws.onmessage = function (event) {
+        document.getElementById('error').hidden = true
+        try {
+            var data = JSON.parse(event.data)
+        }
+        catch {
+            console.error('JSON parse error')
+            document.getElementById('error').hidden = false
+            return
+        }
+        
+        var degree = data[4]
+        if (typeof(degree) != 'number') {
+            console.error('Got ' + event.data + ', expected number')
+            document.getElementById('error').hidden = false
+        }
+        else {
+            rotate(degree)
+        }
+    }
+    ws.onerror = function (event) {
+        //console.log('Error')
+        document.getElementById('error').hidden = false
+        setTimeout(connect, 5000)
+    }
+    // doesn't display msg if connection is closed by server
+}
+
+rotate(0)
+connect()
+
+
+
+
