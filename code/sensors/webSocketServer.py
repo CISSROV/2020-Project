@@ -85,7 +85,7 @@ class ServerFactory(WebSocketServerFactory):
 
 log.startLogging(sys.stdout) # replace with log file
 
-server = ServerFactory(u'ws://127.0.0.1:5005')
+server = ServerFactory(u'ws://127.0.0.1:5005') # update this!
 server.protocol = ServerProtocol
 
 reactor.listenTCP(5005, server)
