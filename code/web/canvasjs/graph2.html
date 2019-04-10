@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <script src="/websocket.js"></script>
+        <script>
+        window.onload = function () {
+
+            var externalT = []
+            var coreT = []
+            var internalT = []
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                title :{
+                    text: "Temperature"
+                },
+                axisY: {
+                    title: "Temperature (in C)",
+                    includeZero: false,
+                    suffix: " C",
+                    minimum: 0,
+                    maximum: 100
+                },
+                axisX:{
+                    intervalType: "second",
+                    interval: 5,
+                    valueFormatString: "hh:mm:ss tt"
+                },      
+                data: [{
+                    name: "External Temperature",
+                    type: "spline",
+                    showInLegend: true,
+                    dataPoints: externalT
+                },
+                {
+                    name: "Core Temperature",
+                    type: "spline",
+                    showInLegend: true,
+                    dataPoints: coreT
+                },
+                {
+                    name: "Internal Temperature",
+                    type: "spline",
+                    showInLegend: true,
+                    dataPoints: internalT
+                }]
+            });
+
+            var dataLength = 20; // number of dataPoints visible at any point
+
+            var updateChart = function(data) {
+                externalT.push({
+                    x: new Date("1970-01-01 " + data[0]),
+                    y: parseFloat(data[1])
+                });
+                coreT.push({
+                    x: new Date("1970-01-01 " + data[0]),
+                    y: parseFloat(data[2])
+                });
+                internalT.push({
+                    x: new Date("1970-01-01 " + data[0]),
+                    y: parseFloat(data[3])
+                });
+
+
+                if (externalT.length > dataLength) {
+                    externalT.shift();
+                    coreT.shift();
+                    internalT.shift();
+                }
+
+                chart.render();
+            };
+
+            connect(updateChart)
+        }
+
+
+        </script>
+    </head>
+    <body>
+        <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+        <p id="error">error</p>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    </body>
+</html>

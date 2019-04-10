@@ -27,7 +27,7 @@ i = 0
 def pseudoGetDataFragment():
     global i
 
-    i += 10
+    i += 1
     t = time.localtime()
     t = ':'.join([str(i).zfill(2) for i in [t.tm_hour, t.tm_min, t.tm_sec]])
 
