@@ -8,7 +8,7 @@ from twisted.internet import task, reactor
 
 # ---> NOTE <--- This process is - and must be - run and owned by root
 
-import dataCollectionPieces as dataShards
+import dataCollectShards as dataShards
 try:
     dataShards.setup()
 except Exception as e:
@@ -21,25 +21,15 @@ def getDateISO8601():
     tmp = time.localtime()
     return '{}-{:0>2}-{:0>2}'.format(tmp.tm_year, tmp.tm_mon, tmp.tm_mday)
 
+IP = '127.0.0.1'
+PORT = 5005
+
 # then use getDataFragment()
 
 # !!! important !!! <- the serial connection must be set up BEFORE the twisted stuff 
 # because upon hitting an error it must shutdown the program and should not be ingored or silenced
 # if handled it must call sys.exit or something else to terminate the program
-'''
-i = 0
-def pseudoGetDataFragment():
-    global i
 
-    i += 1
-    t = time.localtime()
-    t = ':'.join([str(i).zfill(2) for i in [t.tm_hour, t.tm_min, t.tm_sec]])
-
-    return [t, i, i, i, i, i, i, i, i, i, i]
-    # [t, externalTemp, coreTemp, round(internalTemp, 2), \
-    #                  round(heading, 2), round(roll, 2), round(pitch, 2), \
-    #                  round(magField, 4), round(x, 3), round(y, 3), round(z, 3)]
-'''
 # Fetch data every x seconds
 timeout = 5.0 # in seconds
 
@@ -86,10 +76,10 @@ f = open('/var/log/MATE/websocket{}.log'.format(date), 'w')
 
 log.startLogging(f) # replace with log file # sys.stdout
 
-server = ServerFactory(u'ws://127.0.0.1:5005') # update this!
+server = ServerFactory(u'ws://{}:{}'.format(IP , PORT)) # update this!
 server.protocol = ServerProtocol
 
-reactor.listenTCP(5005, server)
+reactor.listenTCP(PORT, server)
 
 time.sleep(abs(time.time() % -5)) # wait till the next whole 5 seconds
 starttime = time.time()
