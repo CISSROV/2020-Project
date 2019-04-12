@@ -4,6 +4,8 @@ import time
 import json
 import os
 
+# old code
+
 import sys
 sys.path.append('/home/pi/Adafruit_Python_BNO055')
 from Adafruit_BNO055 import BNO055
