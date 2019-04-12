@@ -8,9 +8,10 @@ if [[ $1 == 'start' ]]
 then
     echo "Startup!"
 
-    nohup sudo python3.4 dataCollection.py &
+    nohup sudo python3.4 webSocketServer.py &
 
-    tmp=$(pgrep -f "sudo python3.4 dataCollection.py")
+    # old file -> dataCollection.py
+    tmp=$(pgrep -f "sudo python3.4 webSocketServer.py")
 
     echo "PID: $tmp"
 
@@ -18,7 +19,7 @@ elif [[ $1 == 'stop' ]]
 then
     echo "Shutdown!"
 
-    tmp=$(pgrep -f "sudo python3.4 dataCollection.py")
+    tmp=$(pgrep -f "sudo python3.4 webSocketServer.py")
 
     if [ -z $tmp ]
     then
@@ -32,7 +33,7 @@ then
         sudo kill -s SIGKILL $tmp
     fi
 
-    tmp=$(pgrep -f "python3.4 dataCollection.py")
+    tmp=$(pgrep -f "python3.4 webSocketServer.py")
 
     if [ -z $tmp ]
     then
