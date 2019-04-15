@@ -12,7 +12,8 @@ function setData(ls) {
     txt += '<th>Core Temp (&deg;C)</th><th>Internal Temp (&deg;C)</th>'
     txt += '<th>Heading</th><th>Roll</th><th>Pitch</th><th>Magnetic Field</th>'
     txt += '<th>Acc<sub>x</sub></th><th>Acc<sub>y</sub></th><th>Acc<sub>z</sub></th></tr>'
-    for (x in localCopy.reverse()) 
+    cp = [...localCopy]
+    for (x in cp.reverse()) 
     {
         txt += '<tr><td>' + localCopy[x][0] + '</td><td>' + localCopy[x][1] + '</td>'
         txt += '<td>' + localCopy[x][2] + '</td><td>' + localCopy[x][3] + '</td>'
