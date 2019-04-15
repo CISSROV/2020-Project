@@ -15,12 +15,12 @@ function setData(ls) {
     cp = [...localCopy]
     for (x in cp.reverse()) 
     {
-        txt += '<tr><td>' + localCopy[x][0] + '</td><td>' + localCopy[x][1] + '</td>'
-        txt += '<td>' + localCopy[x][2] + '</td><td>' + localCopy[x][3] + '</td>'
-        txt += '<td>' + localCopy[x][4] + '</td><td>' + localCopy[x][5] + '</td>'
-        txt += '<td>' + localCopy[x][6] + '</td><td>' + localCopy[x][7] + '</td>'
-        txt += '<td>' + localCopy[x][8] + '</td><td>' + localCopy[x][9] + '</td>'
-        txt += '<td>' + localCopy[x][10] + '</td></tr>'
+        txt += '<tr><td>' + cp[x][0] + '</td><td>' + cp[x][1] + '</td>'
+        txt += '<td>' + cp[x][2] + '</td><td>' + cp[x][3] + '</td>'
+        txt += '<td>' + cp[x][4] + '</td><td>' + cp[x][5] + '</td>'
+        txt += '<td>' + cp[x][6] + '</td><td>' + cp[x][7] + '</td>'
+        txt += '<td>' + cp[x][8] + '</td><td>' + cp[x][9] + '</td>'
+        txt += '<td>' + cp[x][10] + '</td></tr>'
     }
     document.getElementById('dataTable').innerHTML = txt
 
