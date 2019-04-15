@@ -60,7 +60,7 @@ def setup():
         defaultAcc['y'] += y
         defaultAcc['z'] += z
 
-        time.sleep(0.5)
+        time.sleep(1)
 
     defaultRotation['heading'] /= MEASUREMENTS
     defaultRotation['roll'] /= MEASUREMENTS
