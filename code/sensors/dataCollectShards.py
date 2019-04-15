@@ -10,7 +10,10 @@ from Adafruit_BNO055 import BNO055
 
 silent = True
 
-bno = None
+bno = None 
+
+defaultRotation = {'heading': 0, 'roll': 0, 'pitch': 0}
+defaultAcc = {'x': 0, 'y': 0, 'z': 0}
 
 def setup():
     # ---------------------------
@@ -41,6 +44,23 @@ def setup():
     print('Magnetometer ID:    0x{0:02X}'.format(mag))
     print('Gyroscope ID:       0x{0:02X}\n'.format(gyro))
 
+    MEASUREMENTS = 10
+
+    for i in range(MEASUREMENTS):
+        defaultRotation['heading'], defaultRotation['roll'], defaultRotation['pitch'] += bno.read_euler()
+        defaultAcc['x'], defaultAcc['y'], defaultAcc['z'] += bno.read_linear_acceleration()
+
+        time.sleep(0.01)
+
+    defaultRotation['heading'] /= MEASUREMENTS
+    defaultRotation['roll'] /= MEASUREMENTS
+    defaultRotation['pitch'] /= MEASUREMENTS
+
+    defaultAcc['x'] /= MEASUREMENTS
+    defaultAcc['y'] /= MEASUREMENTS
+    defaultAcc['z'] /= MEASUREMENTS
+
+
 
 
 # ---------------------------
@@ -62,12 +82,21 @@ def getDataFragment():
     # Gyro Sensors
     
     heading, roll, pitch = bno.read_euler()
+
+    heading -= defaultRotation['heading']
+    roll -= defaultRotation['roll']
+    pitch -= defaultRotation['pitch']
+
     sys, gyro, accel, mag = bno.get_calibration_status()
-    x,y,z = bno.read_magnetometer()
+    x, y, z = bno.read_magnetometer()
     magField = pow(x ** 2 + y ** 2 + z ** 2, 0.5) 
     magField = magField / 100 # 100 microTesla = 1 Gauss
     
-    x,y,z = bno.read_linear_acceleration()
+    x, y, z = bno.read_linear_acceleration()
+
+    x -= defaultAcc['x']
+    y -= defaultAcc['y']
+    z -= defaultAcc['z']
 
     internalTemp = bno.read_temp()
 
