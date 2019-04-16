@@ -4,7 +4,7 @@ import time
 import json
 import os
 
-# old code --> being deprecated <--
+# old code --> deprecated <--
 
 import sys
 sys.path.append('/home/pi/Adafruit_Python_BNO055')

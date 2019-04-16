@@ -93,19 +93,21 @@ def chat_client(host=None,port=None):
             if sock == s:
                 # incoming message from remote server, s
                 data = sock.recv(4096)
-                if not data :
+                if not data:
                     print '\nDisconnected from chat server'
                     sys.exit()
-                else :
+                else:
                     #print data
-            sys.stdout.write(data)
-                    sys.stdout.write('[Me] '); sys.stdout.flush()     
+                    sys.stdout.write(data)
+                    sys.stdout.write('[Me] ')
+                    sys.stdout.flush()     
             
-            else :
+            else:
                 # user entered a message
-        msg = print_data()
+                msg = print_data()
                 s.send(msg)
-                sys.stdout.write(msg + '\n[Me]'); sys.stdout.flush() 
+                sys.stdout.write(msg + '\n[Me]')
+                sys.stdout.flush() 
                 
                 
 t1 = threading.Thread(target = chat_client)
