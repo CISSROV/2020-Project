@@ -1,12 +1,11 @@
 #!/usr/bin/env python3.4
+from autobahn.twisted.websocket import WebSocketServerProtocol, WebSocketServerFactory
 
-from autobahn.twisted.websocket import WebSocketServerProtocol, \
-    WebSocketServerFactory
-
-import sys, time, json
+import sys
+import time
+import json
 from twisted.python import log
 from twisted.internet import task, reactor
-#from twisted.internet.defer import Deferred
 
 # ---> NOTE <--- This process is - and must be - run and owned by root
 

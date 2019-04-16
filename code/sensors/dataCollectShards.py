@@ -10,7 +10,7 @@ from Adafruit_BNO055 import BNO055
 
 silent = True
 
-bno = None 
+bno = None
 
 defaultRotation = {'heading': 0, 'roll': 0, 'pitch': 0}
 defaultAcc = {'x': 0, 'y': 0, 'z': 0}
@@ -99,7 +99,7 @@ def getDataFragment():
 
     sys, gyro, accel, mag = bno.get_calibration_status()
     x, y, z = bno.read_magnetometer()
-    magField = pow(x ** 2 + y ** 2 + z ** 2, 0.5) 
+    magField = pow(x ** 2 + y ** 2 + z ** 2, 0.5)
     magField = magField / 100 # 100 microTesla = 1 Gauss
     
     x, y, z = bno.read_linear_acceleration()

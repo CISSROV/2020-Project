@@ -94,7 +94,7 @@ def chat_client(host=None,port=None):
     global buffer
     if (host == None or port == None):
         if(len(sys.argv) < 3) :
-            print 'Usage : python chat_client.py 192.168.1.__  9009'
+            print 'Usage : python chat_client.py 192.168.1.__ 9009'
             sys.exit()
 
         host = sys.argv[1]
