@@ -4,12 +4,16 @@ import time
 import json
 import os
 
-# old code --> deprecated <--
+# ----------------------------------------------------
+# ---- Deprecated - Refer to dataCollectShards.py ----
+# ----------------------------------------------------
 
+# fix sys.path
 import sys
 sys.path.append('/home/pi/Adafruit_Python_BNO055')
 from Adafruit_BNO055 import BNO055
 
+# args for displaying debug info
 silent = True
 if len(sys.argv) >= 2:
     if (sys.argv[1] == '-v'):
@@ -58,29 +62,28 @@ f.close()
 time.sleep(abs(time.time() % -5)) # wait till the next whole 5 seconds
 starttime = time.time()
 
-localCopy = []
+localCopy = [] # contains data of this session
 
 while True:
     t = time.localtime()
-    t = ':'.join([str(i).zfill(2) for i in [t.tm_hour, t.tm_min, t.tm_sec]])
+    t = ':'.join([str(i).zfill(2) for i in [t.tm_hour, t.tm_min, t.tm_sec]]) # time in hh:mm:ss
     
-    externalTemp = tempSensor.getTemp()
+    externalTemp = tempSensor.getTemp() # (water) temperature probe
     
     coreTemp = os.popen('/opt/vc/bin/vcgencmd measure_temp').read()
-    coreTemp = coreTemp[coreTemp.index('=')+1:-3]
-    
+    coreTemp = coreTemp[coreTemp.index('=')+1:-3] # raspberry pi core temperature
     
     # Gyro Sensors
-    
-    heading, roll, pitch = bno.read_euler()
-    sys, gyro, accel, mag = bno.get_calibration_status()
-    x,y,z = bno.read_magnetometer()
-    magField = pow(x ** 2 + y ** 2 + z ** 2, 0.5) 
+
+    heading, roll, pitch = bno.read_euler() # direction
+    sys, gyro, accel, mag = bno.get_calibration_status() # idk why this
+    x, y, z = bno.read_magnetometer() # magnetic field
+    magField = pow(x ** 2 + y ** 2 + z ** 2, 0.5) # absolute value
     magField = magField / 100 # 100 microTesla = 1 Gauss
     
-    x,y,z = bno.read_linear_acceleration()
+    x, y, z = bno.read_linear_acceleration() # without gravity
 
-    internalTemp = bno.read_temp()
+    internalTemp = bno.read_temp() # gyroscope's temperature probe
 
     localCopy.append([t, externalTemp, coreTemp, round(internalTemp, 2), \
                       round(heading, 2), round(roll, 2), round(pitch, 2), \
@@ -89,6 +92,7 @@ while True:
     if not silent:
         print(localCopy[-1])
     try:
+        # write to file
         f = open(fileName,'w')
         json.dump(localCopy, f, indent=4)
         f.write('\n')
@@ -96,5 +100,6 @@ while True:
     except IOError as e:
         print(e)
     
+    # wait pause number of seconds minus the time the code took to run
     print(time.ctime())
     time.sleep(pause - ((time.time() - starttime) % pause))

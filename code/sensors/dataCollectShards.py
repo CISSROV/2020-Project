@@ -46,6 +46,7 @@ def setup():
 
     MEASUREMENTS = 10
 
+    # take ten measurements and average them
     for i in range(MEASUREMENTS):
         heading, roll, pitch = bno.read_euler()
         print(heading, roll, pitch)
