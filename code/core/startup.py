@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 
-import os
 import sys
+import subprocess
 
 def runShellCmd(cmd):
-    f = os.popen(cmd)
-    txt = f.read()
-    f.close()
+    pre = 'bash -c "{0}"'
+    f = subprocess.Popen(pre.format(cmd), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    raw = f.communicate()
+    f.stdout.close()
+    f.stderr.close()
+    
+    txt = '\n\n'.join([i.decode() for i in raw])
+
     return txt
 
 baseCmd = 'sshpass -p raspberry ssh pi@192.168.1.3'
