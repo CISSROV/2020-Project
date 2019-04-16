@@ -47,15 +47,14 @@ def setup():
     MEASUREMENTS = 10
 
     for i in range(MEASUREMENTS):
-        print(bno.read_euler())
-        print(bno.read_linear_acceleration())
-
         heading, roll, pitch = bno.read_euler()
+        print(heading, roll, pitch)
         defaultRotation['heading'] += heading
         defaultRotation['roll'] += roll
         defaultRotation['pitch'] += pitch
 
         x, y, z = bno.read_linear_acceleration()
+        print(x, y, z)
         defaultAcc['x'] += x
         defaultAcc['y'] += y
         defaultAcc['z'] += z
