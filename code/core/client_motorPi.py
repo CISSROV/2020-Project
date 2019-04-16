@@ -155,7 +155,7 @@ def chat_client(host=None,port=None):
                         tiltval = 0
                     else:
                         tiltval = 0
-                    #mixing                
+                    #mixing
                     m1 = 90+forwardval+strafeval+turnval
                     m2 = 90+forwardval-strafeval-turnval
                     m3 = 90-forwardval+strafeval
