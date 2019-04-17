@@ -127,10 +127,10 @@ def chat_client(host=None,port=None):
         
                 # incoming message from remote server, s
                 data = s.recv(4096)
-                if not data :
+                if not data:
                     print '\nDisconnected from chat server'
                     sys.exit()
-                else :
+                else:
                     #print data
                     # sys.stdout.write(data)
                     datalist = data.split()
@@ -164,11 +164,11 @@ def chat_client(host=None,port=None):
                     m6 = 97-upval-tiltval
             
                     move2(m2) #motor 1
-            move3(m1) #motor 2
-            move4(m3) #motor 3
-            move5(m4) #motor 4
-            move6(m6)
-            move7(m7)
+                    move3(m1) #motor 2
+                    move4(m3) #motor 3
+                    move5(m4) #motor 4
+                    move6(m6)
+                    move7(m7)
             
             
                     
