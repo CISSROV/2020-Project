@@ -73,9 +73,9 @@ def setup():
 
 
 
-# ---------------------------
-# ---- JSON & Main Loop -----
-# ---------------------------
+# ------------------------
+# ---- Main Function -----
+# ------------------------
 
 #time.sleep(abs(time.time() % -10)) # wait till the next whole 10 seconds
 #starttime = time.time()
