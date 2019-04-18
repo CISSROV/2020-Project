@@ -26,6 +26,7 @@ def print_data():
     data5 = joystick1.get_axis(4)
     data6 = joystick1.get_axis(5)
     data7 = joystick1.get_button(10)
+    
     data8 = joystick2.get_button(1)
     data9 = joystick2.get_axis(0)
 
