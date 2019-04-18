@@ -88,7 +88,7 @@ def move12(a):
 
 
 ########Multiple clients connect to a server than send and receive data to all clients
-def chat_client(host=None,port=None):
+def chat_client(host=None, port=None):
     m10 = 90
     m12 = 0
     global buffer
