@@ -1,11 +1,29 @@
 #!/usr/bin/env python3
 
+# 
+# May or may not work.
+# Low priority program,
+# mostly just for convenience
+# 
+
 import sys
+import fcntl
+import time
+from os import O_NONBLOCK
 import subprocess
 
 pseudo = False
 
-def runShellCmd(cmd):
+def non_block_read(output):
+    fd = output.fileno()
+    fl = fcntl.fcntl(fd, fcntl.F_GETFL)
+    fcntl.fcntl(fd, fcntl.F_SETFL, fl | O_NONBLOCK)
+    try:
+        return output.read()
+    except:
+        return ""
+
+def runShellCmd(cmd, idk=False):
     pre = 'bash -c "{0}"'
 
     global pseudo
@@ -14,14 +32,36 @@ def runShellCmd(cmd):
         sys.exit(0)
 
     f = subprocess.Popen(pre.format(cmd), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    raw = f.communicate()
+
+    if idk == 'start':
+        while True:
+            try:
+                a = non_block_read(f.stdout)
+                if a != b'' and a != None:
+                    print(a.decode(), end='')
+                else:
+                    pass
+            except Exception as e:
+                print('Error:', e)
+                break
+            time.sleep(0.1)
+    else:
+        try:
+            raw = f.communicate()
+            txt = '\n\n'.join([i.decode() for i in raw if i.strip() != b''])
+            return txt
+        except Exception as e:
+            raise
+        else:
+            pass
+        finally:
+            return ''
+    
     f.stdout.close()
     f.stderr.close()
     
-    txt = '\n\n'.join([i.decode() for i in raw])
-
-    return txt
-
+    return ''
+    
 baseCmd = 'sshpass -p raspberry ssh pi@192.168.1.3'
 script = 'sudo /var/www/scripts/dataCollection.sh'
 
@@ -36,7 +76,7 @@ if len(sys.argv) >= 3:
 
 if sys.argv[1] in ['start', 'stop']:
     # run cmd and pass the argument along
-    txt = runShellCmd(' '.join([baseCmd, script, sys.argv[1]]))
+    txt = runShellCmd(' '.join([baseCmd, script, sys.argv[1]]), sys.argv[1])
     print(txt)
 
     if sys.argv[1] == 'start':
