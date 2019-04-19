@@ -35,10 +35,7 @@ def print_data():
         data.append(joystick2.get_button(x))
 
     mesg = ''
-    for x in range(len(data)):
-        data[x] = round(data[x], 2)
-        mesg += str(data[x])
-        mesg += " "
+    mesg = ' '.join([round(i, 2) for i in range(data)])
 
 
 ##    data = joystick1.get_axis(0)
