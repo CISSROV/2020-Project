@@ -9,6 +9,23 @@ trimUp = {
     'right': 0.0
 }
 
+justPressed1 = {
+    'A': False,
+    'B': False,
+    'X': False,
+    'Y': False,
+    'LB': False,
+    'RB': False
+}
+
+justPressed2 = {
+    'A': False,
+    'B': False,
+    'X': False,
+    'Y': False,
+    'LB': False,
+    'RB': False
+}
 
 data = '0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23'
 #s.recv(4096)
@@ -26,6 +43,39 @@ else:
 
     joystick1 = dict(zip(axis + buttons, datalist[:12]))
     joystick2 = dict(zip(axis + buttons, datalist[12:]))
+
+    for k in joystick1:
+        if k not in buttons:
+            continue
+        v = joystick1[k]
+        if v == 1 and not justPressed1[k]:
+            # just pressed
+            buttonPressed(k, 1)
+            justPressed1[k] = True
+        elif v == 0 and justPressed1[k]:
+            # just released
+            justPressed1[k] = False
+        elif v not in [1, 0]:
+            raise ValueError('Got {0}, expected 0 or 1'.format(v))
+        else:
+            pass
+
+    for k in joystick2:
+        if k not in buttons:
+            continue
+        v = joystick2[k]
+        if v == 1 and not justPressed2[k]:
+            # just pressed
+            buttonPressed(k, 2)
+            justPressed2[k] = True
+        elif v == 0 and justPressed2[k]:
+            # just released
+            justPressed2[k] = False
+        elif v not in [1, 0]:
+            raise ValueError('Got {0}, expected 0 or 1'.format(v))
+        else:
+            pass
+
 
     #
     #       /a/    \b\
@@ -84,10 +134,11 @@ else:
 #print(str(m1) +' '+str(m2)+' '+str(m3)+' '+str(m4)+' '+str(m6)+' '+str(m7)+' '+str(m12)+' '+str(m10))
 
 # print datalist
+print('\033[2J', end='')
 print('Trim: [{0}, {1}]'.format(trimUp['left'], trimUp['right']))
 print(joystick1)
 print(joystick2)
-print('\033[2J', end='')
+
 
 # else :
 # user entered a message
