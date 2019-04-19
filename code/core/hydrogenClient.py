@@ -96,8 +96,8 @@ def chat_client(host=None, port=None):
     m12 = 0
     global buffer
     if (host == None or port == None):
-        if(len(sys.argv) < 3) :
-            print 'Usage : python chat_client.py 192.168.1.__ 9009'
+        if(len(sys.argv) < 3):
+            print('Usage: python chat_client.py 192.168.1.__ 9009')
             sys.exit()
 
         host = sys.argv[1]
@@ -107,16 +107,16 @@ def chat_client(host=None, port=None):
     s.settimeout(2)
 
     # connect to remote host
-    try :
+    try:
         s.connect((host, port))
-    except :
-        print 'Unable to connect'
+    except:
+        print('Unable to connect')
         sys.exit()
 
-    print 'Connected to remote host. You can start sending messages'
+    print('Connected to remote host. You can start sending messages')
     sys.stdout.write('[Me] '); sys.stdout.flush()
 
-    while 1:
+    while True:
         socket_list = [sys.stdin, s]
 
         # Get the list sockets which are readable
@@ -242,7 +242,7 @@ def chat_client(host=None, port=None):
                 #print(str(m1) +' '+str(m2)+' '+str(m3)+' '+str(m4)+' '+str(m6)+' '+str(m7)+' '+str(m12)+' '+str(m10))
 
                 # print datalist
-                print('\033[2J', end='')
+                print '\033[2J',
                 print('Trim: [{0}, {1}]'.format(trimUp['left'], trimUp['right']))
                 print(joystick1)
                 print(joystick2)
@@ -251,11 +251,11 @@ def chat_client(host=None, port=None):
                 print(motor_up_left, motor_up_right)
 
 
-                # else :
+                # else:
                 # user entered a message
                 # s.send(msg)
                 # sys.stdout.write (msg + '\n[Me]'); sys.stdout.flush()
 
 if __name__ == "__main__":
-
-    sys.exit(chat_client())
+    chat_client()
+    print('Done')

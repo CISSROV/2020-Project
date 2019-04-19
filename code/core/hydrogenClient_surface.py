@@ -89,7 +89,7 @@ def print_data():
 ########Multiple clients connect to a server than send and receive data to all clients
 def chat_client(host='192.168.1.2',port=9009):
     if (host == None or port == None):
-    if(len(sys.argv) < 3):
+        if(len(sys.argv) < 3):
             print('Usage : python chat_client.py hostname port')
             sys.exit()
         host = sys.argv[1]
@@ -99,9 +99,9 @@ def chat_client(host='192.168.1.2',port=9009):
     s.settimeout(2)
 
     # connect to remote host
-    try :
+    try:
         s.connect((host, port))
-    except :
+    except:
         print('Unable to connect')
         sys.exit()
 
@@ -109,7 +109,7 @@ def chat_client(host='192.168.1.2',port=9009):
     sys.stdout.write('[Me] ')
     sys.stdout.flush()
 
-    while 1:
+    while True:
         socket_list = [sys.stdin, s]
 
         # Get the list sockets which are readable
@@ -122,9 +122,9 @@ def chat_client(host='192.168.1.2',port=9009):
                 if not data :
                     print('\nDisconnected from chat server')
                     sys.exit()
-                else :
+                else:
                     #print data
-            sys.stdout.write(data)
+                    sys.stdout.write(data)
                     sys.stdout.write('[Me] ')
                     sys.stdout.flush()
 
