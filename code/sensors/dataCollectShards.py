@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.4 
+#!/usr/bin/env python3.4
 import tempSensor
 import time
 import json
@@ -60,7 +60,7 @@ def setup():
         defaultAcc['y'] += y
         defaultAcc['z'] += z
 
-        time.sleep(1)
+        time.sleep(0.5)
 
     defaultRotation['heading'] /= MEASUREMENTS
     defaultRotation['roll'] /= MEASUREMENTS
@@ -83,14 +83,14 @@ def setup():
 def getDataFragment():
     t = time.localtime()
     t = ':'.join([str(i).zfill(2) for i in [t.tm_hour, t.tm_min, t.tm_sec]])
-    
+
     externalTemp = tempSensor.getTemp()
-    
+
     coreTemp = os.popen('/opt/vc/bin/vcgencmd measure_temp').read()
     coreTemp = coreTemp[coreTemp.index('=')+1:-3]
-    
+
     # Gyro Sensors
-    
+
     heading, roll, pitch = bno.read_euler()
 
     heading -= defaultRotation['heading']
@@ -101,7 +101,7 @@ def getDataFragment():
     x, y, z = bno.read_magnetometer()
     magField = pow(x ** 2 + y ** 2 + z ** 2, 0.5)
     magField = magField / 100 # 100 microTesla = 1 Gauss
-    
+
     x, y, z = bno.read_linear_acceleration()
 
     x -= defaultAcc['x']
@@ -116,10 +116,8 @@ def getDataFragment():
 
     if not silent:
         print(fragment)
-    
+
     #print(time.ctime())
     #time.sleep(pause - ((time.time() - starttime) % pause))
 
     return fragment
-
-
