@@ -5,6 +5,7 @@ import pygame
 import time
 import serial as s
 import threading
+import json
 from serial import SerialException
 # import pyfirmata
 
@@ -22,11 +23,12 @@ def print_data():
     data = joystick1.get_axis(0)
     data2 = joystick1.get_axis(1)
     data3 = joystick1.get_axis(2)
-    data4 = joystick1.get_axis(3)    
+    data4 = joystick1.get_axis(3)
     data5 = joystick1.get_axis(4)
+    
     data6 = joystick1.get_axis(5)
     data7 = joystick1.get_button(10)
-    
+
     data8 = joystick2.get_button(1)
     data9 = joystick2.get_axis(0)
 
@@ -41,9 +43,9 @@ def print_data():
     # print msg
     pygame.event.pump()
     time.sleep(0.05)
-        
+
     return mesg
-        
+
 
 # #setup pyFirmata
 # board =  pyfirmata.Arduino('/dev/cu.usbmodem1421')
@@ -70,27 +72,27 @@ def chat_client(host=None,port=None):
             sys.exit()
         host = sys.argv[1]
         port = int(sys.argv[2])
-    
+
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(2)
-     
+
     # connect to remote host
     try :
         s.connect((host, port))
     except :
         print 'Unable to connect'
         sys.exit()
-     
+
     print 'Connected to remote host. You can start sending messages'
     sys.stdout.write('[Me] '); sys.stdout.flush()
-     
+
     while 1:
         socket_list = [sys.stdin, s]
-         
+
         # Get the list sockets which are readable
         ready_to_read,ready_to_write,in_error = select.select(socket_list , [], [])
-         
-        for sock in ready_to_read:             
+
+        for sock in ready_to_read:
             if sock == s:
                 # incoming message from remote server, s
                 data = sock.recv(4096)
@@ -101,15 +103,15 @@ def chat_client(host=None,port=None):
                     #print data
                     sys.stdout.write(data)
                     sys.stdout.write('[Me] ')
-                    sys.stdout.flush()     
-            
+                    sys.stdout.flush()
+
             else:
                 # user entered a message
                 msg = print_data()
                 s.send(msg)
                 sys.stdout.write(msg + '\n[Me]')
-                sys.stdout.flush() 
-                
-                
+                sys.stdout.flush()
+
+
 t1 = threading.Thread(target = chat_client)
 t1.start()

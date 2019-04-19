@@ -25,14 +25,14 @@ def print_data():
     for x in range(6):
         data.append(joystick1.get_axis(x))
 
-    data.append(joystick1.get_button(4))
-    data.append(joystick1.get_button(5))
+    for x in range(6):
+        data.append(joystick1.get_button(x))
 
     for x in range(6):
         data.append(joystick2.get_axis(x))
 
-    data.append(joystick2.get_button(4))
-    data.append(joystick2.get_button(5))
+    for x in range(6):
+        data.append(joystick2.get_button(x))
 
     mesg = ''
     for x in range(len(data)):
