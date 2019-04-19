@@ -24,9 +24,13 @@ def print_data():
 
     for x in range(6):
         data.append(joystick1.get_axis(x))
+    # 0: x axis left thumb, 1: y axis left thumb
+    # 2: x axis right thumb, 3: y axis right thumb
+    # 4: right trigger, 5: left trigger
 
     for x in range(6):
         data.append(joystick1.get_button(x))
+    # A = 0, B = 1, X = 2, Y = 3, LB = 4, RB = 5
 
     for x in range(6):
         data.append(joystick2.get_axis(x))
