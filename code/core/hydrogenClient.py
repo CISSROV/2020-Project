@@ -12,7 +12,7 @@ trimUp = {
 data = ''
 #s.recv(4096)
 if not data:
-    print '\nDisconnected from chat server'
+    print('\nDisconnected from chat server')
     sys.exit()
 else:
     #print data
@@ -63,10 +63,10 @@ else:
 
 
 
-print str(m1) +' '+str(m2)+' '+str(m3)+' '+str(m4)+' '+str(m6)+' '+str(m7)+' '+str(m12)+' '+str(m10)
+print(str(m1) +' '+str(m2)+' '+str(m3)+' '+str(m4)+' '+str(m6)+' '+str(m7)+' '+str(m12)+' '+str(m10))
 
-    # print datalist
-    sys.stdout.write('[Me] '); sys.stdout.flush()
+# print datalist
+sys.stdout.write('[Me] '); sys.stdout.flush()
 
 # else :
 # user entered a message

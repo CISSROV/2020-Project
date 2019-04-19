@@ -89,8 +89,8 @@ def print_data():
 ########Multiple clients connect to a server than send and receive data to all clients
 def chat_client(host='192.168.1.2',port=9009):
     if (host == None or port == None):
-    if(len(sys.argv) < 3) :
-            print 'Usage : python chat_client.py hostname port'
+    if(len(sys.argv) < 3):
+            print('Usage : python chat_client.py hostname port')
             sys.exit()
         host = sys.argv[1]
         port = int(sys.argv[2])
@@ -102,11 +102,12 @@ def chat_client(host='192.168.1.2',port=9009):
     try :
         s.connect((host, port))
     except :
-        print 'Unable to connect'
+        print('Unable to connect')
         sys.exit()
 
-    print 'Connected to remote host. You can start sending messages'
-    sys.stdout.write('[Me] '); sys.stdout.flush()
+    print('Connected to remote host. You can start sending messages')
+    sys.stdout.write('[Me] ')
+    sys.stdout.flush()
 
     while 1:
         socket_list = [sys.stdin, s]
@@ -119,18 +120,20 @@ def chat_client(host='192.168.1.2',port=9009):
                 # incoming message from remote server, s
                 data = sock.recv(4096)
                 if not data :
-                    print '\nDisconnected from chat server'
+                    print('\nDisconnected from chat server')
                     sys.exit()
                 else :
                     #print data
             sys.stdout.write(data)
-                    sys.stdout.write('[Me] '); sys.stdout.flush()
+                    sys.stdout.write('[Me] ')
+                    sys.stdout.flush()
 
             else :
                 # user entered a message
-        msg = print_data()
+                msg = print_data()
                 s.send(msg)
-                sys.stdout.write(msg + '\n[Me]'); sys.stdout.flush()
+                sys.stdout.write(msg + '\n[Me]')
+                sys.stdout.flush()
 
 
 t1 = threading.Thread(target = chat_client)
