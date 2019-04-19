@@ -25,7 +25,7 @@ def print_data():
     data3 = joystick1.get_axis(2)
     data4 = joystick1.get_axis(3)
     data5 = joystick1.get_axis(4)
-    
+
     data6 = joystick1.get_axis(5)
     data7 = joystick1.get_button(10)
 
@@ -77,9 +77,9 @@ def chat_client(host=None,port=None):
     s.settimeout(2)
 
     # connect to remote host
-    try :
+    try:
         s.connect((host, port))
-    except :
+    except:
         print 'Unable to connect'
         sys.exit()
 

@@ -1,7 +1,7 @@
 import sys
-import socket
-import select
-import pygame
+#import socket
+#import select
+#import pygame
 import time
 
 trimUp = {
@@ -9,7 +9,8 @@ trimUp = {
     'right': 0.0
 }
 
-data = ''
+
+data = '0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23'
 #s.recv(4096)
 if not data:
     print('\nDisconnected from chat server')
@@ -17,36 +18,53 @@ if not data:
 else:
     #print data
     # sys.stdout.write(data)
-    datalist = data.split()
+    datalist = [float(i) for i in data.split()]
+    assert len(datalist) == 24
 
-    forwardval = int(float(datalist[3]))*45
-    if abs(float(datalist[2])) > 0.1:
-        strafeval = int(float(datalist[2]))*20
-    else:
-        strafeval = 0
+    axis = ['xLeft', 'yLeft', 'xRight', 'yRight', 'triggerRight', 'triggerLeft']
+    buttons = ['A', 'B', 'X', 'Y', 'LB', 'RB']
 
-    if abs(float(datalist[5])) > 0.1:
-        turnval = int(float(datalist[5]))*20
-    else:
-        turnval = 0
+    joystick1 = dict(zip(axis + buttons, datalist[:12]))
+    joystick2 = dict(zip(axis + buttons, datalist[12:]))
 
-    if abs(float(datalist[6])) > 0.1:
-        upval = int(float(datalist[6]))*40
-    else:
-        upval = 0
+    #
+    #       /a/    \b\
+    #     /////    \\\\\
+    #
+    #
+    #     \\\\\    /////
+    #      \c\     /d/
+    #
+    # ______________a_b_c_d
+    # Back          - - + +
+    # Front         + + - -
+    # Strafe Left   - + - +
+    # Strafe Right  + - + -
+    # Rotate Left   - + + -
+    # Rotate Right  + - - +
+    #
 
-    if abs(float(datalist[6])) > 0.1:
-        tiltval = 0
-    else:
-        tiltval = 0
+    yLeft = 50 * joystick1['yLeft']
+    xLeft = 50 * joystick1['xLeft']
+    xRight = 50 * joystick1['xRight']
+
+    motor_a =  yLeft - xLeft - xRight
+
+    motor_b =  yLeft + xLeft + xRight
+
+    motor_c = -yLeft - xLeft + xRight
+
+    motor_d = -yLeft + xLeft - xRight
+
     #mixing
-    m1 = 90+forwardval+strafeval+turnval
-    m2 = 90+forwardval-strafeval-turnval
-    m3 = 90-forwardval+strafeval
-    m4 = 90-forwardval-strafeval
+    #m1 = 90+forwardval+strafeval+turnval
+    #m2 = 90+forwardval-strafeval-turnval
+    #m3 = 90-forwardval+strafeval
+    #m4 = 90-forwardval-strafeval
 
-    m_up_left  = 97 + upval + tiltval + trimUp['left']
-    m_up_right = 97 - upval - tiltval + trimUp['right']
+
+    motor_up_left  = 1 * (90 + upval + trimUp['left'])
+    motor_up_right = -1 * (90 + upval + trimUp['right'])
 
     '''
     move2(m2) #motor 1
@@ -63,10 +81,13 @@ else:
 
 
 
-print(str(m1) +' '+str(m2)+' '+str(m3)+' '+str(m4)+' '+str(m6)+' '+str(m7)+' '+str(m12)+' '+str(m10))
+#print(str(m1) +' '+str(m2)+' '+str(m3)+' '+str(m4)+' '+str(m6)+' '+str(m7)+' '+str(m12)+' '+str(m10))
 
 # print datalist
-sys.stdout.write('[Me] '); sys.stdout.flush()
+print('Trim: [{0}, {1}]'.format(trimUp['left'], trimUp['right']))
+print(joystick1)
+print(joystick2)
+print('\033[2J', end='')
 
 # else :
 # user entered a message
