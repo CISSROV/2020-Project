@@ -20,8 +20,8 @@ then
 elif [[ $1 == 'check' ]]
 then
     echo "Check!"
-
-    sshpass -p raspberry ssh pi@192.168.1.3 pgrep -f \"sudo python3.4 data\"
+    # does not work
+    sshpass -p raspberry ssh pi@192.168.1.3 pgrep -f "sudo python3.4 webSocketServer"
 else
     echo "Usage: startup.sh [start|stop|check]"
 fi

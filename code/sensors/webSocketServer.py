@@ -27,7 +27,7 @@ PORT = 5005
 
 # then use getDataFragment()
 
-# !!! important !!! <- the serial connection must be set up BEFORE the twisted stuff 
+# !!! important !!! <- the serial connection must be set up BEFORE the twisted stuff
 # because upon hitting an error it must shutdown the program and should not be ingored or silenced
 # if handled it must call sys.exit or something else to terminate the program
 
@@ -66,7 +66,7 @@ class ServerFactory(WebSocketServerFactory):
             self.clients.remove(client)
 
     def broadcast(self):
-        msg = json.dumps(pseudoGetDataFragment())
+        msg = json.dumps(dataShards.getDataFragment())
         print("broadcasting message '{}' ..".format(msg))
         for c in self.clients:
             c.sendMessage(msg.encode('utf8'))
@@ -91,5 +91,3 @@ try:
     reactor.run()
 finally:
     f.close()
-
-
