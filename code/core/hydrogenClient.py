@@ -3,7 +3,7 @@ import socket
 import select
 import pygame
 import time
-'''
+
 port = '/dev/ttyACM0'
 
 import pyfirmata
@@ -28,22 +28,22 @@ pin10 = board.get_pin('d:10:s') #motor 3
 pin12 = board.get_pin('d:12:s') #motor 3
 
 def move2(a):
-    pin2.write(a)
+    pin2.write(a) # motor
 
 def move3(a):
-    pin3.write(a)
+    pin3.write(a) # motor
 
 def move4(a):
-    pin4.write(a)
+    pin4.write(a) # motor
 
 def move5(a):
-    pin5.write(a)
+    pin5.write(a) # motor
 
 def move6(a):
-    pin6.write(a)
+    pin6.write(a) # vertical thruster
 
 def move7(a):
-    pin7.write(a)
+    pin7.write(a) # vertial thruster
 
 def move8(a):
     pin8.write(a)
@@ -56,7 +56,7 @@ def move10(a):
 
 def move12(a):
     pin12.write(a)
-'''
+
 trimUp = {
     'left': 0.0,
     'right': 0.0
@@ -270,14 +270,15 @@ def chat_client(host='192.168.1.2', port=9009):
 
 
 
-                    '''
-                    move2(m2) #motor 1
-                    move3(m1) #motor 2
-                    move4(m3) #motor 3
-                    move5(m4) #motor 4
-                    move6(m6)
-                    move7(m7)
-                    '''
+
+                    move2(motor_a) #motor 1
+                    move3(motor_b) #motor 2
+                    move4(motor_c) #motor 3
+                    move5(motor_d) #motor 4
+
+                    move6(motor_up_left)
+                    move7(motor_up_right)
+
 
 
 
