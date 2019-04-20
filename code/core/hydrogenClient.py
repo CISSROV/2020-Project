@@ -135,6 +135,11 @@ def chat_client(host=None, port=None):
                     #print data
                     # sys.stdout.write(data)
                     datalist = [float(i) for i in data.split()]
+
+                    for i in range(len(datalist)):
+	                       if abs(datalist[i]) < 0.1:
+                               datalist[i] = 0.0
+
                     assert len(datalist) == 24
 
                     axis = ['xLeft', 'yLeft', 'xRight', 'yRight', 'triggerRight', 'triggerLeft']
@@ -212,7 +217,7 @@ def chat_client(host=None, port=None):
                     #m4 = 90-forwardval-strafeval
 
                     if joystick1['triggerRight'] >= 0.1 and joystick1['triggerLeft'] >= 0.1:
-                        pass # do nothing
+                        pass # do nothing cause both are pressed
                     else:
                         if joystick1['triggerRight'] > 0.1:
                             upval = joystick1['triggerRight']
