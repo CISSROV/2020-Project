@@ -91,9 +91,7 @@ def buttonPressed(button, num):
             trimUp['right'] -= 1
 
 ########Multiple clients connect to a server than send and receive data to all clients
-first = True
-
-def chat_client(host=None, port=None):
+def chat_client(host='192.168.1.2', port=9009):
     m10 = 90
     m12 = 0
     global buffer
@@ -131,13 +129,6 @@ def chat_client(host=None, port=None):
             if sock == sock:
                 data = s.recv(4096)
                 print(data)
-                global first
-                if first:
-                    #data = sock.recv(4096) # clear out first msg
-                    first = False
-                    print('dumbed data')
-                    break
-
 
                 if not data:
                     print('\nDisconnected from chat server')
@@ -145,7 +136,7 @@ def chat_client(host=None, port=None):
                 else:
                     #print data
                     # sys.stdout.write(data)
-                    datalist = [float(i) for i in data.split()]
+                    datalist = [float(i) for i in data.split()[2:]]
 
                     for i in range(len(datalist)):
                         if abs(datalist[i]) < 0.1:
@@ -153,11 +144,13 @@ def chat_client(host=None, port=None):
 
                     assert len(datalist) == 24
 
-                    axis = ['xLeft', 'yLeft', 'xRight', 'yRight', 'triggerRight', 'triggerLeft']
+                    axis = ['xLeft', 'yLeft', 'triggerLeft', 'xRight', 'yRight', 'triggerRight']
                     buttons = ['A', 'B', 'X', 'Y', 'LB', 'RB']
 
                     joystick1 = dict(zip(axis + buttons, datalist[:12]))
                     joystick2 = dict(zip(axis + buttons, datalist[12:]))
+
+                    global justPressed1, justPressed2
 
                     for k in joystick1:
                         if k not in buttons:
@@ -211,15 +204,33 @@ def chat_client(host=None, port=None):
 
                     yLeft = 50 * joystick1['yLeft']
                     xLeft = 50 * joystick1['xLeft']
-                    xRight = 50 * joystick1['xRight']
+                    yRight = 50 * joystick1['yRight']
 
-                    motor_a =  yLeft - xLeft - xRight
+                    spin = 0
 
-                    motor_b =  yLeft + xLeft + xRight
+                    joystick1['triggerRight'] = (joystick1['triggerRight'] + 1) / 2
 
-                    motor_c = -yLeft - xLeft + xRight
+                    joystick1['triggerLeft'] = (joystick1['triggerLeft'] + 1) / 2
 
-                    motor_d = -yLeft + xLeft - xRight
+                    if joystick1['triggerRight'] >= 0.1 and joystick1['triggerLeft'] >= 0.1:
+                        pass # do nothing cause both are pressed
+                    else:
+                        if joystick1['triggerRight'] > 0.1:
+                            # spin right
+                            spin = joystick1['triggerRight'] * 50
+
+                        if joystick1['triggerLeft'] > 0.1:
+                            # spin left
+                            spin = -joystick1['triggerLeft'] * 50
+
+
+                    motor_a = 90 + yLeft - xLeft - spin
+
+                    motor_b = 90 + yLeft + xLeft + spin
+
+                    motor_c = 90 - yLeft - xLeft + spin
+
+                    motor_d = 90 - yLeft + xLeft - spin
 
                     #mixing
                     #m1 = 90+forwardval+strafeval+turnval
@@ -227,18 +238,27 @@ def chat_client(host=None, port=None):
                     #m3 = 90-forwardval+strafeval
                     #m4 = 90-forwardval-strafeval
 
-                    if joystick1['triggerRight'] >= 0.1 and joystick1['triggerLeft'] >= 0.1:
-                        pass # do nothing cause both are pressed
-                    else:
-                        if joystick1['triggerRight'] > 0.1:
-                            upval = joystick1['triggerRight']
+                    global trimUp
 
-                        if joystick1['triggerLeft'] > 0.1:
-                            upval = -joystick1['triggerLeft']
+                    motor_up_left  = 1 * (90 + trimUp['left'] + yRight)
+                    motor_up_right = -1 * (90 + trimUp['right'] + yRight)
+
+                    def bounds(x):
+                        if x < 0:
+                            return 0
+                        if x > 180:
+                            return 180
+                        return x
+
+                    motor_a = bounds(motor_a)
+                    motor_b = bounds(motor_b)
+                    motor_c = bounds(motor_c)
+                    motor_d = bounds(motor_d)
+
+                    motor_up_left  = bounds(motor_up_left)
+                    motor_up_right = bounds(motor_up_right)
 
 
-                    motor_up_left  = 1 * (90 + upval + trimUp['left'])
-                    motor_up_right = -1 * (90 + upval + trimUp['right'])
 
                     '''
                     move2(m2) #motor 1
@@ -258,7 +278,9 @@ def chat_client(host=None, port=None):
                 #print(str(m1) +' '+str(m2)+' '+str(m3)+' '+str(m4)+' '+str(m6)+' '+str(m7)+' '+str(m12)+' '+str(m10))
 
                 # print datalist
-                print '\033[2J',
+                for i in range(30):
+                    print '\r\033[A\033[K',
+
                 print('Trim: [{0}, {1}]'.format(trimUp['left'], trimUp['right']))
                 print(joystick1)
                 print(joystick2)

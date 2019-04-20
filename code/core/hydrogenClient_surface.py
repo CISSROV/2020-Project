@@ -106,7 +106,7 @@ def chat_client(host='192.168.1.2',port=9009):
         sys.exit()
 
     print('Connected to remote host. You can start sending messages')
-    sys.stdout.write('[Me] ')
+    print('[Me] ')
     sys.stdout.flush()
 
     while True:
@@ -125,18 +125,17 @@ def chat_client(host='192.168.1.2',port=9009):
                     sys.exit()
                 else:
                     #print data
-                    #sys.stdout.write('\033[2J')
-                    sys.stdout.write('\r\033[K')
-                    sys.stdout.write(data)
-                    sys.stdout.write('[Me] ')
-                    sys.stdout.flush()
+                    #print('\033[2J')
+                    print '\033[2J',
+                    print data
+                    print '[Me] ',
 
             else :
                 # user entered a message
                 msg = print_data()
                 s.send(msg)
-                sys.stdout.write(msg + '\n[Me]')
-                sys.stdout.flush()
+                print '\r\033[A\033[K',
+                print msg + '\n[Me]',
 
 
 t1 = threading.Thread(target = chat_client)
