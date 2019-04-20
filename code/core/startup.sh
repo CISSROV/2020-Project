@@ -23,5 +23,5 @@ then
 
     sshpass -p raspberry ssh pi@192.168.1.3 pgrep -f \"sudo python3.4 data\"
 else
-    echo "Usage: startup.sh [start|stop]"
+    echo "Usage: startup.sh [start|stop|check]"
 fi
