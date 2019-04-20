@@ -8,8 +8,13 @@ def getDateISO8601():
 print("Content-type: text/html\n\n")
 
 date = getDateISO8601()
-f = open('/var/log/MATE/websocket{}.log'.format(date), 'r')
-raw = f.read()
-f.close()
+try:
+    f = open('/var/log/MATE/websocket{}.log'.format(date), 'r')
+    raw = f.read()
+    f.close()
 
-print(raw)
+    raw = raw.replace('\n', '<br>')
+
+    print(raw)
+except FileNotFoundError as e:
+    print(e)

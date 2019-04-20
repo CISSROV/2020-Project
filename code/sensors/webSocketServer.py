@@ -4,6 +4,7 @@ from autobahn.twisted.websocket import WebSocketServerProtocol, WebSocketServerF
 import sys
 import time
 import json
+import os
 from twisted.python import log
 from twisted.internet import task, reactor
 
@@ -73,7 +74,8 @@ class ServerFactory(WebSocketServerFactory):
             print("message sent to {}".format(c.peer))
 
 date = getDateISO8601()
-f = open('/var/log/MATE/websocket{}.log'.format(date), 'w')
+
+f = open('/var/log/MATE/websocket{}.log'.format(date), 'a')
 
 log.startLogging(f) # replace with log file # sys.stdout
 

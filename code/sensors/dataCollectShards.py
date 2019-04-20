@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.4
-TEMPSENSOR = False
+TEMPSENSOR = True
 if TEMPSENSOR:
     import tempSensor # temp sensor doesn't work
 import time
