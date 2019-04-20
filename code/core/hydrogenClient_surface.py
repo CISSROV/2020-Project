@@ -39,7 +39,7 @@ def print_data():
         data.append(joystick2.get_button(x))
 
     mesg = ''
-    mesg = ' '.join([round(i, 2) for i in range(len(data))])
+    mesg = ' '.join([str(round(i, 2)) for i in data])
 
 
 ##    data = joystick1.get_axis(0)
@@ -87,6 +87,8 @@ def print_data():
 #     pin8.write(a)
 
 ########Multiple clients connect to a server than send and receive data to all clients
+first = True
+
 def chat_client(host='192.168.1.2',port=9009):
     if (host == None or port == None):
         if(len(sys.argv) < 3):
@@ -118,12 +120,19 @@ def chat_client(host='192.168.1.2',port=9009):
         for sock in ready_to_read:
             if sock == s:
                 # incoming message from remote server, s
+                if first:
+                    sock.recv(4096) # clear out first msg
+                    first = False
+                    break
+                
                 data = sock.recv(4096)
-                if not data :
+                if not data:
                     print('\nDisconnected from chat server')
                     sys.exit()
                 else:
                     #print data
+                    #sys.stdout.write('\033[2J')
+                    sys.stdout.write('\r\033[K')
                     sys.stdout.write(data)
                     sys.stdout.write('[Me] ')
                     sys.stdout.flush()

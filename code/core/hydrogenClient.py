@@ -3,7 +3,7 @@ import socket
 import select
 import pygame
 import time
-
+'''
 port = '/dev/ttyACM0'
 
 import pyfirmata
@@ -56,7 +56,7 @@ def move10(a):
 
 def move12(a):
     pin12.write(a)
-
+'''
 trimUp = {
     'left': 0.0,
     'right': 0.0
@@ -127,7 +127,8 @@ def chat_client(host=None, port=None):
         #print ("s "+str(s))
 
             if sock == sock:
-                s.recv(4096)
+                data = s.recv(4096)
+                print(data)
                 if not data:
                     print('\nDisconnected from chat server')
                     sys.exit()
@@ -137,8 +138,8 @@ def chat_client(host=None, port=None):
                     datalist = [float(i) for i in data.split()]
 
                     for i in range(len(datalist)):
-	                       if abs(datalist[i]) < 0.1:
-                               datalist[i] = 0.0
+                        if abs(datalist[i]) < 0.1:
+                            datalist[i] = 0.0
 
                     assert len(datalist) == 24
 
