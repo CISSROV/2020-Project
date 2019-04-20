@@ -91,6 +91,8 @@ def buttonPressed(button, num):
             trimUp['right'] -= 1
 
 ########Multiple clients connect to a server than send and receive data to all clients
+first = True
+
 def chat_client(host=None, port=None):
     m10 = 90
     m12 = 0
@@ -129,6 +131,14 @@ def chat_client(host=None, port=None):
             if sock == sock:
                 data = s.recv(4096)
                 print(data)
+                global first
+                if first:
+                    #data = sock.recv(4096) # clear out first msg
+                    first = False
+                    print('dumbed data')
+                    break
+
+
                 if not data:
                     print('\nDisconnected from chat server')
                     sys.exit()

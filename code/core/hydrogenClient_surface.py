@@ -87,12 +87,10 @@ def print_data():
 #     pin8.write(a)
 
 ########Multiple clients connect to a server than send and receive data to all clients
-first = True
-
 def chat_client(host='192.168.1.2',port=9009):
     if (host == None or port == None):
         if(len(sys.argv) < 3):
-            print('Usage : python chat_client.py hostname port')
+            print('Usage: python chat_client.py hostname port')
             sys.exit()
         host = sys.argv[1]
         port = int(sys.argv[2])
@@ -120,11 +118,7 @@ def chat_client(host='192.168.1.2',port=9009):
         for sock in ready_to_read:
             if sock == s:
                 # incoming message from remote server, s
-                if first:
-                    sock.recv(4096) # clear out first msg
-                    first = False
-                    break
-                
+
                 data = sock.recv(4096)
                 if not data:
                     print('\nDisconnected from chat server')
