@@ -38,7 +38,7 @@ def setup():
             print(e)
             time.sleep(1)
             failureCount += 1
-            if failureCount > 10:
+            if failureCount > 20:
                 raise RuntimeError('You\'re a failure, just like this code')
         else:
             break
