@@ -75,7 +75,10 @@ class ServerFactory(WebSocketServerFactory):
 
 date = getDateISO8601()
 
-f = open('/var/log/MATE/websocket{}.log'.format(date), 'a')
+try:
+    f = open('/var/log/MATE/websocket{}.log'.format(date), 'a')
+except FileNotFoundError:
+    f = open('/var/log/MATE/websocket{}.log'.format(date), 'w')
 
 log.startLogging(f) # replace with log file # sys.stdout
 
