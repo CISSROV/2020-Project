@@ -23,9 +23,27 @@ def setup():
 
     bno = BNO055.BNO055(serial_port='/dev/serial0', rst=18)
 
+    # Register read errors come after this
+
+    disconnected = False
+    failureCount = 0
     # Initialize the BNO055 and stop if something went wrong.
-    if not bno.begin():
-        raise RuntimeError('Failed to initialize BNO055! Is the sensor connected?')
+    # Crash occurs here; Register read error
+    while True:
+        try:
+            disconnected = not bno.begin()
+        except Exception as e:
+            print(e)
+            time.sleep(1)
+            failureCount += 1
+            if failureCount > 10:
+                raise RuntimeError('You\'re a failure, just like this code')
+        else:
+            break
+
+        if disconnected:
+            raise RuntimeError('Failed to initialize BNO055! Is the sensor connected?')
+
 
     # Print system status and self test result.
     status, self_test, error = bno.get_system_status()
@@ -33,8 +51,8 @@ def setup():
     print('Self test result (0x0F is normal): 0x{0:02X}'.format(self_test))
     # Print out an error if system status is in error mode.
     if status == 0x01:
-        print('System error: {0}'.format(error))
-        print('See datasheet section 4.3.59 for the meaning.')
+        raise RuntimeError('System error: {0}'.format(error) +\
+            '\nSee datasheet section 4.3.59 for the meaning.')
 
     # Print BNO055 software revision and other diagnostic data.
     sw, bl, accel, mag, gyro = bno.get_revision()
@@ -46,10 +64,15 @@ def setup():
 
     MEASUREMENTS = 10
 
+    for i in range(5):
+        bno.read_euler()
+        bno.read_linear_acceleration()
+        time.sleep(0.1)
+
     # take ten measurements and average them
     for i in range(MEASUREMENTS):
         heading, roll, pitch = bno.read_euler()
-        print(heading, roll, pitch)
+        print(heading, roll, pitch, end=' ')
         defaultRotation['heading'] += heading
         defaultRotation['roll'] += roll
         defaultRotation['pitch'] += pitch
@@ -60,7 +83,7 @@ def setup():
         defaultAcc['y'] += y
         defaultAcc['z'] += z
 
-        time.sleep(0.5)
+        time.sleep(0.1)
 
     defaultRotation['heading'] /= MEASUREMENTS
     defaultRotation['roll'] /= MEASUREMENTS
@@ -69,6 +92,9 @@ def setup():
     defaultAcc['x'] /= MEASUREMENTS
     defaultAcc['y'] /= MEASUREMENTS
     defaultAcc['z'] /= MEASUREMENTS
+
+    print(defaultAcc)
+    print(defaultRotation)
 
 
 
