@@ -16,16 +16,16 @@ iter8 = pyfirmata.util.Iterator(board)
 iter8.start()
 
 #locate pins
-pin2 = board.get_pin('d:2:s') #motor 1
-pin3 = board.get_pin('d:3:s') #motor 1
-pin4 = board.get_pin('d:4:s') #motor 2
-pin5 = board.get_pin('d:5:s') #motor 3
-pin6 = board.get_pin('d:6:s') #motor 3
-pin7 = board.get_pin('d:7:s') #motor 3
-pin8 = board.get_pin('d:8:s') #motor 3
-pin9 = board.get_pin('d:9:s') #motor 3
-pin10 = board.get_pin('d:10:s') #motor 3
-pin12 = board.get_pin('d:12:s') #motor 3
+pin2 = board.get_pin('d:2:s') #motor 2
+pin3 = board.get_pin('d:3:s') #motor 3
+pin4 = board.get_pin('d:4:s') #motor 4
+pin5 = board.get_pin('d:5:s') #motor 5
+pin6 = board.get_pin('d:6:s') #motor 6
+pin7 = board.get_pin('d:7:s') #motor 7
+pin8 = board.get_pin('d:8:s') #motor 8
+pin9 = board.get_pin('d:9:s') #motor 9
+pin10 = board.get_pin('d:10:s') #motor 10
+pin12 = board.get_pin('d:12:s') #motor 12
 
 def move2(a):
     pin2.write(a) # motor
@@ -46,7 +46,7 @@ def move7(a):
     pin7.write(a) # vertial thruster
 
 def move8(a):
-    pin8.write(a)
+    pin8.write(a) # claw
 
 def move9(a):
     pin9.write(a)
@@ -189,20 +189,20 @@ def chat_client(host='192.168.1.2', port=9009):
                     if joystick1['A'] and joystick1['B']:
                         pass # do nothing cause both are pressed
                     elif joystick1['A']:
-                        motor_claw = 180
-                    elif joystick1['A']:
-                        motor_claw = 0
+                        motor_claw = 150
+                    elif joystick1['B']:
+                        motor_claw = 30
 
 
 
-                    #
+                    #       150    150
                     #       /a/    \b\
-                    #     /////    \\\\\
+                    #  4  /////    \\\\\  2
                     #
-                    #
-                    #     \\\\\    /////
+                    #               150
+                    #  5  \\\\\    /////  3
                     #      \c\     /d/
-                    #
+                    #      150
                     # ______________a_b_c_d
                     # Back          - - + +
                     # Front         + + - -
@@ -212,9 +212,9 @@ def chat_client(host='192.168.1.2', port=9009):
                     # Rotate Right  + - - +
                     #
 
-                    yLeft = 50 * joystick1['yLeft']
-                    xLeft = 50 * joystick1['xLeft']
-                    yRight = 50 * joystick1['yRight']
+                    yLeft = 60 * joystick1['yLeft']
+                    xLeft = 60 * joystick1['xLeft']
+                    yRight = 60 * joystick1['yRight']
 
                     spin = 0
 
@@ -227,20 +227,20 @@ def chat_client(host='192.168.1.2', port=9009):
                     else:
                         if joystick1['triggerRight'] > 0.1:
                             # spin right
-                            spin = joystick1['triggerRight'] * 50
+                            spin = joystick1['triggerRight'] * 60
 
                         if joystick1['triggerLeft'] > 0.1:
                             # spin left
-                            spin = -joystick1['triggerLeft'] * 50
+                            spin = -joystick1['triggerLeft'] * 60
 
 
                     motor_a = 90 + yLeft - xLeft - spin
 
                     motor_b = 90 + yLeft + xLeft + spin
 
-                    motor_c = 90 - yLeft - xLeft + spin
+                    motor_c = 90 - yLeft + xLeft - spin
 
-                    motor_d = 90 - yLeft + xLeft - spin
+                    motor_d = 90 - yLeft - xLeft + spin
 
                     #mixing
                     #m1 = 90+forwardval+strafeval+turnval
@@ -250,8 +250,8 @@ def chat_client(host='192.168.1.2', port=9009):
 
                     global trimUp
 
-                    motor_up_left  = 1 * (90 + trimUp['left'] + yRight)
-                    motor_up_right = -1 * (90 + trimUp['right'] + yRight)
+                    motor_up_left  = 90 + trimUp['left'] + yRight
+                    motor_up_right = 180 - (90 + trimUp['right'] + yRight)
 
                     def bounds(x):
                         if x < 30:
@@ -262,7 +262,7 @@ def chat_client(host='192.168.1.2', port=9009):
 
                     motor_a = bounds(motor_a)
                     motor_b = bounds(motor_b)
-                    motor_c = bounds(motor_c)
+                    motor_c = bounds(180 - motor_c) # reverse
                     motor_d = bounds(motor_d)
 
                     motor_up_left  = bounds(motor_up_left)
@@ -271,13 +271,15 @@ def chat_client(host='192.168.1.2', port=9009):
 
 
 
-                    move2(motor_a) #motor 1
-                    move3(motor_b) #motor 2
-                    move4(motor_c) #motor 3
-                    move5(motor_d) #motor 4
+                    move4(motor_a)
+                    move2(motor_b)
+                    move3(motor_c)
+                    move5(motor_d)
 
                     move6(motor_up_left)
                     move7(motor_up_right)
+
+                    move8(motor_claw)
 
 
 
@@ -297,7 +299,9 @@ def chat_client(host='192.168.1.2', port=9009):
                 print(joystick2)
                 print(motor_a, motor_b)
                 print(motor_c, motor_d)
+                print ''
                 print(motor_up_left, motor_up_right)
+                print(motor_claw)
 
 
                 # else:
