@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# ------------------------------------------
-# ---- Deprecated - Refer to startup.py ----
-# ------------------------------------------
-
 if [[ $1 == 'start' ]]
 then
     echo "Startup!"
@@ -20,7 +16,12 @@ then
     echo "Shutdown!"
 
     sshpass -p raspberry ssh pi@192.168.1.3 sudo /var/www/scripts/dataCollection.sh stop
+
+elif [[ $1 == 'check' ]]
+then
+    echo "Check!"
+
+    sshpass -p raspberry ssh pi@192.168.1.3 pgrep -f \"sudo python3.4 data\"
 else
     echo "Usage: startup.sh [start|stop]"
 fi
-
