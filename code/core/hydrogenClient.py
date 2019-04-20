@@ -184,6 +184,16 @@ def chat_client(host='192.168.1.2', port=9009):
                         else:
                             pass
 
+                    motor_claw = 90
+
+                    if joystick1['A'] and joystick1['B']:
+                        pass # do nothing cause both are pressed
+                    elif joystick1['A']:
+                        motor_claw = 180
+                    elif joystick1['A']:
+                        motor_claw = 0
+
+
 
                     #
                     #       /a/    \b\
