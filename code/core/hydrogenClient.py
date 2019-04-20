@@ -250,8 +250,8 @@ def chat_client(host='192.168.1.2', port=9009):
 
                     global trimUp
 
-                    motor_up_left  = 90 + trimUp['left'] + yRight
-                    motor_up_right = 180 - (90 + trimUp['right'] + yRight)
+                    motor_up_left  = 93 + trimUp['left'] + yRight
+                    motor_up_right = 93 + trimUp['right'] + yRight
 
                     def bounds(x):
                         if x < 30:
@@ -269,15 +269,16 @@ def chat_client(host='192.168.1.2', port=9009):
                     motor_up_right = bounds(motor_up_right)
 
 
-
+                    # right
 
                     move4(motor_a)
                     move2(motor_b)
                     move3(motor_c)
                     move5(motor_d)
 
-                    move6(motor_up_left)
-                    move7(motor_up_right)
+                    # 150 down up, 30 move up
+                    move6(motor_up_right) # stop on 93
+                    move7(motor_up_left) # stop on 93
 
                     move8(motor_claw)
 
