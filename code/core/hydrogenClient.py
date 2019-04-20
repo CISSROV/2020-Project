@@ -254,10 +254,10 @@ def chat_client(host='192.168.1.2', port=9009):
                     motor_up_right = -1 * (90 + trimUp['right'] + yRight)
 
                     def bounds(x):
-                        if x < 0:
-                            return 0
-                        if x > 180:
-                            return 180
+                        if x < 30:
+                            return 30
+                        if x > 150:
+                            return 150
                         return x
 
                     motor_a = bounds(motor_a)
