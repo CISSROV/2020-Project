@@ -1,5 +1,7 @@
 #!/usr/bin/env python3.4
-import tempSensor
+TEMPSENSOR = False
+if TEMPSENSOR:
+    import tempSensor # temp sensor doesn't work
 import time
 import json
 import os
@@ -110,7 +112,10 @@ def getDataFragment():
     t = time.localtime()
     t = ':'.join([str(i).zfill(2) for i in [t.tm_hour, t.tm_min, t.tm_sec]])
 
-    externalTemp = tempSensor.getTemp()
+    if TEMPSENSOR:
+        externalTemp = tempSensor.getTemp()
+    else:
+        externalTemp = -1
 
     coreTemp = os.popen('/opt/vc/bin/vcgencmd measure_temp').read()
     coreTemp = coreTemp[coreTemp.index('=')+1:-3]
