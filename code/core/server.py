@@ -1,80 +1,78 @@
-# chat_server.py
- 
+#!/usr/bin/env python3.4
+from autobahn.twisted.websocket import WebSocketServerProtocol, WebSocketServerFactory
+
 import sys
-import socket
-import select
+import time
+import json
+from twisted.python import log
+from twisted.internet import task, reactor
 
-HOST = '' 
-SOCKET_LIST = []
-RECV_BUFFER = 4096 
-PORT = 9009
+IP = '127.0.0.1'
+PORT = 8008
 
-def chat_server():
+clientTypes = [
+    'motor',
+    'surface'
+]
 
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_socket.bind((HOST, PORT))
-    server_socket.listen(10)
- 
-    # add server socket object to the list of readable connections
-    SOCKET_LIST.append(server_socket)
- 
-    print "Chat server started on port " + str(PORT)
- 
-    while 1:
+class ServerProtocol(WebSocketServerProtocol):
+    # ws = new WebSocket('ws://localhost:8008/motor')
+    # ws = new WebSocket('ws://localhost:8008/surface')
 
-        # get the list sockets which are ready to be read through select
-        # 4th arg, time_out  = 0 : poll and never block
-        ready_to_read,ready_to_write,in_error = select.select(SOCKET_LIST,[],[],0)
-      
-        for sock in ready_to_read:
-            # a new connection request recieved
-            if sock == server_socket: 
-                sockfd, addr = server_socket.accept()
-                SOCKET_LIST.append(sockfd)
-                print "Client (%s, %s) connected" % addr
-                 
-                broadcast(server_socket, sockfd, "[%s:%s] entered our chatting room\n" % addr)
-             
-            # a message from a client, not a new connection
-            else:
-                # process data recieved from client, 
-                try:
-                    # receiving data from the socket.
-                    data = sock.recv(RECV_BUFFER)
-                    if data:
-                        # there is something in the socket
-                        broadcast(server_socket, sock, "\r" + '[' + str(sock.getpeername()) + '] ' + data)  
-                    else:
-                        # remove the socket that's broken    
-                        if sock in SOCKET_LIST:
-                            SOCKET_LIST.remove(sock)
+    def onConnect(self, request):
+        print(request.path)
+        print(request)
+        print('Client connecting & registering: {0}'.format(request.peer))
+        clientTypeRequest = request.path
+        if clientTypeRequest.startswith('/'):
+            clientTypeRequest = clientTypeRequest[1:]
 
-                        # at this stage, no data means probably the connection has been broken
-                        broadcast(server_socket, sock, "Client (%s, %s) is offline\n" % addr) 
+        if clientTypeRequest not in clientTypes:
+            print('Bad client type received: {}'.format(clientTypeRequest))
+            self._closeConnection() # find smth better; unclean closing
+        else:
+            self.factory.register(self, clientTypeRequest)
 
-                # exception 
-                except:
-                    broadcast(server_socket, sock, "Client (%s, %s) is offline\n" % addr)
-                    continue
+    def onOpen(self):
+        print('WebSocket connection open')
 
-    server_socket.close()
-    
-# broadcast chat messages to all connected clients
-def broadcast (server_socket, sock, message):
-    for socket in SOCKET_LIST:
-        # send the message only to peer
-        if socket != server_socket and socket != sock :
-            try :
-                socket.send(message)
-            except :
-                # broken socket connection
-                socket.close()
-                # broken socket, remove it
-                if socket in SOCKET_LIST:
-                    SOCKET_LIST.remove(socket)
- 
-if __name__ == "__main__":
+    def onClose(self, wasClean, code, reason):
+        print('WebSocket connection closed & unregistering: {0}'.format(reason))
+        self.factory.unregister(self)
 
-    sys.exit(chat_server())
+    def onMessage(self, msg, isBinary):
+        print(msg, isBinary)
 
+class ServerFactory(WebSocketServerFactory):
+
+    def __init__(self, url):
+        WebSocketServerFactory.__init__(self, url)
+        self.clients = []
+        self.surfaceConnection = None
+
+    def register(self, client, clientTypeRequest):
+        if client not in self.clients:
+            self.clients.append(client)
+
+    def unregister(self, client):
+        if client in self.clients:
+            self.clients.remove(client)
+
+    def broadcast(self):
+        msg = json.dumps(dataShards.getDataFragment())
+        print("broadcasting message '{}' ..".format(msg))
+        for c in self.clients:
+            c.sendMessage(msg.encode('utf8'))
+            print("message sent to {}".format(c.peer))
+
+log.startLogging(sys.stdout) # replace with log file
+
+server = ServerFactory(u'ws://{}:{}'.format(IP , PORT)) # update this!
+server.protocol = ServerProtocol
+
+reactor.listenTCP(PORT, server)
+
+try:
+    reactor.run()
+finally:
+    pass # f.close()
