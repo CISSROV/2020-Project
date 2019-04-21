@@ -2,8 +2,6 @@
 from autobahn.twisted.websocket import WebSocketServerProtocol, WebSocketServerFactory
 
 import sys
-import time
-import json
 from twisted.python import log
 from twisted.internet import task, reactor
 
@@ -72,7 +70,7 @@ class ServerFactory(WebSocketServerFactory):
 
 log.startLogging(sys.stdout) # replace with log file
 
-server = ServerFactory(u'ws://{}:{}'.format(IP , PORT)) # update this!
+server = ServerFactory(u'ws://{}:{}'.format(IP , PORT))
 server.protocol = ServerProtocol
 
 reactor.listenTCP(PORT, server)
