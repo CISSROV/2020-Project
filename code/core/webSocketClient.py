@@ -15,8 +15,6 @@ CLIENT_TYPES = [
     'surface' # surface code
 ]
 
-THIS_TYPE = CLIENT_TYPES[1] # 0 - motor, 1 - surface
-
 class ClientProtocol(WebSocketClientProtocol):
 
     def onConnect(self, response):
@@ -31,7 +29,7 @@ class ClientProtocol(WebSocketClientProtocol):
         print("WebSocket connection open.")
 
     def onMessage(self, payload, isBinary):
-        if THIS_TYPE == 'motor':
+        if self.factory.clientType == 'motor':
             # recv instructions!
             print(payload)
             txt = payload.decode()
@@ -46,9 +44,10 @@ class ClientProtocol(WebSocketClientProtocol):
 
 class ClientFactory(WebSocketClientFactory):
 
-    def __init__(self, url, func):
+    def __init__(self, url, clientType, func):
         WebSocketClientFactory.__init__(self, url)
         self.connections = []
+        self.clientType = clientType
         self.func = func
 
     def register(self, client):
@@ -60,24 +59,30 @@ class ClientFactory(WebSocketClientFactory):
             self.connections.remove(client)
 
     def broadcast(self): # only for surface
-        global THIS_TYPE
-        if THIS_TYPE != 'surface':
+        if self.clientType != 'surface':
             raise ValueError('Only surface py should broadcast data')
         print('ping')
         txt = self.factory.func()
         for c in self.connections:
             c.sendMessage(txt.encode())
 
+def start(clientType, func):
+    if clientType not in CLIENT_TYPES:
+        raise ValueError('Client Type is not surface or motor: {}'.format(clientType))
 
-log.startLogging(sys.stdout)
+    log.startLogging(sys.stdout)
 
-factory = ClientFactory(u'ws://{}:{}/surface'.format(IP , PORT), func)
-factory.protocol = ClientProtocol
+    factory = ClientFactory(
+            u'ws://{}:{}/{}'.format(IP , PORT, clientType),
+            clientType,
+            func
+        )
+    factory.protocol = ClientProtocol
 
-reactor.connectTCP(IP, PORT, factory)
+    reactor.connectTCP(IP, PORT, factory)
 
-if THIS_TYPE == 'surface':
-    l = task.LoopingCall(factory.broadcast) # only for surface
-    l.start(TIMEOUT)
+    if clientType == 'surface':
+        l = task.LoopingCall(factory.broadcast) # only for surface
+        l.start(TIMEOUT)
 
-reactor.run()
+    reactor.run()
