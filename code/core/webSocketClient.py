@@ -10,10 +10,12 @@ PORT = 8008
 
 TIMEOUT = 0.1
 
-clientTypes = [
+CLIENT_TYPES = [
     'motor',
-    'surface'
+    'surface' # surface code
 ]
+
+THIS_TYPE = CLIENT_TYPES[1] # 0 - motor, 1 - surface
 
 class ClientProtocol(WebSocketClientProtocol):
 
@@ -29,7 +31,14 @@ class ClientProtocol(WebSocketClientProtocol):
         print("WebSocket connection open.")
 
     def onMessage(self, payload, isBinary):
-        print(payload)
+        if THIS_TYPE == 'motor':
+            # recv instructions!
+            print(payload)
+            txt = payload.decode()
+            self.factory.func(txt)
+        else:
+            raise ValueError('Only motor py should receive data')
+
 
     def onClose(self, wasClean, code, reason):
         print("WebSocket connection closed: {0}".format(reason))
@@ -37,9 +46,10 @@ class ClientProtocol(WebSocketClientProtocol):
 
 class ClientFactory(WebSocketClientFactory):
 
-    def __init__(self, url):
+    def __init__(self, url, func):
         WebSocketClientFactory.__init__(self, url)
         self.connections = []
+        self.func = func
 
     def register(self, client):
         if client not in self.connections:
@@ -49,21 +59,25 @@ class ClientFactory(WebSocketClientFactory):
         if client in self.connections:
             self.connections.remove(client)
 
-
-    def broadcast(self):
+    def broadcast(self): # only for surface
+        global THIS_TYPE
+        if THIS_TYPE != 'surface':
+            raise ValueError('Only surface py should broadcast data')
         print('ping')
+        txt = self.factory.func()
         for c in self.connections:
-            c.sendMessage(b'Hello World!')
+            c.sendMessage(txt.encode())
 
 
 log.startLogging(sys.stdout)
 
-factory = ClientFactory(u'ws://{}:{}/surface'.format(IP , PORT))
+factory = ClientFactory(u'ws://{}:{}/surface'.format(IP , PORT), func)
 factory.protocol = ClientProtocol
 
 reactor.connectTCP(IP, PORT, factory)
 
-l = task.LoopingCall(factory.broadcast)
-l.start(TIMEOUT)
+if THIS_TYPE == 'surface':
+    l = task.LoopingCall(factory.broadcast) # only for surface
+    l.start(TIMEOUT)
 
 reactor.run()

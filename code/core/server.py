@@ -8,7 +8,7 @@ from twisted.internet import task, reactor
 IP = '127.0.0.1'
 PORT = 8008
 
-clientTypes = [
+CLIENT_TYPES = [
     'motor',
     'surface'
 ]
