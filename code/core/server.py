@@ -64,7 +64,6 @@ class ServerFactory(WebSocketServerFactory):
     def broadcast(self, client, msg, isBinary):
         if self.surfaceConnection == client:
             # broadcasting
-            print('received ping')
             if self.motorConnection:
                 self.motorConnection.sendMessage(msg)
         elif self.motorConnection == client:

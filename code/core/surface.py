@@ -18,22 +18,22 @@ def getData():
     data1 = []
 
     values = [round(joystick1.get_axis(x), 2) for x in range(6)]
-    data1.append(list(zip(axis, values)))
+    data1 += list(zip(axis, values))
 
     values = [round(joystick1.get_button(x), 2) for x in range(6)]
-    data1.append(list(zip(axis, values)))
+    data1 += list(zip(buttons, values))
 
     data2 = []
 
     values = [round(joystick2.get_axis(x), 2) for x in range(6)]
-    data2.append(list(zip(axis, values)))
+    data2 += list(zip(axis, values))
 
     values = [round(joystick2.get_button(x), 2) for x in range(6)]
-    data2.append(list(zip(axis, values)))
+    data2 += list(zip(buttons, values))
 
     allData = [dict(data1), dict(data2)]
     for i in range(30):
-        print ('\r\033[A\033[K', end='')
+        print('\r\033[A\033[K', end='')
 
     print(allData)
 

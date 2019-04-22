@@ -1,5 +1,9 @@
 #!/usr/bin/env python3.4
 import webSocketClient
+import json
+
+axis = ['xLeft', 'yLeft', 'triggerLeft', 'xRight', 'yRight', 'triggerRight']
+buttons = ['A', 'B', 'X', 'Y', 'LB', 'RB']
 
 PORT = '/dev/ttyACM0'
 
@@ -95,6 +99,7 @@ def process(data):
         motor_claw = 90
         joystick1 = joysticks[0]
 
+        print(joystick1)
         if joystick1['A'] and joystick1['B']:
             pass # do nothing cause both are pressed
         elif joystick1['A']:
@@ -127,9 +132,11 @@ def process(data):
 
         spin = 0
 
+        print(joystick1['triggerRight']) # equals 0 instead of one
         joystick1['triggerRight'] = (joystick1['triggerRight'] + 1) / 2
 
         joystick1['triggerLeft'] = (joystick1['triggerLeft'] + 1) / 2
+        print(joystick1['triggerRight'])
 
         if joystick1['triggerRight'] >= 0.1 and joystick1['triggerLeft'] >= 0.1:
             pass # do nothing cause both are pressed
@@ -193,14 +200,14 @@ def process(data):
 
         # print datalist
         for i in range(30):
-            print '\r\033[A\033[K',
+            print('\r\033[A\033[K', end='')
 
         print('Trim: [{0}, {1}]'.format(trimUp['left'], trimUp['right']))
-        print(joystick1)
-        print(joystick2)
+        print(joysticks[0])
+        print(joysticks[1])
         print(motor_a, motor_b)
         print(motor_c, motor_d)
-        print ''
+        print()
         print(motor_up_left, motor_up_right)
         print(motor_claw)
 
