@@ -3,7 +3,7 @@ from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientF
 
 import sys
 from twisted.python import log
-from twisted.internet import reactor
+from twisted.internet import task, reactor
 
 IP = '127.0.0.1'
 PORT = 8008
@@ -28,14 +28,8 @@ class ClientProtocol(WebSocketClientProtocol):
     def onOpen(self):
         print("WebSocket connection open.")
 
-        def sendData():
-            self.sendMessage("nothing")
-            self.factory.reactor.callLater(1, sendData) # improve this
-
-        sendData()
-
     def onMessage(self, payload, isBinary):
-        pass
+        print(payload)
 
     def onClose(self, wasClean, code, reason):
         print("WebSocket connection closed: {0}".format(reason))
@@ -56,19 +50,20 @@ class ClientFactory(WebSocketClientFactory):
             self.connections.remove(client)
 
 
-    def broadcast(self, msg):
+    def broadcast(self):
+        print('ping')
         for c in self.connections:
             c.sendMessage(b'Hello World!')
 
 
 log.startLogging(sys.stdout)
 
-factory = WebSocketClientFactory(u'ws://{}:{}/surface'.format(IP , PORT))
+factory = ClientFactory(u'ws://{}:{}/surface'.format(IP , PORT))
 factory.protocol = ClientProtocol
 
 reactor.connectTCP(IP, PORT, factory)
 
-l = task.LoopingCall(server.broadcast)
+l = task.LoopingCall(factory.broadcast)
 l.start(TIMEOUT)
 
 reactor.run()
