@@ -1,5 +1,5 @@
+#!/usr/bin/env python3.4
 import webSocketClient
-import pyfirmata
 
 PORT = '/dev/ttyACM0'
 
@@ -26,6 +26,8 @@ justPressed = [
         'RB': False
     }
 ]
+'''
+import pyfirmata
 
 #setup pyFirmata
 BOARD =  pyfirmata.Arduino(PORT)
@@ -50,7 +52,7 @@ pins = [
     None, # no pin 11
     board.get_pin('d:12:s'), #motor 12
 ]
-
+'''
 # example: pins[8].write(150)
 
 def buttonPressed(button, num):
@@ -175,9 +177,8 @@ def process(data):
         motor_up_left  = bounds(motor_up_left)
         motor_up_right = bounds(motor_up_right)
 
-
+        '''
         # right
-
         pins[4].write(motor_a)
         pins[2].write(motor_b)
         pins[3].write(motor_c)
@@ -188,6 +189,7 @@ def process(data):
         pins[7].write(motor_up_left) # stop on 93
 
         pins[8].write(motor_claw)
+        '''
 
         # print datalist
         for i in range(30):
