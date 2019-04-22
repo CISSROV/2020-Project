@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.4
-from autobahn.twisted.websocket import WebSocketServerProtocol, WebSocketServerFactory
+from autobahn.twisted.websocket import \
+    WebSocketServerProtocol, WebSocketServerFactory
 
 import sys
 from twisted.python import log

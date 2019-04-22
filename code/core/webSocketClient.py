@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.4
-from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory
+from autobahn.twisted.websocket import \
+    WebSocketClientProtocol, WebSocketClientFactory
 
 import sys
 from twisted.python import log
@@ -14,6 +15,13 @@ CLIENT_TYPES = [
     'motor',
     'surface' # surface code
 ]
+
+#
+# How to use
+# start( 'motor' or 'surface', func )
+# if motor, func should take one string arg
+# if surface, func should return a string
+#
 
 class ClientProtocol(WebSocketClientProtocol):
 
@@ -31,7 +39,6 @@ class ClientProtocol(WebSocketClientProtocol):
     def onMessage(self, payload, isBinary):
         if self.factory.clientType == 'motor':
             # recv instructions!
-            print(payload)
             txt = payload.decode()
             self.factory.func(txt)
         else:
@@ -59,10 +66,13 @@ class ClientFactory(WebSocketClientFactory):
             self.connections.remove(client)
 
     def broadcast(self): # only for surface
+        if not len(self.connections):
+            return # no connections
+
         if self.clientType != 'surface':
             raise ValueError('Only surface py should broadcast data')
-        print('ping')
-        txt = self.factory.func()
+
+        txt = self.func()
         for c in self.connections:
             c.sendMessage(txt.encode())
 
@@ -77,6 +87,7 @@ def start(clientType, func):
             clientType,
             func
         )
+
     factory.protocol = ClientProtocol
 
     reactor.connectTCP(IP, PORT, factory)
