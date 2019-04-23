@@ -38,9 +38,9 @@ def setup():
             disconnected = not bno.begin()
         except Exception as e:
             print(e)
-            time.sleep(0.5)
+            time.sleep(0.1)
             failureCount += 1
-            if failureCount > 20:
+            if failureCount > 10:
                 print('You\'re a failure, just like this code')
                 gyroRunning = False
         else:
@@ -170,6 +170,9 @@ def getDataFragment():
 
     if not gyroRunning:
         print('Attempting to restart gyro')
+
+        gyroRunning = True
+        setup()
 
 
     fragment = [t, externalTemp, coreTemp, internalTemp, \
