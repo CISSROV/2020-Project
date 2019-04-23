@@ -23,7 +23,7 @@ def setup():
     # ---------------------------
     # ---- Gyro Startup Code ----
     # ---------------------------
-    global bno
+    global bno, gyroRunning
 
     bno = BNO055.BNO055(serial_port='/dev/serial0', rst=18)
 
@@ -116,6 +116,8 @@ def setup():
 #starttime = time.time()
 
 def getDataFragment():
+    global gyroRunning
+
     t = time.localtime()
     t = ':'.join([str(i).zfill(2) for i in [t.tm_hour, t.tm_min, t.tm_sec]])
 
@@ -129,7 +131,7 @@ def getDataFragment():
 
     try:
         coreTemp = os.popen('/opt/vc/bin/vcgencmd measure_temp').read()
-        coreTemp = round(coreTemp[coreTemp.index('=')+1:-3], 2)
+        coreTemp = round(float(coreTemp[coreTemp.index('=')+1:-3]), 2)
     except:
         coreTemp = 'Error'
 

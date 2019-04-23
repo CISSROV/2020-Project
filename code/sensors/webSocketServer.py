@@ -50,7 +50,8 @@ class ServerProtocol(WebSocketServerProtocol):
         self.factory.unregister(self)
 
     def onMessage(self, msg, isBinary):
-        pass # should not be receiving messages
+        if msg == b'hi':
+            self.sendMessage(b'Hello World!')
 
 class ServerFactory(WebSocketServerFactory):
 
@@ -71,7 +72,7 @@ class ServerFactory(WebSocketServerFactory):
         print("broadcasting message '{}' ..".format(msg))
         for c in self.clients:
             c.sendMessage(msg.encode('utf8'))
-            print("message sent to {}".format(c.peer))
+            #print("message sent to {}".format(c.peer))
 
 date = getDateISO8601()
 

@@ -27,6 +27,10 @@ function connect(dataHandler) {
     ws = new WebSocket('ws://' + getHost() + ':5005')
     ws.onmessage = function (event) {
         document.getElementById('error').hidden = true
+        if (event.data.trim() == 'Hello World!') {
+            console.log('Hello World!')
+            return
+        }
         try {
             var data = JSON.parse(event.data)
         }
@@ -35,7 +39,7 @@ function connect(dataHandler) {
             document.getElementById('error').hidden = false
             return
         }
-        
+
         dataHandler(data)
     }
     ws.onerror = function (event) {
