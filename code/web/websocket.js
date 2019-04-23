@@ -35,7 +35,7 @@ function connect(dataHandler) {
             document.getElementById('error').hidden = false
             return
         }
-        
+
         dataHandler(data)
     }
     ws.onerror = function (event) {

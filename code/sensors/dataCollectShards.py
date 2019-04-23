@@ -17,6 +17,8 @@ bno = None
 defaultRotation = {'heading': 0, 'roll': 0, 'pitch': 0}
 defaultAcc = {'x': 0, 'y': 0, 'z': 0}
 
+gyroRunning = True
+
 def setup():
     # ---------------------------
     # ---- Gyro Startup Code ----
@@ -36,67 +38,72 @@ def setup():
             disconnected = not bno.begin()
         except Exception as e:
             print(e)
-            time.sleep(1)
+            time.sleep(0.5)
             failureCount += 1
             if failureCount > 20:
-                raise RuntimeError('You\'re a failure, just like this code')
+                print('You\'re a failure, just like this code')
+                gyroRunning = False
         else:
             break
 
         if disconnected:
-            raise RuntimeError('Failed to initialize BNO055! Is the sensor connected?')
+            print('Failed to initialize BNO055! Is the sensor connected?')
+            gyroRunning = False
 
+    if gyroRunning:
+        # Print system status and self test result.
+        status, self_test, error = bno.get_system_status()
+        print('System status: {0}'.format(status))
+        print('Self test result (0x0F is normal): 0x{0:02X}'.format(self_test))
+        # Print out an error if system status is in error mode.
+        if status == 0x01:
+            raise RuntimeError('System error: {0}'.format(error) +\
+                '\nSee datasheet section 4.3.59 for the meaning.')
 
-    # Print system status and self test result.
-    status, self_test, error = bno.get_system_status()
-    print('System status: {0}'.format(status))
-    print('Self test result (0x0F is normal): 0x{0:02X}'.format(self_test))
-    # Print out an error if system status is in error mode.
-    if status == 0x01:
-        raise RuntimeError('System error: {0}'.format(error) +\
-            '\nSee datasheet section 4.3.59 for the meaning.')
+        # Print BNO055 software revision and other diagnostic data.
+        sw, bl, accel, mag, gyro = bno.get_revision()
+        print('Software version:   {0}'.format(sw))
+        print('Bootloader version: {0}'.format(bl))
+        print('Accelerometer ID:   0x{0:02X}'.format(accel))
+        print('Magnetometer ID:    0x{0:02X}'.format(mag))
+        print('Gyroscope ID:       0x{0:02X}\n'.format(gyro))
 
-    # Print BNO055 software revision and other diagnostic data.
-    sw, bl, accel, mag, gyro = bno.get_revision()
-    print('Software version:   {0}'.format(sw))
-    print('Bootloader version: {0}'.format(bl))
-    print('Accelerometer ID:   0x{0:02X}'.format(accel))
-    print('Magnetometer ID:    0x{0:02X}'.format(mag))
-    print('Gyroscope ID:       0x{0:02X}\n'.format(gyro))
+        MEASUREMENTS = 10
 
-    MEASUREMENTS = 10
+        for i in range(5):
+            bno.read_euler()
+            bno.read_linear_acceleration()
+            time.sleep(0.1)
 
-    for i in range(5):
-        bno.read_euler()
-        bno.read_linear_acceleration()
-        time.sleep(0.1)
+        global defaultRotation, defaultAcc
+        defaultRotation = {'heading': 0, 'roll': 0, 'pitch': 0}
+        defaultAcc = {'x': 0, 'y': 0, 'z': 0}
+        # take ten measurements and average them
+        for i in range(MEASUREMENTS):
+            heading, roll, pitch = bno.read_euler()
+            print(heading, roll, pitch, end=' ')
+            defaultRotation['heading'] += heading
+            defaultRotation['roll'] += roll
+            defaultRotation['pitch'] += pitch
 
-    # take ten measurements and average them
-    for i in range(MEASUREMENTS):
-        heading, roll, pitch = bno.read_euler()
-        print(heading, roll, pitch, end=' ')
-        defaultRotation['heading'] += heading
-        defaultRotation['roll'] += roll
-        defaultRotation['pitch'] += pitch
+            x, y, z = bno.read_linear_acceleration()
+            print(x, y, z)
+            defaultAcc['x'] += x
+            defaultAcc['y'] += y
+            defaultAcc['z'] += z
 
-        x, y, z = bno.read_linear_acceleration()
-        print(x, y, z)
-        defaultAcc['x'] += x
-        defaultAcc['y'] += y
-        defaultAcc['z'] += z
+            time.sleep(0.1)
 
-        time.sleep(0.1)
+        defaultRotation['heading'] /= MEASUREMENTS
+        defaultRotation['roll'] /= MEASUREMENTS
+        defaultRotation['pitch'] /= MEASUREMENTS
 
-    defaultRotation['heading'] /= MEASUREMENTS
-    defaultRotation['roll'] /= MEASUREMENTS
-    defaultRotation['pitch'] /= MEASUREMENTS
+        defaultAcc['x'] /= MEASUREMENTS
+        defaultAcc['y'] /= MEASUREMENTS
+        defaultAcc['z'] /= MEASUREMENTS
 
-    defaultAcc['x'] /= MEASUREMENTS
-    defaultAcc['y'] /= MEASUREMENTS
-    defaultAcc['z'] /= MEASUREMENTS
-
-    print(defaultAcc)
-    print(defaultRotation)
+        print(defaultAcc)
+        print(defaultRotation)
 
 
 
@@ -112,38 +119,62 @@ def getDataFragment():
     t = time.localtime()
     t = ':'.join([str(i).zfill(2) for i in [t.tm_hour, t.tm_min, t.tm_sec]])
 
-    if TEMPSENSOR:
-        externalTemp = tempSensor.getTemp()
-    else:
-        externalTemp = -1
+    try:
+        if TEMPSENSOR:
+            externalTemp = round(tempSensor.getTemp(), 2)
+        else:
+            externalTemp = -1
+    except:
+        externalTemp = 'Error'
 
-    coreTemp = os.popen('/opt/vc/bin/vcgencmd measure_temp').read()
-    coreTemp = coreTemp[coreTemp.index('=')+1:-3]
+    try:
+        coreTemp = os.popen('/opt/vc/bin/vcgencmd measure_temp').read()
+        coreTemp = round(coreTemp[coreTemp.index('=')+1:-3], 2)
+    except:
+        coreTemp = 'Error'
 
     # Gyro Sensors
+    try:
+        heading, roll, pitch = bno.read_euler()
 
-    heading, roll, pitch = bno.read_euler()
+        heading -= defaultRotation['heading']
+        roll -= defaultRotation['roll']
+        pitch -= defaultRotation['pitch']
 
-    heading -= defaultRotation['heading']
-    roll -= defaultRotation['roll']
-    pitch -= defaultRotation['pitch']
+        heading = round(heading, 2)
+        roll = round(roll, 2)
+        pitch = round(pitch, 2)
 
-    sys, gyro, accel, mag = bno.get_calibration_status()
-    x, y, z = bno.read_magnetometer()
-    magField = pow(x ** 2 + y ** 2 + z ** 2, 0.5)
-    magField = magField / 100 # 100 microTesla = 1 Gauss
+        sys, gyro, accel, mag = bno.get_calibration_status()
+        x, y, z = bno.read_magnetometer()
+        magField = pow(x ** 2 + y ** 2 + z ** 2, 0.5)
+        magField = round(magField / 100, 3) # 100 microTesla = 1 Gauss
 
-    x, y, z = bno.read_linear_acceleration()
+        x, y, z = bno.read_linear_acceleration()
 
-    x -= defaultAcc['x']
-    y -= defaultAcc['y']
-    z -= defaultAcc['z']
+        x -= defaultAcc['x']
+        y -= defaultAcc['y']
+        z -= defaultAcc['z']
 
-    internalTemp = bno.read_temp()
+        x = round(x, 3)
+        y = round(y, 3)
+        z = round(z, 3)
 
-    fragment = [t, externalTemp, coreTemp, round(internalTemp, 2), \
-                      round(heading, 2), round(roll, 2), round(pitch, 2), \
-                      round(magField, 4), round(x, 3), round(y, 3), round(z, 3)]
+        internalTemp = round(bno.read_temp(), 2)
+    except:
+        heading, roll, pitch = 'Error', 'Error', 'Error'
+        magField = 'Error'
+        x, y, z = 'Error', 'Error', 'Error'
+        internalTemp = 'Error'
+        gyroRunning = False
+
+    if not gyroRunning:
+        print('Attempting to restart gyro')
+
+
+    fragment = [t, externalTemp, coreTemp, internalTemp, \
+                      heading, roll, pitch, \
+                      magField, x, y, z]
 
     if not silent:
         print(fragment)
