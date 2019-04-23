@@ -4,7 +4,7 @@ import time
 print("Content-type: text/html\n\n")
 
 try:
-    f = open('/var/www/scripts/nohup.out.log', 'r')
+    f = open('/var/www/scripts/nohup.out', 'r')
     raw = f.read()
     f.close()
 
