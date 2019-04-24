@@ -4,8 +4,8 @@ import time
 HIGH = GPIO.HIGH
 LOW = GPIO.LOW
 
-IN1 = 21 # GPIO pin number to IN1
-IN2 = 20 # GPIO pin number to IN2
+IN1 = int(input('IN1: ')) #16 # GPIO pin number to IN1
+IN2 = int(input('IN2: ')) #26 # GPIO pin number to IN2
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -19,14 +19,10 @@ p.start(50)
 try:
     while 1:
         # dc is the speed, should be between 0 and 100
-        for dc in range(0, 101, 5):
-            p.ChangeDutyCycle(dc)
-            time.sleep(1)
-        print('top')
-        for dc in range(100, -1, -5):
-            p.ChangeDutyCycle(dc)
-            time.sleep(1)
-        print('bottom')
+        dc = int(input('power: '))
+        
+        p.ChangeDutyCycle(dc)
+        time.sleep(1)
 except KeyboardInterrupt:
     print('Stopping!')
 finally:
