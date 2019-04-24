@@ -174,7 +174,7 @@ def process(data):
                 return 30
             if x > 150:
                 return 150
-            return x
+            return round(x, 2)
 
         motor_a = bounds(motor_a)
         motor_b = bounds(motor_b)
