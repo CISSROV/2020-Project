@@ -85,8 +85,6 @@ def process(data):
 
     old = [] # for debugging
 
-    #print('msg:', joysticks)
-
     del data
 
     global justPressed
