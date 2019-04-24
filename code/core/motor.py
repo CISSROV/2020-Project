@@ -73,6 +73,11 @@ def buttonPressed(button, num):
 
 def process(data):
     joysticks = json.loads(data)
+    assert len(joysticks) == 24
+
+    joystick1 = dict(zip(axis + buttons, joysticks[:12]))
+    joystick2 = dict(zip(axis + buttons, joysticks[12:]))
+
     print('msg:', joysticks)
 
     del data

@@ -3,8 +3,8 @@ import webSocketClient
 import pygame
 import json
 
-axis = ['xLeft', 'yLeft', 'triggerLeft', 'xRight', 'yRight', 'triggerRight']
-buttons = ['A', 'B', 'X', 'Y', 'LB', 'RB']
+#axis = ['xLeft', 'yLeft', 'triggerLeft', 'xRight', 'yRight', 'triggerRight']
+#buttons = ['A', 'B', 'X', 'Y', 'LB', 'RB']
 
 pygame.init()
 
@@ -15,23 +15,23 @@ joystick2.init()
 
 def getData():
 
-    data1 = []
+    allData = []
 
-    values = [round(joystick1.get_axis(x), 2) for x in range(6)]
-    data1 += list(zip(axis, values))
+    allData += [round(joystick1.get_axis(x), 2) for x in range(6)]
+    #data1 += list(zip(axis, values))
 
-    values = [round(joystick1.get_button(x), 2) for x in range(6)]
-    data1 += list(zip(buttons, values))
+    allData += [round(joystick1.get_button(x), 2) for x in range(6)]
+    #sdata1 += list(zip(buttons, values))
 
-    data2 = []
+    #data2 = []
 
-    values = [round(joystick2.get_axis(x), 2) for x in range(6)]
-    data2 += list(zip(axis, values))
+    allData += [round(joystick2.get_axis(x), 2) for x in range(6)]
+    #data2 += list(zip(axis, values))
 
-    values = [round(joystick2.get_button(x), 2) for x in range(6)]
-    data2 += list(zip(buttons, values))
+    allData += [round(joystick2.get_button(x), 2) for x in range(6)]
+    #data2 += list(zip(buttons, values))
 
-    allData = [dict(data1), dict(data2)]
+    #allData = [dict(data1), dict(data2)]
     for i in range(30):
         print('\r\033[A\033[K', end='')
 
