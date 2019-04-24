@@ -2,6 +2,11 @@
 import webSocketClient
 import json
 
+from sys import version
+if version[0] != '3':
+    raise Exception('This is Python3 code')
+
+
 axis = ['xLeft', 'yLeft', 'triggerLeft', 'xRight', 'yRight', 'triggerRight']
 buttons = ['A', 'B', 'X', 'Y', 'LB', 'RB']
 
@@ -30,7 +35,7 @@ justPressed = [
         'RB': False
     }
 ]
-'''
+
 import pyfirmata
 
 #setup pyFirmata
@@ -44,19 +49,19 @@ iter8.start()
 pins = [
     None, # no pin 0
     None, # no pin 1
-    board.get_pin('d:2:s'), #motor 2
-    board.get_pin('d:3:s'), #motor 3
-    board.get_pin('d:4:s'), #motor 4
-    board.get_pin('d:5:s'), #motor 5
-    board.get_pin('d:6:s'), #motor 6 - vertical thruster
-    board.get_pin('d:7:s'), #motor 7 - vertical thruster
-    board.get_pin('d:8:s'), #motor 8 - claw
-    board.get_pin('d:9:s'), #motor 9
-    board.get_pin('d:10:s'), #motor 10
+    BOARD.get_pin('d:2:s'), #motor 2
+    BOARD.get_pin('d:3:s'), #motor 3
+    BOARD.get_pin('d:4:s'), #motor 4
+    BOARD.get_pin('d:5:s'), #motor 5
+    BOARD.get_pin('d:6:s'), #motor 6 - vertical thruster
+    BOARD.get_pin('d:7:s'), #motor 7 - vertical thruster
+    BOARD.get_pin('d:8:s'), #motor 8 - claw
+    BOARD.get_pin('d:9:s'), #motor 9
+    BOARD.get_pin('d:10:s'), #motor 10
     None, # no pin 11
-    board.get_pin('d:12:s'), #motor 12
+    BOARD.get_pin('d:12:s'), #motor 12
 ]
-'''
+
 # example: pins[8].write(150)
 
 def buttonPressed(button, num):
@@ -196,7 +201,7 @@ def process(data):
     motor_up_left  = bounds(motor_up_left)
     motor_up_right = bounds(motor_up_right)
 
-    '''
+    #'''
     # right
     pins[4].write(motor_a)
     pins[2].write(motor_b)
@@ -208,7 +213,7 @@ def process(data):
     pins[7].write(motor_up_left) # stop on 93
 
     pins[8].write(motor_claw)
-    '''
+    #'''
 
     # print datalist
     for i in range(30):
@@ -227,4 +232,4 @@ def process(data):
         print(index, i)
         index += 1
 
-webSocketClient.start('motor', process)
+webSocketClient.start('motor', process, ip="192.168.1.2")

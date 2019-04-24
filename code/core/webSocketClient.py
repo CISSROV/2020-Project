@@ -76,7 +76,10 @@ class ClientFactory(WebSocketClientFactory):
         for c in self.connections:
             c.sendMessage(txt.encode())
 
-def start(clientType, func):
+def start(clientType, func, ip=None):
+    if ip:
+        IP = ip
+
     if clientType not in CLIENT_TYPES:
         raise ValueError('Client Type is not surface or motor: {}'.format(clientType))
 
@@ -97,3 +100,6 @@ def start(clientType, func):
         l.start(TIMEOUT)
 
     reactor.run()
+
+if __name__ == '__main__':
+    raise Exception('This code is only to be imported!!!')

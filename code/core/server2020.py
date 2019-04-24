@@ -6,6 +6,9 @@ import sys
 from twisted.python import log
 from twisted.internet import task, reactor
 
+if sys.version[0] != '3':
+    raise Exception('This is Python3 code')
+
 IP = '127.0.0.1'
 PORT = 8008
 
