@@ -111,7 +111,7 @@ def process(data):
 
     motor_claw = 90
 
-    print(joystick1)
+    #print(joystick1)
     if joystick1['A'] and joystick1['B']:
         pass # do nothing cause both are pressed
     elif joystick1['A']:
