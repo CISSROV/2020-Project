@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import motorInterface
 import sys
 import socket
