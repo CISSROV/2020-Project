@@ -17,7 +17,12 @@ def getData():
 
     allData = []
 
-    allData += [round(joystick1.get_axis(x), 2) for x in range(6)]
+    tmp = [round(joystick1.get_axis(x), 2) for x in range(6)]
+    for i in tmp:
+        if abs(i) < 0.1:
+            i = 0
+        allData.append(i)
+
     #data1 += list(zip(axis, values))
 
     allData += [round(joystick1.get_button(x), 2) for x in range(6)]
@@ -25,7 +30,11 @@ def getData():
 
     #data2 = []
 
-    allData += [round(joystick2.get_axis(x), 2) for x in range(6)]
+    tmp = [round(joystick2.get_axis(x), 2) for x in range(6)]
+    for i in tmp:
+        if abs(i) < 0.1:
+            i = 0
+        allData.append(i)
     #data2 += list(zip(axis, values))
 
     allData += [round(joystick2.get_button(x), 2) for x in range(6)]

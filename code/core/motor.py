@@ -77,6 +77,8 @@ def process(data):
 
     joystick1 = dict(zip(axis + buttons, joysticks[:12]))
     joystick2 = dict(zip(axis + buttons, joysticks[12:]))
+    joysticks = [joystick1, joystick2]
+    old = joystick1
 
     print('msg:', joysticks)
 
@@ -215,5 +217,6 @@ def process(data):
         print()
         print(motor_up_left, motor_up_right)
         print(motor_claw)
+        print(old)
 
 webSocketClient.start('motor', process)

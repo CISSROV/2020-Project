@@ -9,7 +9,7 @@ from twisted.internet import task, reactor
 IP = '127.0.0.1'
 PORT = 8008
 
-TIMEOUT = 0.05
+TIMEOUT = 0.1
 
 CLIENT_TYPES = [
     'motor',
