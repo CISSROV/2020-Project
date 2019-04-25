@@ -56,6 +56,7 @@ class ClientFactory(WebSocketClientFactory):
         self.connections = []
         self.clientType = clientType
         self.func = func
+        self.connectionRefusedCount = 0
 
     def register(self, client):
         if client not in self.connections:
@@ -76,7 +77,20 @@ class ClientFactory(WebSocketClientFactory):
         for c in self.connections:
             c.sendMessage(txt.encode())
 
+    def clientConnectionFailed(self, connector, error):
+        #reactor.stop()
+        self.connectionRefusedCount += 1
+        for _ in range(2):
+            print('\r\033[K\033[A', end='')
+        print(self.connectionRefusedCount, error.getErrorMessage())
+        reactor.callLater(3, connectTCP, self)
+
+def connectTCP(factory):
+    global IP, PORT
+    reactor.connectTCP(IP, PORT, factory)
+
 def start(clientType, func, ip=None):
+    global IP
     if ip:
         IP = ip
 
@@ -93,7 +107,8 @@ def start(clientType, func, ip=None):
 
     factory.protocol = ClientProtocol
 
-    reactor.connectTCP(IP, PORT, factory)
+    #reactor.connectTCP(IP, PORT, factory)
+    connectTCP(factory)
 
     if clientType == 'surface':
         l = task.LoopingCall(factory.broadcast) # only for surface
