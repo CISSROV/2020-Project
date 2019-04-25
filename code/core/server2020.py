@@ -1,13 +1,15 @@
 #!/usr/bin/env python3.4
+
+import sys
+if sys.version[0] != '3':
+    raise Exception('This is Python3 code')
+
 from autobahn.twisted.websocket import \
     WebSocketServerProtocol, WebSocketServerFactory
 
-import sys
 from twisted.python import log
 from twisted.internet import task, reactor
 
-if sys.version[0] != '3':
-    raise Exception('This is Python3 code')
 
 IP = '127.0.0.1'
 PORT = 8008

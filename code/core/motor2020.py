@@ -1,10 +1,11 @@
 #!/usr/bin/env python3.4
-import webSocketClient
-import json
 
 from sys import version
 if version[0] != '3':
     raise Exception('This is Python3 code')
+
+import webSocketClient
+import json
 
 
 axis = ['xLeft', 'yLeft', 'triggerLeft', 'xRight', 'yRight', 'triggerRight']
