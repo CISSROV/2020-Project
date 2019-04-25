@@ -182,8 +182,8 @@ def process(data):
 
     global trimUp
 
-    motor_up_left  = 93 + trimUp['left'] + yRight
-    motor_up_right = 93 + trimUp['right'] + yRight
+    motor_up_left  = 93 - (trimUp['left'] + yRight)
+    motor_up_right = 93 - (trimUp['right'] + yRight) # thrusters reversed
 
     def bounds(x):
         if x < 30:
