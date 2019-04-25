@@ -131,7 +131,7 @@ def process(data):
     #
     #               150
     #  5  \\\\\    /////  3
-    #      \c\     /d/
+    #      \d\     /c/
     #      150
     # ______________a_b_c_d
     # Back          - - + +
@@ -143,7 +143,7 @@ def process(data):
     #
 
     yLeft = 60 * joystick1['yLeft']
-    xLeft = 60 * joystick1['xLeft']
+    xLeft = 60 * joystick1['xLeft'] # should be strafe
     yRight = 60 * joystick1['yRight']
 
     spin = 0
@@ -190,21 +190,28 @@ def process(data):
             return 30
         if x > 150:
             return 150
-        return round(x, 2)
+        return round(x, 3)
+
+    def specialBounds(x):
+        if x < 20:
+            return 20
+        if x > 210:
+            return 210
+        return round(x, 3)
 
     motor_a = bounds(motor_a)
     motor_b = bounds(motor_b)
     motor_c = bounds(180 - motor_c) # reverse
     motor_d = bounds(motor_d)
 
-    motor_up_left  = bounds(motor_up_left)
-    motor_up_right = bounds(motor_up_right)
+    motor_up_left  = specialBounds(motor_up_left)
+    motor_up_right = specialBounds(motor_up_right)
 
     #'''
     # right
     pins[4].write(motor_a)
     pins[2].write(motor_b)
-    pins[3].write(motor_c)
+    pins[3].write(180-motor_c)
     pins[5].write(motor_d)
 
     # 150 down up, 30 move up
