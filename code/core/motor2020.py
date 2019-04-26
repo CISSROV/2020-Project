@@ -201,7 +201,7 @@ def process(data):
 
     motor_a = bounds(motor_a)
     motor_b = bounds(motor_b)
-    motor_c = bounds(180 - motor_c) # reverse
+    motor_c = bounds(180 - motor_c) # reverse # de reverse
     motor_d = bounds(motor_d)
 
     motor_up_left  = specialBounds(motor_up_left)
@@ -211,7 +211,7 @@ def process(data):
     # right
     pins[4].write(motor_a)
     pins[2].write(motor_b)
-    pins[3].write(180-motor_c)
+    pins[3].write(motor_c)
     pins[5].write(motor_d)
 
     # 150 down up, 30 move up
@@ -229,7 +229,7 @@ def process(data):
     print(joystick1)
     print(joystick2)
     print(motor_a, motor_b)
-    print(motor_c, motor_d)
+    print(180-motor_c, motor_d)
     print()
     print(motor_up_left, motor_up_right)
     print(motor_claw)
