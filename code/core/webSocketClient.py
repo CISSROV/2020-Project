@@ -11,11 +11,6 @@ PORT = 8008
 
 TIMEOUT = 0.1
 
-CLIENT_TYPES = [
-    'motor',
-    'surface' # surface code
-]
-
 #
 # How to use
 # start( 'motor' or 'surface', func )
@@ -93,9 +88,6 @@ def start(clientType, func, ip=None):
     global IP
     if ip:
         IP = ip
-
-    if clientType not in CLIENT_TYPES:
-        raise ValueError('Client Type is not surface or motor: {}'.format(clientType))
 
     log.startLogging(sys.stdout)
 
