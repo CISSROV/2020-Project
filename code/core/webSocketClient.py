@@ -32,12 +32,12 @@ class ClientProtocol(WebSocketClientProtocol):
         print("WebSocket connection open.")
 
     def onMessage(self, payload, isBinary):
-        if self.factory.clientType == 'motor':
+        if self.factory.clientType in ['motor', 'miniROV']:
             # recv instructions!
             txt = payload.decode()
             self.factory.func(txt)
         else:
-            raise ValueError('Only motor py should receive data')
+            raise ValueError('Only motor pi / Mini ROV should receive data')
 
 
     def onClose(self, wasClean, code, reason):

@@ -107,6 +107,8 @@ def process(data):
     joystick2['triggerRight'] = (joystick2['triggerRight'] + 1) / 2
     joystick2['triggerLeft'] = (joystick2['triggerLeft'] + 1) / 2
 
+    vertical = 0
+
     if joystick2['triggerRight'] >= 0.1 and joystick2['triggerLeft'] >= 0.1:
         pass # do nothing cause both are pressed
     else:
@@ -150,7 +152,7 @@ def process(data):
     
     # right
     move1(motor_up)
-    move2(motor_a)
+    move4(motor_a)
     move3(motor_b)
 
     # print datalist
@@ -168,4 +170,4 @@ def process(data):
         print(index, i)
         index += 1
 
-webSocketClient.start('miniROV', process)
+webSocketClient.start('miniROV', process, ip="192.168.1.2")
