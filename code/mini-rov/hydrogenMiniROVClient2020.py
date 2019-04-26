@@ -7,20 +7,18 @@ axis = ['xLeft', 'yLeft', 'triggerLeft', 'xRight', 'yRight', 'triggerRight']
 buttons = ['A', 'B', 'X', 'Y', 'LB', 'RB']
 
 trimUp = {
-    'left': 0.0,
-    'right': 0.0
+    'center': 0.0
 }
 
 # these are in a row
 
 # this motor is IN3/4 on the edge of the motor controller
-m1 = motorInterface.motor(16, 26)
-# next to the one above
-m2 = motorInterface.motor(12, 13)
+m1 = motorInterface.motor(16, 26) # vertical
+m2 = motorInterface.motor(12, 13) # unused
 
 # 2nd chip
-m3 = motorInterface.motor(27, 23)
-m4 = motorInterface.motor(4, 18)
+m3 = motorInterface.motor(27, 23) # side (maybe left)
+m4 = motorInterface.motor(4, 18) # side (maybe right)
 
 def move1(pow):
     m1.set(pow)
@@ -56,13 +54,11 @@ justPressed = [
 def buttonPressed(button, num):
     global trimUp
     # num is 0 or 1
-    if num == 1:
+    if num == 1: # controller number 2
         if button == 'LB':
-            trimUp['left'] += 1
-            trimUp['right'] += 1
+            trimUp['center'] += 1
         elif button == 'RB':
-            trimUp['left'] -= 1
-            trimUp['right'] -= 1
+            trimUp['center'] -= 1
 
 
 def process(data):
@@ -104,14 +100,9 @@ def process(data):
     del stickNum
 
     yLeft = 50 * joystick2['yLeft']
-    xLeft = 50 * joystick2['xLeft']
+    #xLeft = 50 * joystick2['xLeft']
     yRight = 50 * joystick2['yRight']
-    xRight = 50 * joystick2['xRight']
-
-    spin = 0
-
-    joystick2['triggerRight'] = (joystick2['triggerRight'] + 1) / 2
-    joystick2['triggerLeft'] = (joystick2['triggerLeft'] + 1) / 2
+    #xRight = 50 * joystick2['xRight']
 
     joystick2['triggerRight'] = (joystick2['triggerRight'] + 1) / 2
     joystick2['triggerLeft'] = (joystick2['triggerLeft'] + 1) / 2
@@ -121,26 +112,30 @@ def process(data):
     else:
         if joystick2['triggerRight'] > 0.1:
             # spin right
-            spin = joystick2['triggerRight'] * 60
+            vertical = joystick2['triggerRight'] * 50
 
         if joystick2['triggerLeft'] > 0.1:
             # spin left
-            spin = -joystick2['triggerLeft'] * 60
+            vertical = -joystick2['triggerLeft'] * 50
 
 
-    motor_a = yLeft - xLeft - spin
+    # Mini-ROV motor setup
+    #   top view
+    #     ____
+    #    |    |
+    # /a\|    |/b\
+    #    |____|
+    #     (up)
+    #
 
-    motor_b = yLeft + xLeft + spin
+    motor_a = yLeft
 
-    motor_c = -yLeft + xLeft - spin
-
-    motor_d = -yLeft - xLeft + spin
+    motor_b = yRight
 
     global trimUp
+    motor_up = trimUp['center'] + vertical
 
-    motor_up_left  = 93 + trimUp['left'] + yRight
-    motor_up_right = 93 + trimUp['right'] + yRight
-
+    
     def bounds(x):
         # max power is -100 to 100
         if x < -50:
@@ -151,35 +146,26 @@ def process(data):
 
     motor_a = bounds(motor_a)
     motor_b = bounds(motor_b)
-    motor_c = bounds(180 - motor_c) # reverse
-    motor_d = bounds(motor_d)
-
-    motor_up_left  = bounds(motor_up_left)
-    motor_up_right = bounds(motor_up_right)
-
+    motor_up = bounds(motor_up)
     
     # right
-    move1(motor_a)
-    move2(motor_b)
-    move3(motor_c) # ================ FIX THIS ================
-    move4(motor_d)
-    
+    move1(motor_up)
+    move2(motor_a)
+    move3(motor_b)
 
     # print datalist
     for i in range(30):
         print('\r\033[A\033[K', end='')
 
-    print('Trim: [{0}, {1}]'.format(trimUp['left'], trimUp['right']))
+    print('Trim: {0}'.format(trimUp['center']))
     print(joystick1)
     print(joystick2)
     print(motor_a, motor_b)
-    print(motor_c, motor_d)
+    print(motor_up)
     print()
-    print(motor_up_left, motor_up_right)
-    print(motor_claw)
     index = 0
     for i in old:
         print(index, i)
         index += 1
 
-webSocketClient.start('motor', process)
+webSocketClient.start('miniROV', process)
