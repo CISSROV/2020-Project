@@ -34,7 +34,7 @@ function connect(dataHandler) {
         try {
             var data = JSON.parse(event.data)
         }
-        catch {
+        catch(err) {
             console.error('JSON parse error')
             document.getElementById('error').hidden = false
             return
