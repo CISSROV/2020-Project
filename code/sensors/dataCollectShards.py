@@ -19,11 +19,13 @@ defaultAcc = {'x': 0, 'y': 0, 'z': 0}
 
 gyroRunning = True
 
+hasSetupOnce = False
+
 def setup():
     # ---------------------------
     # ---- Gyro Startup Code ----
     # ---------------------------
-    global bno, gyroRunning
+    global bno, gyroRunning, hasSetupOnce
 
     bno = BNO055.BNO055(serial_port='/dev/serial0', rst=18)
 
@@ -68,6 +70,9 @@ def setup():
         print('Magnetometer ID:    0x{0:02X}'.format(mag))
         print('Gyroscope ID:       0x{0:02X}\n'.format(gyro))
 
+        if hasSetupOnce:
+            return # don't get default values again
+
         MEASUREMENTS = 10
 
         for i in range(5):
@@ -105,6 +110,7 @@ def setup():
         print(defaultAcc)
         print(defaultRotation)
 
+        hasSetupOnce = True
 
 
 
