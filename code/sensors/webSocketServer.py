@@ -33,7 +33,7 @@ PORT = 5005
 # if handled it must call sys.exit or something else to terminate the program
 
 # Fetch data every x seconds
-timeout = 5.0 # in seconds
+timeout = 1.0 # in seconds
 
 class ServerProtocol(WebSocketServerProtocol):
 
