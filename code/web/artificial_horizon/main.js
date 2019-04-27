@@ -197,8 +197,8 @@ window.addEventListener("load", function() {
             document.getElementById('error').hidden = false
         }
         else {
-            target_roll = radians(roll_tmp)
-            target_pitch = radians(pitch_tmp)
+            target_roll = radians(pitch_tmp) //radians(roll_tmp)
+            target_pitch = radians(roll_tmp) //radians(pitch_tmp)
         }
     })
     intervalID = setInterval(adjustIDK, 100)
