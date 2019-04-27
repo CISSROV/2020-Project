@@ -5,6 +5,7 @@ var indicator = document.getElementById('heading_indicator')
 var degs = 0
 
 function rotate(degree) {
+    degree = Math.abs(degree)
     if (degree < 0 || degree > 360) {
         document.getElementById('error').hidden = false
         throw new Error('Degree Argument out of Range, got ' + degree)
