@@ -89,6 +89,8 @@ def buttonPressed(button, num):
 
 
 def process(data):
+    global emergencyPower, justPressed
+
     joysticks = json.loads(data)
     assert len(joysticks) == 24
 
@@ -98,8 +100,6 @@ def process(data):
     old = [] # for debugging
 
     del data
-
-    global justPressed
 
     stickNum = 0
     for stick, jPressed in zip((joystick1, joystick2), justPressed):
@@ -155,12 +155,7 @@ def process(data):
 
     yLeft = 60 * joystick1['yLeft']
     xLeft = 60 * joystick1['xLeft'] # should be strafe
-
-    global emergencyPower
-    if emergencyPower:
-        yRight = 60 * joystick1['yRight']
-    else:
-        yRight = 30 * joystick1['yRight']
+    yRight = 60 * joystick1['yRight']
 
     spin = 0
 
@@ -198,8 +193,9 @@ def process(data):
 
     global trimUp
 
-    motor_up_left  = 93 - (trimUp['left'] + yRight)
-    motor_up_right = 93 - (trimUp['right'] + yRight) # thrusters reversed
+    neutral_up = 93
+    motor_up_left  = neutral_up - (trimUp['left'] + yRight)
+    motor_up_right = neutral_up - (trimUp['right'] + yRight) # thrusters reversed
 
     def bounds(x):
         if x < 30:
@@ -223,25 +219,37 @@ def process(data):
     motor_up_left  = specialBounds(motor_up_left)
     motor_up_right = specialBounds(motor_up_right)
 
-    if currentPower['left'] < motor_up_left: # less than desired
-        currentPower['left'] += 20
-        if currentPower['left'] > motor_up_left:
+    step = 5
+
+    if emergencyPower:
+        currentPower['left'] = motor_up_left
+        currentPower['right'] = motor_up_right
+    else:
+        if neutral_up == motor_up_left:
             currentPower['left'] = motor_up_left
+        else:
+            if currentPower['left'] < motor_up_left: # less than desired
+                currentPower['left'] += step
+                if currentPower['left'] > motor_up_left:
+                    currentPower['left'] = motor_up_left
 
-    if currentPower['left'] > motor_up_left: # more than desired
-        currentPower['left'] -= 20
-        if currentPower['left'] < motor_up_left:
-            currentPower['left'] = motor_up_left
-
-    if currentPower['right'] < motor_up_right: # less than desired
-        currentPower['right'] += 20
-        if currentPower['right'] > motor_up_right:
+            if currentPower['left'] > motor_up_left: # more than desired
+                currentPower['left'] -= step
+                if currentPower['left'] < motor_up_left:
+                    currentPower['left'] = motor_up_left
+        
+        if neutral_up == motor_up_right:
             currentPower['right'] = motor_up_right
+        else:
+            if currentPower['right'] < motor_up_right: # less than desired
+                currentPower['right'] += step
+                if currentPower['right'] > motor_up_right:
+                    currentPower['right'] = motor_up_right
 
-    if currentPower['right'] > motor_up_right: # more than desired
-        currentPower['right'] -= 20
-        if currentPower['right'] < motor_up_right:
-            currentPower['right'] = motor_up_right
+            if currentPower['right'] > motor_up_right: # more than desired
+                currentPower['right'] -= step
+                if currentPower['right'] < motor_up_right:
+                    currentPower['right'] = motor_up_right
 
     #'''
     # right
@@ -267,7 +275,7 @@ def process(data):
     print(motor_a, motor_b)
     print(180-motor_c, motor_d)
     print()
-    print(motor_up_left, motor_up_right)
+    print(currentPower['left'], currentPower['right'])
     print(motor_claw)
     #global emergencyPower
     if emergencyPower:
