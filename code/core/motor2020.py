@@ -150,7 +150,12 @@ def process(data):
 
     yLeft = 60 * joystick1['yLeft']
     xLeft = 60 * joystick1['xLeft'] # should be strafe
-    yRight = 60 * joystick1['yRight']
+
+    global emergencyPower
+    if emergencyPower:
+        yRight = 60 * joystick1['yRight']
+    else:
+        yRight = 30 * joystick1['yRight']
 
     spin = 0
 
@@ -199,20 +204,11 @@ def process(data):
         return round(x, 3)
 
     def specialBounds(x):
-        global emergencyPower
-
-        if emergencyPower:
-            if x < 20:
-                return 20
-            if x > 210:
-                return 210
-            return round(x, 3)
-        else:
-            if x < 45:
-                return 45
-            if x > 135:
-                return 135
-            return round(x, 3)
+        if x < 20:
+            return 20
+        if x > 210:
+            return 210
+        return round(x, 3)
 
     motor_a = bounds(motor_a)
     motor_b = bounds(motor_b)
@@ -248,7 +244,7 @@ def process(data):
     print()
     print(motor_up_left, motor_up_right)
     print(motor_claw)
-    global emergencyPower
+    #global emergencyPower
     if emergencyPower:
         print('-----------------------')
         print('-- MAX POWER ENABLED --')
