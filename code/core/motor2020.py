@@ -37,6 +37,8 @@ justPressed = [
     }
 ]
 
+emergencyPower = False
+
 import pyfirmata
 
 #setup pyFirmata
@@ -66,7 +68,7 @@ pins = [
 # example: pins[8].write(150)
 
 def buttonPressed(button, num):
-    global trimUp
+    global trimUp, emergencyPower
     # num is zero or one
     if num == 0:
         if button == 'LB':
@@ -75,6 +77,10 @@ def buttonPressed(button, num):
         elif button == 'RB':
             trimUp['left'] -= 1
             trimUp['right'] -= 1
+        elif button == 'X':
+            emergencyPower = True
+        elif button == 'Y':
+            emergencyPower = False
 
 
 def process(data):
@@ -193,11 +199,20 @@ def process(data):
         return round(x, 3)
 
     def specialBounds(x):
-        if x < 20:
-            return 20
-        if x > 210:
-            return 210
-        return round(x, 3)
+        global emergencyPower
+
+        if emergencyPower:
+            if x < 20:
+                return 20
+            if x > 210:
+                return 210
+            return round(x, 3)
+        else:
+            if x < 45:
+                return 45
+            if x > 135:
+                return 135
+            return round(x, 3)
 
     motor_a = bounds(motor_a)
     motor_b = bounds(motor_b)
@@ -233,6 +248,12 @@ def process(data):
     print()
     print(motor_up_left, motor_up_right)
     print(motor_claw)
+    global emergencyPower
+    if emergencyPower:
+        print('-----------------------')
+        print('-- MAX POWER ENABLED --')
+        print('-----------------------')
+
     index = 0
     for i in old:
         print(index, i)
