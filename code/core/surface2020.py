@@ -13,15 +13,30 @@ import json
 
 pygame.init()
 
+joysticks = [pygame.joystick.Joystick(i) for i in range(2)]
+
+'''
 joystick1 = pygame.joystick.Joystick(0)
 joystick2 = pygame.joystick.Joystick(1)
 joystick1.init()
 joystick2.init()
+'''
 
 def getData():
+    global joysticks
+
+    def dealWithNumber(n):
+        if abs(n) < 0.1:
+            return 0
+        return round(n, 2)
 
     allData = []
 
+    for i in range(2):
+        allData.append([dealWithNumber(joysticks[i].get_axis(x), 2) for x in range(6)] \
+            + [dealWithNumber(joysticks[i].get_button(x), 2) for x in range(6)])
+
+    '''
     tmp = [round(joystick1.get_axis(x), 2) for x in range(6)]
     for i in tmp:
         if abs(i) < 0.1:
@@ -44,6 +59,7 @@ def getData():
 
     allData += [round(joystick2.get_button(x), 2) for x in range(6)]
     #data2 += list(zip(buttons, values))
+    '''
 
     #allData = [dict(data1), dict(data2)]
     for i in range(30):

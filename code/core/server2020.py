@@ -88,7 +88,7 @@ class ServerFactory(WebSocketServerFactory):
             print('Mini ROV isn\'t supposed to send stuff')
 
 
-log.startLogging(sys.stdout) # replace with log file
+log.startLogging(sys.stdout) # replace with log file (maybe)
 
 server = ServerFactory(u'ws://{}:{}'.format(IP , PORT))
 server.protocol = ServerProtocol
