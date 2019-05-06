@@ -1,8 +1,7 @@
 import time
+import pyfirmata
 
 port = '/dev/ttyACM0'
-
-import pyfirmata
 
 #setup pyFirmata
 board =  pyfirmata.Arduino(port)
@@ -12,16 +11,16 @@ iter8 = pyfirmata.util.Iterator(board)
 iter8.start()
 
 #locate pins
-pin2 = board.get_pin('d:2:s') #motor 1
-pin3 = board.get_pin('d:3:s') #motor 1
-pin4 = board.get_pin('d:4:s') #motor 2
-pin5 = board.get_pin('d:5:s') #motor 3
-pin6 = board.get_pin('d:6:s') #motor 3
-pin7 = board.get_pin('d:7:s') #motor 3
-pin8 = board.get_pin('d:8:s') #motor 3
-pin9 = board.get_pin('d:9:s') #motor 3
-pin10 = board.get_pin('d:10:s') #motor 3
-pin12 = board.get_pin('d:12:s') #motor 3
+pin2 = board.get_pin('d:2:s') 
+pin3 = board.get_pin('d:3:s') 
+pin4 = board.get_pin('d:4:s')
+pin5 = board.get_pin('d:5:s')
+pin6 = board.get_pin('d:6:s')
+pin7 = board.get_pin('d:7:s')
+pin8 = board.get_pin('d:8:s')
+pin9 = board.get_pin('d:9:s')
+pin10 = board.get_pin('d:10:s')
+pin12 = board.get_pin('d:12:s')
 
 def move2(a):
     pin2.write(a) # motor
