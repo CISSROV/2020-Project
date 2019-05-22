@@ -60,8 +60,14 @@ class ClientProtocol(WebSocketClientProtocol):
         self.factory.unregister(self)
 
 class ClientFactory(WebSocketClientFactory):
+    #
+    # Determines how connection deal with each other
+    #
 
     def __init__(self, url, clientType, func):
+        # url is a string in the format "ws://127.0.0.1:8008"
+        # clientType is the string "/motor"
+        # func is the handler function
         WebSocketClientFactory.__init__(self, url)
         self.connections = []
         self.clientType = clientType
@@ -69,20 +75,24 @@ class ClientFactory(WebSocketClientFactory):
         self.connectionRefusedCount = 0
 
     def register(self, client):
+        # remember this connection
         if client not in self.connections:
             self.connections.append(client)
 
     def unregister(self, client):
+        # forget this connection
         if client in self.connections:
             self.connections.remove(client)
 
     def broadcast(self): # only for surface
+        # send to all other connections
         if not len(self.connections):
             return # no connections
 
         if self.clientType != 'surface':
             raise ValueError('Only surface py should broadcast data')
 
+        # ???
         txt = self.func()
         for c in self.connections:
             c.sendMessage(txt.encode())
