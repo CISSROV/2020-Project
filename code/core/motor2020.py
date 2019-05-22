@@ -1,4 +1,7 @@
 #!/usr/bin/env python3.4
+# Author: Jonathan Rotter
+
+# look at motor2020++.py for comments
 
 from sys import version
 if version[0] != '3':

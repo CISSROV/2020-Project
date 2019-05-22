@@ -221,6 +221,8 @@ def process(data):
         pass # do nothing because both are pressed
 
     else:
+        # axis don't go perfectly to zero so the 
+        # if statement is used to make sure the trigger is actually pressed
         if joystick1['triggerRight'] > 0.1:
             # spin right
             spin = joystick1['triggerRight'] * 60
@@ -229,7 +231,7 @@ def process(data):
             # spin left
             spin = -joystick1['triggerLeft'] * 60
 
-
+    # mixing motor values
     motor_a = 90 + yLeft - xLeft - spin
 
     motor_b = 90 + yLeft + xLeft + spin
@@ -238,107 +240,150 @@ def process(data):
 
     motor_d = 90 - yLeft - xLeft + spin
 
-    #mixing
-    #m1 = 90+forwardval+strafeval+turnval
-    #m2 = 90+forwardval-strafeval-turnval
-    #m3 = 90-forwardval+strafeval
-    #m4 = 90-forwardval-strafeval
-
     global trimUp
 
-    neutral_up = 93
+    neutral_up = 93 # the motors and escs are weird
+
     motor_up_left  = neutral_up - (trimUp['left'] + yRight)
-    motor_up_right = neutral_up - (trimUp['right'] + yRight) # thrusters reversed
+    motor_up_right = neutral_up - (trimUp['right'] + yRight)
 
     def bounds(x):
+        #
+        # Ensures that 30 <= x <= 150 for the motors
+        # The motors don't respond to higher or lower values
+        # Rounds result to three decimal points 
+        #
         if x < 30:
             return 30
+
         if x > 150:
             return 150
+
         return round(x, 3)
 
     def specialBounds(x):
+        #
+        # Ensures that 20 <= x <= 210 for the vetical thrusters
+        # Rounds result to three decimal points 
+        #
         if x < 20:
             return 20
+
         if x > 210:
             return 210
+
         return round(x, 3)
 
+    # keep motor values within bounds
     motor_a = bounds(motor_a)
     motor_b = bounds(motor_b)
-    motor_c = bounds(180 - motor_c) # reverse # de reverse
+    motor_c = bounds(180 - motor_c) # reverse due to how it was connected
     motor_d = bounds(motor_d)
 
     motor_up_left  = specialBounds(motor_up_left)
     motor_up_right = specialBounds(motor_up_right)
 
+    # Vertical thruster throttling to try to avoid power surges
     step = 5
 
     if emergencyPower:
+        # No throttling
+        # Changes in control take immediate effect
         currentPower['left'] = motor_up_left
         currentPower['right'] = motor_up_right
+
     else:
         if neutral_up == motor_up_left:
+            # Turn thruster off immediately
             currentPower['left'] = motor_up_left
+
         else:
+            # Change thruster power slowly to avoid current spikes
+
             if currentPower['left'] < motor_up_left: # less than desired
+                # increase the thruster value by a bit
                 currentPower['left'] += step
+
+                # check if the step went beyond the desired power value
+                # if so, set it back
                 if currentPower['left'] > motor_up_left:
                     currentPower['left'] = motor_up_left
 
             if currentPower['left'] > motor_up_left: # more than desired
+                # decrease the thruster value by a bit
                 currentPower['left'] -= step
+
+                # check if the step went beyond the desired power value
+                # if so, set it back
                 if currentPower['left'] < motor_up_left:
                     currentPower['left'] = motor_up_left
         
         if neutral_up == motor_up_right:
+            # Turn thruster off immediately
             currentPower['right'] = motor_up_right
+
+
         else:
+            # Change thruster power slowly to avoid current spikes
+
             if currentPower['right'] < motor_up_right: # less than desired
+                # increase the thruster value by a bit
                 currentPower['right'] += step
+
+                # check if the step went beyond the desired power value
+                # if so, set it back
                 if currentPower['right'] > motor_up_right:
                     currentPower['right'] = motor_up_right
 
             if currentPower['right'] > motor_up_right: # more than desired
+                # decrease the thruster value by a bit
                 currentPower['right'] -= step
+
+                # check if the step went beyond the desired power value
+                # if so, set it back
                 if currentPower['right'] < motor_up_right:
                     currentPower['right'] = motor_up_right
 
-    #'''
-    # right
+    # Write data values to the pins aka motors
     pins[4].write(motor_a)
     pins[2].write(motor_b)
     pins[3].write(motor_c)
     pins[5].write(motor_d)
 
     # 150 down up, 30 move up
-    pins[6].write(currentPower['right'])  #motor_up_right) # stop on 93
-    pins[7].write(currentPower['left'])  #motor_up_left) # stop on 93
+    pins[6].write(currentPower['right']) # stop on 93
+    pins[7].write(currentPower['left']) # stop on 93
 
     pins[8].write(motor_claw)
-    #'''
 
-    # print datalist
+
+    # clear screen
     for i in range(30):
+        # '\r' moves to the start of the line
+        # '\033[A' moves up one line
+        # '\033[K' clears the line
         print('\r\033[A\033[K', end='')
 
+    # print datalist info
     print('Trim: [{0}, {1}]'.format(trimUp['left'], trimUp['right']))
     print(joystick1)
     print(joystick2)
     print(motor_a, motor_b)
-    print(180-motor_c, motor_d)
+    print(180-motor_c, motor_d) # motor_c is reversed so it is re-reversed here
     print()
     print(currentPower['left'], currentPower['right'])
     print(motor_claw)
-    #global emergencyPower
+    
     if emergencyPower:
         print('-----------------------')
         print('-- MAX POWER ENABLED --')
         print('-----------------------')
 
-    index = 0
-    for i in old:
+    # for debugging
+    for index, i in enumerate(old):
         print(index, i)
-        index += 1
 
+# start a web socket client
+# type is "motor", handling function is process
+# ip is that of the server
 webSocketClient.start('motor', process, ip="192.168.1.2")
