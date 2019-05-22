@@ -102,13 +102,16 @@ def buttonPressed(button, num):
             # Trim up
             trimUp['left'] += 1
             trimUp['right'] += 1
+
         elif button == 'RB':
             # Trim down
             trimUp['left'] -= 1
             trimUp['right'] -= 1
+
         elif button == 'X':
             # Disable throttling
             emergencyPower = True
+
         elif button == 'Y':
             # Enable throttling
             emergencyPower = False
@@ -136,42 +139,50 @@ def process(data):
 
     del data
 
-
-    stickNum = 0
-    for stick, jPressed in zip((joystick1, joystick2), justPressed):
+    # stick is a dict representing one of the joysticks
+    # jPressed is a dict found in justPressed
+    # stickNum is either 0 or 1 and is used as an argument in buttonPressed()
+    #
+    # This for loop is for processing button presses
+    for stick, jPressed, stickNum in zip((joystick1, joystick2), justPressed, range(2)):
         for k in stick:
             if k not in buttons:
-                continue
+                continue # only processes button presses, not axis
 
+            # value of button, which is 0 or 1
             v = stick[k]
             if v == 1 and not jPressed[k]:
-                # just pressed
+                # button was just pressed
                 buttonPressed(k, stickNum)
                 jPressed[k] = True
+
             elif v == 0 and jPressed[k]:
-                # just released
+                # button was just released
                 jPressed[k] = False
+
             elif v not in [1, 0]:
+                # Got a value other than 0 or 1 for the state of a button
                 raise ValueError('Got {0}, expected 0 or 1'.format(v))
+
             else:
-                pass
-
-        stickNum += 1
-
-    del stickNum
+                pass # nothing to do
 
     motor_claw = 90
 
-    #print(joystick1)
+    # 'A' and 'B' open and close the claw
     if joystick1['A'] and joystick1['B']:
-        pass # do nothing cause both are pressed
+        pass # do nothing because both are pressed
+
     elif joystick1['A']:
-        motor_claw = 150
+        motor_claw = 150 # open or close it
+
     elif joystick1['B']:
-        motor_claw = 30
+        motor_claw = 30 # open or close it
 
 
-
+    #
+    #   Motor positioning 
+    #
     #       150    150
     #       /a/    \b\
     #  4  /////    \\\\\  2
@@ -189,12 +200,17 @@ def process(data):
     # Rotate Right  + - - +
     #
 
+    # the joystick values are from -1 to 1
+    # scale them to be from -60 to 60
     yLeft = 60 * joystick1['yLeft']
     xLeft = 60 * joystick1['xLeft'] # should be strafe
     yRight = 60 * joystick1['yRight']
 
+    # Code for rotating the ROV
+
     spin = 0
 
+    # Change the values to be from 0 to 1 instead of from -1 to 1
     joystick1['triggerRight'] = (joystick1['triggerRight'] + 1) / 2
     joystick1['triggerLeft'] = (joystick1['triggerLeft'] + 1) / 2
 
@@ -202,7 +218,8 @@ def process(data):
     joystick2['triggerLeft'] = (joystick2['triggerLeft'] + 1) / 2
 
     if joystick1['triggerRight'] >= 0.1 and joystick1['triggerLeft'] >= 0.1:
-        pass # do nothing cause both are pressed
+        pass # do nothing because both are pressed
+
     else:
         if joystick1['triggerRight'] > 0.1:
             # spin right
