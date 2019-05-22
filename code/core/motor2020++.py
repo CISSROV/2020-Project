@@ -1,25 +1,33 @@
 #!/usr/bin/env python3.4
+# Author: Jonathan Rotter
 
+# Check if the version of python is 3.x
 from sys import version
 if version[0] != '3':
+    # Stop running if the version is python 2.x 
     raise Exception('This is Python3 code')
 
 import webSocketClient
 import json
 
-
+# Data labels for axis and buttons in the order specified by joystick config.md
 axis = ['xLeft', 'yLeft', 'triggerLeft', 'xRight', 'yRight', 'triggerRight']
 buttons = ['A', 'B', 'X', 'Y', 'LB', 'RB']
 
+# Port that the arduino mega is connected to
 PORT = '/dev/ttyACM0'
 
+# Trim values
 trimUp = {
     'left': 0.0,
     'right': 0.0
 }
 
+# Stores if a button was just pressed to ensure buttons are only processed once per press
+# Changed to true once pressed and false once released
 justPressed = [
     {
+    # 1st joystick
         'A': False,
         'B': False,
         'X': False,
@@ -28,6 +36,7 @@ justPressed = [
         'RB': False
     },
     {
+    # 2nd Joystick
         'A': False,
         'B': False,
         'X': False,
@@ -37,8 +46,10 @@ justPressed = [
     }
 ]
 
+# Specifies if the vertical thrusters are throttled to prevent power surges or not
 emergencyPower = False
 
+# Current power level sent to the vertical thrusters
 currentPower = {
     'left': 93.0,
     'right': 93.0
@@ -46,14 +57,14 @@ currentPower = {
 
 import pyfirmata
 
-#setup pyFirmata
+# Setup pyFirmata
 BOARD =  pyfirmata.Arduino(PORT)
 
-#setup an iterator for safety
+# Setup an iterator for safety (no idea what that means, ask Danny or Yilou)
 iter8 = pyfirmata.util.Iterator(BOARD)
 iter8.start()
 
-#locate pins
+# Setup pins
 pins = [
     None, # no pin 0
     None, # no pin 1
@@ -70,36 +81,61 @@ pins = [
     BOARD.get_pin('d:12:s'), #motor 12
 ]
 
-# example: pins[8].write(150)
+# example how to use pins: pins[8].write(150)
 
 def buttonPressed(button, num):
+    #
+    # Specifies what to do if a button is pressed
+    # button should be in ['A', 'B', 'X', 'Y', 'LB', 'RB']
+    # num is which joystick it is, should be either 0 or 1
+    #
+
+    # Check if it received a valid button 
+    if button not in buttons:
+        raise KeyError('Unknown button {}'.format(button))
+
     global trimUp, emergencyPower
-    # num is zero or one
+
+    # If it is the 1st joystick
     if num == 0:
         if button == 'LB':
+            # Trim up
             trimUp['left'] += 1
             trimUp['right'] += 1
         elif button == 'RB':
+            # Trim down
             trimUp['left'] -= 1
             trimUp['right'] -= 1
         elif button == 'X':
+            # Disable throttling
             emergencyPower = True
         elif button == 'Y':
+            # Enable throttling
             emergencyPower = False
 
 
 def process(data):
+    #
+    # Takes joystick data and processes it to control the motors
+    # Data is a json string of a list
+    #
+
     global emergencyPower, justPressed
 
+    # Load json string into a list
     joysticks = json.loads(data)
+    # Verify the number of entries of the list
     assert len(joysticks) == 24
 
+    # Use the labels to make a dictionary 
+    # with the keys being labels and values being the joystick values
     joystick1 = dict(zip(axis + buttons, joysticks[:12]))
     joystick2 = dict(zip(axis + buttons, joysticks[12:]))
 
     old = [] # for debugging
 
     del data
+
 
     stickNum = 0
     for stick, jPressed in zip((joystick1, joystick2), justPressed):

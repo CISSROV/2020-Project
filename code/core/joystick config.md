@@ -1,5 +1,6 @@
 
 # NOTES - pygame events and values
+
 ### JOYAXISMOTION
 event.axis              event.value  
 0 - x axis left thumb   (+1 is right, -1 is left)
