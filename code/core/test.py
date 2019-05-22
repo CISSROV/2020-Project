@@ -1,16 +1,19 @@
+#!/usr/bin/env python3.4
+# Author: Jonathan Rotter & Danny Kong & Yiluo Li
+
 import time
 import pyfirmata
 
 port = '/dev/ttyACM0'
 
-#setup pyFirmata
+# Setup pyFirmata
 board =  pyfirmata.Arduino(port)
 
-#setup an iterator for safety
+# Setup an iterator for safety
 iter8 = pyfirmata.util.Iterator(board)
 iter8.start()
 
-#locate pins
+# Locate pins
 pin2 = board.get_pin('d:2:s') 
 pin3 = board.get_pin('d:3:s') 
 pin4 = board.get_pin('d:4:s')

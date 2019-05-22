@@ -86,6 +86,7 @@ class ServerFactory(WebSocketServerFactory):
             client._closeConnection() # find some better way to end the connection; unclean closing
 
     def unregister(self, client):
+        # remove a remembered connection
         if self.surfaceConnection == client:
             self.surfaceConnection = None
 
@@ -99,8 +100,12 @@ class ServerFactory(WebSocketServerFactory):
             print('Unknown client: {}'.format(client))
 
     def broadcast(self, client, msg, isBinary):
+        # broacast data to other connections
+
+        # only surface pi is supposed to send data
         if self.surfaceConnection == client:
             # broadcasting
+
             if self.motorConnection:
                 self.motorConnection.sendMessage(msg)
 
@@ -114,8 +119,9 @@ class ServerFactory(WebSocketServerFactory):
             print('Mini ROV isn\'t supposed to send stuff')
 
 
-log.startLogging(sys.stdout) # replace with log file (maybe)
+log.startLogging(sys.stdout) # TODO: replace with log file (maybe)
 
+# Setup server factory
 server = ServerFactory(u'ws://{}:{}'.format(IP , PORT))
 server.protocol = ServerProtocol
 

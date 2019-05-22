@@ -1,4 +1,6 @@
 #!/usr/bin/env python3.4
+# Author: Jonathan Rotter
+
 from autobahn.twisted.websocket import \
     WebSocketClientProtocol, WebSocketClientFactory
 
@@ -6,9 +8,12 @@ import sys
 from twisted.python import log
 from twisted.internet import task, reactor
 
+# ip is localhost
 IP = '127.0.0.1'
 PORT = 8008
 
+# time between surface2020 being run
+# frequency = 1/timeout
 TIMEOUT = 0.1
 
 #
@@ -19,28 +24,38 @@ TIMEOUT = 0.1
 #
 
 class ClientProtocol(WebSocketClientProtocol):
+    #
+    # Determines how the client will communicate with the server
+    #
 
     def onConnect(self, response):
+        # called by the client factory
         print("Server connected: {0}".format(response.peer))
         self.factory.register(self)
 
     def onConnecting(self, transport_details):
+        # called by the client factory
         print("Connecting; transport details: {}".format(transport_details))
         return None
 
     def onOpen(self):
+        # called by the client factory
         print("WebSocket connection open.")
 
     def onMessage(self, payload, isBinary):
+        # called by the client factory
+        # payload is encoded
         if self.factory.clientType in ['motor', 'miniROV']:
-            # recv instructions!
+            # received instructions!
             txt = payload.decode()
             self.factory.func(txt)
+
         else:
             raise ValueError('Only motor pi / Mini ROV should receive data')
 
 
     def onClose(self, wasClean, code, reason):
+        # called by the client factory
         print("WebSocket connection closed: {0}".format(reason))
         self.factory.unregister(self)
 
