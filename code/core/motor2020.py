@@ -3,6 +3,16 @@
 
 # look at motor2020++.py for comments
 
+# 
+# motor2020++.py features throttling of the vertical thrusters
+# as the ensuing power surges have cause brown-outs during
+# the 2019 competition, requiring a full restart of the ROV
+#
+# This is the old code that does not feature this throttling
+# And cause I'm lazy and the two files are almost the same,
+# look at the other one for comments
+#
+
 from sys import version
 if version[0] != '3':
     raise Exception('This is Python3 code')

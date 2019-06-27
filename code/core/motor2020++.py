@@ -1,6 +1,23 @@
 #!/usr/bin/env python3.4
 # Author: Jonathan Rotter
 
+#
+# Motor control featuing togggleable throttling of the vertical
+# thrusters as they have caused brown outs in motor pi
+#
+# This code is meant to be run on motor pi and requires 
+# a connected arduino mega
+#
+# The ip of server pi must be specifed in the
+# webSocketClient.start call at the bottom of this file
+# port is 8008 and is specified in webSocketClient.py 
+#
+# Required 3rd-party libraries:
+# autobahn
+# twisted
+# pyfirmata
+# 
+
 # Check if the version of python is 3.x
 from sys import version
 if version[0] != '3':
