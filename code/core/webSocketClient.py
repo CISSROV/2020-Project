@@ -175,5 +175,4 @@ def start(clientType, func, ip=None):
 
 if __name__ == '__main__':
     # not to be run as the main module
-    
     raise Exception('This code is only to be imported!!!')

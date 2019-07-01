@@ -4,6 +4,7 @@
 import time
 import pyfirmata
 
+# idk what this is
 port = '/dev/ttyACM0'
 
 # Setup pyFirmata
@@ -25,6 +26,7 @@ pin9 = board.get_pin('d:9:s')
 pin10 = board.get_pin('d:10:s')
 pin12 = board.get_pin('d:12:s')
 
+# functions for setting pins
 def move2(a):
     pin2.write(a) # motor
 
@@ -55,9 +57,13 @@ def move10(a):
 def move12(a):
     pin12.write(a)
 
-
+# main loop
 while True:
+    # motor number is the pin number the motor is connected to
+    # must be an integer otherwise it will crash
     n = int(input('Motor number: '))
+    # usually between 30 - 130? I think?
+    # motors won't work when set to the extremes of 0, 180
     d = int(input('Power Level: '))
     if n == 2:
         move2(d)
@@ -80,4 +86,5 @@ while True:
     elif n == 12:
         move12(d)
     
+    # wait five seconds for some reason
     time.sleep(5)
