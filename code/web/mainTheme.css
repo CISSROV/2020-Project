@@ -1,7 +1,14 @@
+/*
+ * mainTheme.css is generaling styling to make all html documents
+ * look similar. It is meant to only contain styles shared amoung all 
+ * html documents. Specified styling should be kept seperate.
+ */
 
 /* General Style */
 body {
+    /* gray background */
     background-color: #ddd;
+    /* Better than the default font */
     font-family: Helvetica;
 }
 
@@ -20,6 +27,7 @@ body {
     margin-bottom: 5px;
 }
 
+/* Styling for a header inside a box */
 div.box h3 {
     margin: -5px -5px 5px -5px;
     background-color: #777;
@@ -27,10 +35,12 @@ div.box h3 {
     border-radius: 2px;
 }
 
+/* Margin adjustment for paragraphs in boxes */
 div.box p {
     margin: 12px;
 }
 
+/* Buttons for the box class */
 div.box button {
     margin: 4px 9px -3px 9px;
     font-size: 16px;
@@ -64,13 +74,14 @@ div.box button {
     min-height: 200px;
 }
 
+/* class for containters to dump log info to */
 #dump {
     padding: 10px;
     vertical-align: top;
     margin: 0px;
 }
 
-/* Fancy Menu in the banner */
+/* Fancy Dropdown Menu in the banner */
 #dropdown { 
     margin-left: 5px; 
     float: left;
@@ -84,6 +95,7 @@ div#dropdown img {
     margin-top: -10px;
 }
 
+/* drowpdown content */
 #dropdownContent {
     display: none;
 }
