@@ -4,6 +4,10 @@
     <title>ROV Index</title>
     <link rel="stylesheet" href="mainTheme.css">
     <style type="text/css">
+        /* 
+         * make a shadown when hovering over a box, 
+         * plus change the mouse cursor to the clickable cursor
+         */
         .box:hover {
             box-shadow: 3px 3px 5px grey;
             cursor: pointer;
@@ -11,7 +15,9 @@
     </style>
 </head>
 <body>
+    <!-- top banner -->
     <div id='banner' style="height: 80px">
+        <!-- logo and dropdown -->
         <div id="dropdown">
             <a href="/">
                 <img src="logo.png">
@@ -32,6 +38,7 @@
         <h1 id="title">ROV Menu</h1>
     </div>
 
+    <!-- a bunch of clickable boxes to all the different pages -->
     <div style="text-align: center;">
         <div style="display: inline-block;">
             <a href="dataSheet.html">
@@ -58,6 +65,7 @@
                     <p>Display the latest log</p>
                 </div>
             </a>
+            <!-- camera streams -->
             <a href="http://192.168.1.3:8080/?action=stream">
                 <div class='box'>
                     <h3>Camera 1</h3>
@@ -87,6 +95,7 @@
             </div>
         </div>
     </div>
+    <!-- div for displaying data like error logs -->
     <div id='dumpDiv' hidden>
         <p id='dump'></p>
     </div>

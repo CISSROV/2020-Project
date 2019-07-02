@@ -7,11 +7,14 @@
     <meta http-equiv="cache-control" content="no-cache" />
 </head>
 <body>
+    <!-- Banner at the top -->
     <div id='banner' style="height: 80px">
+        <!-- logo on the left -->
         <div id="dropdown">
             <a href="/">
                 <img src="logo.png">
             </a>
+            <!-- dropdown menu on the left -->
             <div id="dropdownContent">
                 <a href="dataSheet.html">
                     <p>Data Sheet</p>
@@ -27,8 +30,7 @@
         <h1 id="title">ROV Data Sheet</h1>
     </div>
 
-
-    <!--#85cdf3;-->
+    <!-- buttons -->
     <div id="controls">
         <button id="compress" onclick="compress()">
             Compressed View
@@ -37,24 +39,34 @@
             Uncompressed View
         </button>
     </div>
+
+    <!--
+        data table
+        overflow-x: auto makes it scroll when the table content is wider than the page 
+    -->
     <div style="overflow-x:auto">
-    <table id="dataTable">
-        <tr>
-            <th>Time</th>
-            <th>External Temp (&deg;C)</th>
-            <th>Core Temp (&deg;C)</th>
-            <th>Internal Temp (&deg;C)</th>
-            <th>Heading</th>
-            <th>Roll</th>
-            <th>Pitch</th>
-            <th>Magnetic Field</th>
-            <th>Acc<sub>x</sub></th>
-            <th>Acc<sub>y</sub></th>
-            <th>Acc<sub>z</sub></th>
-        </tr>
-    </table>
+        <table id="dataTable">
+            <tr>
+                <th>Time</th>
+                <th>External Temp (&deg;C)</th>
+                <th>Core Temp (&deg;C)</th>
+                <th>Internal Temp (&deg;C)</th>
+                <th>Heading</th>
+                <th>Roll</th>
+                <th>Pitch</th>
+                <th>Magnetic Field</th>
+                <th>Acc<sub>x</sub></th>
+                <th>Acc<sub>y</sub></th>
+                <th>Acc<sub>z</sub></th>
+            </tr>
+        </table>
     </div>
+
+    <!-- unhide this when there is an error -->
+    <!-- unknown error cause I was too lazy to make a system that specifies the error -->
     <h3 class="error" id="error" hidden>An unknown error has occured while attempting connect or process received data</h3>
+
+    <!-- scripts being used -->
     <script src="websocket.js"></script>
     <script src="dataGetterNew.js"></script>
     <!-- dataGetterNew.js is websocket based -->

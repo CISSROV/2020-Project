@@ -1,44 +1,67 @@
+/* 
+ * the styling here is only that unique to dataSheet.html, 
+ * the general styling is in mainTheme.css 
+ */
+
 /* Table Style */
 table {
+    /* makes two adjacent table cells have a shared border */
     border-collapse: collapse;
+    /* self explanatory */
     background-color: white;
 }
 
+/* Add padding to each element in the table so it is easier to read */
 th, td {
     padding: 15px;
     min-width: 160px;
 }
 
-/* Alternate td */
+/* Alternate td to make the rows smaller and so more data fit on the screen */
 .compressed {
     padding-top: 5px;
     padding-bottom: 5px;
 }
 
+/* table header rows */
 th {
     text-align: left;
     background-color: #00a5ed;
 }
 
+/* change the background color of a row if the mouse cursor is hovering over it */
 tr:hover {
     background-color: #85cdf3;
 }
 
+/* make the rows of the data table have a 1px solid black border on all sides except the top */
+
+/* 
+ * the table#dataTable specifies that it only applies 
+ * to rows in the table with the id of dataTable.
+ * As there is only one table in the dataSheet html document 
+ * that specification doesn't really matter
+ */
 table#dataTable tr {
     border-bottom: 1px solid black;
     border-left: 1px solid black;
     border-right: 1px solid black;
 }
 
+/* Make the table with the id of dataTable be as wide as its container */
+/* In this case it means almost as wide as the page */
 #dataTable {
     width: 100%;
 }
 
 /* Misc */
+
+/* Put the title into the middle */
 #title {
     text-align: center;
 }
 
+/* Make the background color of the entire page gray */
 body {
     background-color: #ddd;
 }
@@ -50,23 +73,38 @@ body {
     margin-bottom: 10px;
 }
 
+/* if the button is in a div where id='controls' */
 div#controls button {
-    background-color: #008CBA; 
+    /* make the button blue */
+    background-color: #008CBA;
+    /* add some padding to it */
     padding: 7px;
+    /* get rid of ugly standard borders */
     border: none;
+    /* set text color */
     color: white;
+    /* font size */
     font-size: 12px;
+    /* make the edges round */
     border-radius: 5px;
 }
 
+/* if the button is in a div where id='controls' and the mouse is hovering over it */
 div#controls button:hover {
+    /* make the button a lighter blue */
     background-color: #0BACCB;
+    /* add some shadow to the box cause why not */
     box-shadow: 3px 3px 5px grey;
+    /* make the mouse cursor be the clickable cursor*/
     cursor: pointer;
 }
 
 /* Error class */
+
+/* class for things that show errors */
 .error {
+    /* font color red */
     color: red;
+    /* text center aligned*/
     text-align: center;
 }

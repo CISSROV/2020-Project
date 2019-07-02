@@ -3,31 +3,48 @@
 <head>
     <title>ROV Display</title>
     <link rel="stylesheet" href="mainTheme.css">
+    <!-- styling for this document -->
     <style type="text/css">
+        /* i dont understand most of the styling here */
         #heading {
             min-height: 351px;
         }
         div#heading embed {
             margin: 33px;
         }
+
+        /* 
+         * margin top is negative to slide the top of the dataSheet.html page under the other 
+         * display panels so that just the table is visible
+         */
         #dataSheet {
             margin-top: -100px;
             position: relative;
         }
+
+        /* 
+         * make a gray panel that covers the top of the dataSheet.html page 
+         * so that just the table is visible 
+        */
         #grayPanel {
             background-color: #ddd;
             width: 100%;
             height: 100px;
+            /* z-index makes it be above the embeded dataSheet page */
             z-index: 1;
             position: relative;
             margin-top: -100px;
         }
+
+        /* 2nd banner styling */
         #secondBanner {
             display: block;
             width: 100%;
             text-align: center;
             margin: 0px 0px 8px 0px;
         }
+
+        /* styling only applying to things within a div of id secondBanner */
         div#secondBanner p {
             display: inline-block;
             margin: 6px;
@@ -41,12 +58,19 @@
     </style>
 </head>
 <body>
+    <!-- top banner -->
     <div id='banner' style="height: 80px">
+        <!-- logo and dropdown on the left -->
         <div id="dropdown">
             <a href="/">
                 <img src="logo.png">
             </a>
+            <!-- 
+                as this page has stuff on top of each other the z-index: 3 
+                ensures that the dropdown will always be on top 
+            -->
             <div id="dropdownContent" style="z-index: 3;">
+                <!-- all the stuff on the dropdown-->
                 <a href="dataSheet.html">
                     <p>Data Sheet</p>
                 </a>
@@ -61,40 +85,66 @@
 
         <h1 id="title">ROV Display</h1>
     </div>
+    <!-- bar that displays more data on if dataCollection is working or not -->
     <div id="secondBanner">
         <div>
             <p>PID: <span id="dataCollectionPID">?</span></p>
             <p>Status: <span id="dataCollectionStatus">?</span></p>
         </div>
     </div>
+
     <div style="text-align: center; position: relative; z-index: 2; overflow-y: hidden;">
+        <!-- heading indicator -->
         <div id="heading" class="box">
             <h3>Heading</h3>
             <embed src="heading/heading.html" style="width:240px; height: 240px;">
         </div>
+        <!-- pitch/roll indicator -->
         <div id="roll_pitch" class="box">
             <h3>Artificial Horizon</h3>
             <embed src="artificial_horizon/index.html" style="width:306px; height: 306px;">
         </div>
     </div>
 
+    <!-- make the gray panel to cover part of dataSheet.html -->
     <div id="grayPanel"></div>
+    <!-- embed dataSheet.html -->
     <div id="dataSheet">
         <object data="dataSheet.html" style="width: 100%; height: 500px"></object>
     </div>
+
+    <!-- js -->
     <script type="text/javascript">
         function checkPID() {
+            // get the pid and status display elements
             var pid = document.getElementById('dataCollectionPID')
             var status = document.getElementById('dataCollectionStatus')
+
+            // make an http request
             xmlhttp = new XMLHttpRequest()
+
             xmlhttp.onreadystatechange = function() {
+                // this function is called when this.readState changes
+
+                //
+                // if the http request has returned (this.readyState == 4) 
+                // and with status 200
+                // Note: 200 OK is returned normally when everything went correctly
+                //
                 if (this.readyState == 4 && this.status == 200) {
+                    // get the response to the request
                     var txt = this.responseText
+
+                    // extract the PID out of the returned html document
                     var term = 'id="PID"'
                     txt = txt.slice(txt.indexOf(term) + term.length + 6)
                     txt = txt.slice(0, txt.indexOf('</p>'))
-                    //console.log(txt)
+
+                    // set the pid display in display.html to be 
+                    // the number gotten from the received html document
                     pid.innerText = txt
+
+                    // if the pid was equal to None
                     if (txt == 'None') {
                         status.innerText = "Not Running"
                     }
@@ -103,17 +153,21 @@
                     }
                 }
                 else {
+                    // if it got a status other than 200 
+                    // i.e. something went wrong getting the html document
                     if (this.readyState == 4) {
                         pid.innerText = "?"
                         status.innerText = "?"
                     }
                 }
             }
+            // make the request be type GET and fetch this url
             xmlhttp.open('GET', 'cgi-bin/statusDataCollection.py', true)
             xmlhttp.send()
         }
 
         checkPID()
+        // fetch the html document on the pid every 10 seconds
         intervalID = setInterval(checkPID, 10000)
     </script>
 </body>
