@@ -5,6 +5,10 @@
 # into one file to reduce clutter
 # It is to start the webSocketServer used to collect and share sensor data
 #
+# ----- IMPORTANT ------
+# JUST START THE webSocketServer YOURSELF WITH sudo python3.4 webSocketServer.py
+# INSTEAD OF BOTHERING WITH THIS EXTRA STUFF
+#
 
 cd /var/www/scripts
 
