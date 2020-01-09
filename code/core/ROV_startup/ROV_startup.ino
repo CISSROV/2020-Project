@@ -1,9 +1,26 @@
 
 #include "Keyboard.h"
 
+/*
+ * Code for entering all keystrokes necessary to start the ROV.
+ * 
+ * Needs to be uploaded on an Arduino Mirco or Arduino Leonardo
+ * as those are the only ones that can emulate a Keyboard
+ * and cause keystrokes to be sent to the computer
+ * 
+ * How to use:
+ *  plug the Arduino into the computer once the computer
+ *  is up and running
+ *  Uses Raspian-specific keystroke shortcuts
+ */
+
 char ctrlKey = KEY_LEFT_CTRL;
 char otherKey = KEY_LEFT_ALT;
 
+/*
+ * Keyboard shortcut for opening a new tab 
+ * in the Terminal in Raspian Linux
+ */
 void newTab() {
   Keyboard.press(ctrlKey);
   Keyboard.press('T');
@@ -12,11 +29,22 @@ void newTab() {
   delay(200);
 }
 
+/*
+ * Enter a command on the Terminal
+ * and press enter
+ * 
+ * s: the command to enter
+ */
 void runCmd(String s) {
   Keyboard.println(s);
   delay(100);
 }
 
+/*
+ * Starts the setup sequence
+ * 1 second after the Arduino
+ * starts up.
+ */
 void setup() {
   // put your setup code here, to run once:
   Keyboard.begin();
@@ -55,6 +83,5 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
+  // unused
 }

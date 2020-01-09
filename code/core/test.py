@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.4
-# Author: Jonathan Rotter & Danny Kong & Yiluo Li
+'''Author: Jonathan Rotter & Danny Kong & Yiluo Li'''
 
 import time
 import pyfirmata

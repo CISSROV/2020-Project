@@ -1,50 +1,53 @@
 #!/usr/bin/env python3.4
-# Author: Jonathan Rotter
+'''Author: Jonathan Rotter
 
-#
-# Motor control featuing togggleable throttling of the vertical
-# thrusters as they have caused brown outs in motor pi
-#
-# This code is meant to be run on motor pi and requires 
-# a connected arduino mega
-#
-# The ip of server pi must be specifed in the
-# webSocketClient.start call at the bottom of this file
-# port is 8008 and is specified in webSocketClient.py 
-#
-# Required 3rd-party libraries:
-# autobahn
-# twisted
-# pyfirmata
-# 
+Motor control featuring toggglable throttling of the vertical
+thrusters as they have caused brown outs in motor pi
+
+This code is meant to be run on motor pi and requires
+a connected arduino mega
+
+The ip of server pi must be specified in the
+webSocketClient.start call at the bottom of this file
+port is 8008 and is specified in webSocketClient.py
+
+Required 3rd-party libraries:
+`autobahn`
+`twisted`
+`pyfirmata`
+'''
 
 # Check if the version of python is 3.x
 from sys import version
 if version[0] != '3':
-    # Stop running if the version is python 2.x 
+    # Stop running if the version is python 2.x
     raise Exception('This is Python3 code')
 
 import webSocketClient
 import json
 
-# Data labels for axis and buttons in the order specified by joystick config.md
 axis = ['xLeft', 'yLeft', 'triggerLeft', 'xRight', 'yRight', 'triggerRight']
 buttons = ['A', 'B', 'X', 'Y', 'LB', 'RB']
+'''Data labels for axis and buttons in the order
+specified by `joystick config.md`
+'''
 
-# Port that the arduino mega is connected to
 PORT = '/dev/ttyACM0'
+'''Port that the arduino mega is connected to'''
 
 # Trim values
 trimUp = {
     'left': 0.0,
     'right': 0.0
 }
+'''Stores the default power level of the vertical thrusters.
+As the ROV does not have perfect density,
+this value can be adjusted by the bumpers (LB, RB) on the controller
+to keep the ROV at constant depth when at rest'''
 
-# Stores if a button was just pressed to ensure buttons are only processed once per press
-# Changed to true once pressed and false once released
 justPressed = [
     {
-    # 1st joystick
+        # 1st joystick
         'A': False,
         'B': False,
         'X': False,
@@ -53,7 +56,7 @@ justPressed = [
         'RB': False
     },
     {
-    # 2nd Joystick
+        # 2nd Joystick
         'A': False,
         'B': False,
         'X': False,
@@ -62,15 +65,19 @@ justPressed = [
         'RB': False
     }
 ]
+'''Stores if a button was just pressed to ensure buttons are only processed
+once per press.
+Changed to true once pressed and false once released'''
 
-# Specifies if the vertical thrusters are throttled to prevent power surges or not
 emergencyPower = False
+'''Specifies if the vertical thrusters are throttled to
+prevent power surges causing voltage drops or not'''
 
-# Current power level sent to the vertical thrusters
 currentPower = {
     'left': 93.0,
     'right': 93.0
 }
+'''Current power level sent to the vertical thrusters'''
 
 import pyfirmata
 
@@ -97,17 +104,22 @@ pins = [
     None, # no pin 11
     BOARD.get_pin('d:12:s'), #motor 12
 ]
+'''All pins are put into a list
+so that they can conveniently be referred to
+via pins[pin num]
+example: pins[8].write(150)
+'''
 
-# example how to use pins: pins[8].write(150)
 
 def buttonPressed(button, num):
-    #
-    # Specifies what to do if a button is pressed
-    # button should be in ['A', 'B', 'X', 'Y', 'LB', 'RB']
-    # num is which joystick it is, should be either 0 or 1
-    #
+    '''Specifies what to do if a button is pressed
 
-    # Check if it received a valid button 
+    Args:
+        button (str): The button name: ['A', 'B', 'X', 'Y', 'LB', 'RB']
+        num (int): The joystick number, should be either 0 or 1
+    '''
+
+    # Check if it received a valid button
     if button not in buttons:
         raise KeyError('Unknown button {}'.format(button))
 
@@ -135,10 +147,15 @@ def buttonPressed(button, num):
 
 
 def process(data):
-    #
-    # Takes joystick data and processes it to control the motors
-    # Data is a json string of a list
-    #
+    '''Uses a json file of the state of the XBox controller
+    to set the motors. The json passed in as `data` must have
+    all the labels found in axis and buttons, twice, once
+    for each controller. The first twelve are controller 1,
+    the second twelve are controller 2
+
+    Args:
+        data (str): A json string representing a dict of the controller's state
+    '''
 
     global emergencyPower, justPressed
 
@@ -147,12 +164,12 @@ def process(data):
     # Verify the number of entries of the list
     assert len(joysticks) == 24
 
-    # Use the labels to make a dictionary 
+    # Use the labels to make a dictionary
     # with the keys being labels and values being the joystick values
     joystick1 = dict(zip(axis + buttons, joysticks[:12]))
     joystick2 = dict(zip(axis + buttons, joysticks[12:]))
 
-    old = [] # for debugging
+    old = []  # for debugging
 
     del data
 
@@ -164,7 +181,7 @@ def process(data):
     for stick, jPressed, stickNum in zip((joystick1, joystick2), justPressed, range(2)):
         for k in stick:
             if k not in buttons:
-                continue # only processes button presses, not axis
+                continue  # only processes button presses, not axis
 
             # value of button, which is 0 or 1
             v = stick[k]
@@ -182,23 +199,21 @@ def process(data):
                 raise ValueError('Got {0}, expected 0 or 1'.format(v))
 
             else:
-                pass # nothing to do
+                pass  # nothing to do
 
     motor_claw = 90
 
     # 'A' and 'B' open and close the claw
     if joystick1['A'] and joystick1['B']:
-        pass # do nothing because both are pressed
+        pass  # do nothing because both are pressed
 
     elif joystick1['A']:
-        motor_claw = 150 # open or close it
+        motor_claw = 150  # open or close it
 
     elif joystick1['B']:
-        motor_claw = 30 # open or close it
+        motor_claw = 30  # open or close it
 
-
-    #
-    #   Motor positioning 
+    #   Motor positioning
     #
     #       150    150
     #       /a/    \b\
@@ -220,7 +235,7 @@ def process(data):
     # the joystick values are from -1 to 1
     # scale them to be from -60 to 60
     yLeft = 60 * joystick1['yLeft']
-    xLeft = 60 * joystick1['xLeft'] # should be strafe
+    xLeft = 60 * joystick1['xLeft']  # should be strafe
     yRight = 60 * joystick1['yRight']
 
     # Code for rotating the ROV
@@ -235,10 +250,10 @@ def process(data):
     joystick2['triggerLeft'] = (joystick2['triggerLeft'] + 1) / 2
 
     if joystick1['triggerRight'] >= 0.1 and joystick1['triggerLeft'] >= 0.1:
-        pass # do nothing because both are pressed
+        pass  # do nothing because both are pressed
 
     else:
-        # axis don't go perfectly to zero so the 
+        # axis don't go perfectly to zero so the
         # if statement is used to make sure the trigger is actually pressed
         if joystick1['triggerRight'] > 0.1:
             # spin right
@@ -259,17 +274,24 @@ def process(data):
 
     global trimUp
 
-    neutral_up = 93 # the motors and escs are weird
+    neutral_up = 93  # the motors and escs are weird
 
-    motor_up_left  = neutral_up - (trimUp['left'] + yRight)
+    motor_up_left = neutral_up - (trimUp['left'] + yRight)
     motor_up_right = neutral_up - (trimUp['right'] + yRight)
 
     def bounds(x):
-        #
-        # Ensures that 30 <= x <= 150 for the motors
-        # The motors don't respond to higher or lower values
-        # Rounds result to three decimal points 
-        #
+        '''
+        Ensures that 30 <= x <= 150 for the motors
+        The motors don't respond to higher or lower values
+        Rounds result to three decimal points
+
+        Args:
+            x (int): Number to ensure is within 30 to 150
+
+        Returns:
+            x: An int that fits 30 <= x <= 150
+        '''
+
         if x < 30:
             return 30
 
@@ -279,10 +301,17 @@ def process(data):
         return round(x, 3)
 
     def specialBounds(x):
-        #
-        # Ensures that 20 <= x <= 210 for the vetical thrusters
-        # Rounds result to three decimal points 
-        #
+        '''
+        Ensures that 20 <= x <= 210 for the vertical thrusters
+        Rounds result to three decimal points
+
+        Args:
+            x (int): Number to ensure is within 20 to 210
+
+        Returns:
+            x: An int that fits 20 <= x <= 210
+        '''
+
         if x < 20:
             return 20
 
@@ -294,10 +323,10 @@ def process(data):
     # keep motor values within bounds
     motor_a = bounds(motor_a)
     motor_b = bounds(motor_b)
-    motor_c = bounds(180 - motor_c) # reverse due to how it was connected
+    motor_c = bounds(180 - motor_c)  # reverse due to how it was connected
     motor_d = bounds(motor_d)
 
-    motor_up_left  = specialBounds(motor_up_left)
+    motor_up_left = specialBounds(motor_up_left)
     motor_up_right = specialBounds(motor_up_right)
 
     # Vertical thruster throttling to try to avoid power surges
@@ -317,7 +346,7 @@ def process(data):
         else:
             # Change thruster power slowly to avoid current spikes
 
-            if currentPower['left'] < motor_up_left: # less than desired
+            if currentPower['left'] < motor_up_left:  # less than desired
                 # increase the thruster value by a bit
                 currentPower['left'] += step
 
@@ -326,7 +355,7 @@ def process(data):
                 if currentPower['left'] > motor_up_left:
                     currentPower['left'] = motor_up_left
 
-            if currentPower['left'] > motor_up_left: # more than desired
+            if currentPower['left'] > motor_up_left:  # more than desired
                 # decrease the thruster value by a bit
                 currentPower['left'] -= step
 
@@ -334,16 +363,15 @@ def process(data):
                 # if so, set it back
                 if currentPower['left'] < motor_up_left:
                     currentPower['left'] = motor_up_left
-        
+
         if neutral_up == motor_up_right:
             # Turn thruster off immediately
             currentPower['right'] = motor_up_right
 
-
         else:
             # Change thruster power slowly to avoid current spikes
 
-            if currentPower['right'] < motor_up_right: # less than desired
+            if currentPower['right'] < motor_up_right:  # less than desired
                 # increase the thruster value by a bit
                 currentPower['right'] += step
 
@@ -352,7 +380,7 @@ def process(data):
                 if currentPower['right'] > motor_up_right:
                     currentPower['right'] = motor_up_right
 
-            if currentPower['right'] > motor_up_right: # more than desired
+            if currentPower['right'] > motor_up_right:  # more than desired
                 # decrease the thruster value by a bit
                 currentPower['right'] -= step
 
@@ -368,17 +396,24 @@ def process(data):
     pins[5].write(motor_d)
 
     # 150 down up, 30 move up
-    pins[6].write(currentPower['right']) # stop on 93
-    pins[7].write(currentPower['left']) # stop on 93
+    pins[6].write(currentPower['right'])  # stop on 93
+    pins[7].write(currentPower['left'])  # stop on 93
 
     pins[8].write(motor_claw)
 
-
     # clear screen
     for i in range(30):
-        # '\r' moves to the start of the line
-        # '\033[A' moves up one line
-        # '\033[K' clears the line
+        # \r is a special character that makes print
+        # start at the beginning of the line, overwritting
+        # what is already there
+        #
+        # \033 is the ascii escape character for special
+        # terminal instructions
+        # \033[A moves the cursor up a line
+        # \033[K clears the line
+        # refer to http://ascii-table.com/ansi-escape-sequences.php
+        #
+        # the point of these are to clear the terminal screen
         print('\r\033[A\033[K', end='')
 
     # print datalist info
@@ -386,11 +421,12 @@ def process(data):
     print(joystick1)
     print(joystick2)
     print(motor_a, motor_b)
-    print(180-motor_c, motor_d) # motor_c is reversed so it is re-reversed here
+    print(180-motor_c, motor_d)
+    # motor_c is reversed so it is re-reversed here
     print()
     print(currentPower['left'], currentPower['right'])
     print(motor_claw)
-    
+
     if emergencyPower:
         print('-----------------------')
         print('-- MAX POWER ENABLED --')

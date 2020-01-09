@@ -1,15 +1,23 @@
 #!/usr/bin/env python3.4
-# Author: Jonathan Rotter
+'''Author: Jonathan Rotter
 
-#
-# This module required for motor2020 and surface2020
-# and thus is needed on both motor pi and surface pi.
-# It handles the websocket stuff for both those programs.
-# 
-# Required 3rd-party libraries:
-# autobahn
-# twisted
-# 
+This module is required for motor2020 and surface2020
+and thus needs to be on both motor pi and surface pi.
+It handles the websocket stuff for both those programs.
+
+
+How to use:
+    start( 'motor' or 'surface', func )
+    if motor, func should take one string arg
+    if surface, func should return a string
+    func is a reference to a function, so NO parentheses next to it
+    don't call it, pass the reference to the function itself
+
+
+Required 3rd-party libraries:
+`autobahn`
+`twisted`
+'''
 
 # websocket stuff
 from autobahn.twisted.websocket import \
@@ -17,51 +25,59 @@ from autobahn.twisted.websocket import \
 
 import sys
 
-# asyncronous stuff
+# asynchronous stuff
 from twisted.python import log
 from twisted.internet import task, reactor
 
-# ip is localhost, does not need to be changed
 IP = '127.0.0.1'
-# needs the be the same here as in server2020
-PORT = 8008
+'''ip is localhost, does not need to be changed'''
 
-# time between surface2020 being run in seconds
+PORT = 8008
+'''needs the be the same here as in server2020'''
+
 # frequency = 1/timeout
 TIMEOUT = 0.1
+'''time between surface2020 being run in seconds'''
 
-#
-# How to use
-# start( 'motor' or 'surface', func )
-# if motor, func should take one string arg
-# if surface, func should return a string
-# func is a refrence to a function, so NO parentheses next to it
-# dont call it, pass the refrence to the function itself
-#
 
 class ClientProtocol(WebSocketClientProtocol):
-    #
-    # Determines how the client will communicate with the server
-    #
+    '''
+    Determines how the client will communicate with the server
+    '''
 
     def onConnect(self, response):
-        # called by the client factory
+        '''
+        Called by the client factory when
+        connecting
+        '''
         print("Server connected: {0}".format(response.peer))
         # remember this connection
         self.factory.register(self)
 
     def onConnecting(self, transport_details):
-        # called by the client factory
+        '''
+        Called by the client factory when
+        connecting
+        '''
         print("Connecting; transport details: {}".format(transport_details))
         return None
 
     def onOpen(self):
-        # called by the client factory
+        '''
+        Called by the client factory when
+        the connection is open
+        '''
         print("WebSocket connection open.")
 
     def onMessage(self, payload, isBinary):
-        # called by the client factory
-        # payload is encoded (bytes-like object)
+        '''
+        Called by the client factory when
+        receiving a message
+
+        Args:
+            payload (bytes): A bytes-like object
+            isBinary (bool): Almost always true
+        '''
 
         # validate that the type is motor2020 or miniROV
         # surface2020 shouldn't receive data
@@ -69,7 +85,7 @@ class ClientProtocol(WebSocketClientProtocol):
             # received instructions!
             # decode bytes to string
             txt = payload.decode()
-            # call the given function, passing the 
+            # call the given function, passing the
             # payload/message as an argument
             self.factory.func(txt)
 
@@ -77,22 +93,31 @@ class ClientProtocol(WebSocketClientProtocol):
             # fail fast for debugging purposes
             raise ValueError('Only motor pi / Mini ROV should receive data')
 
-
     def onClose(self, wasClean, code, reason):
-        # called by the client factory
+        '''
+        Called by the client factory when closing
+        '''
+
         print("WebSocket connection closed: {0}".format(reason))
         # remove the remembered connection
         self.factory.unregister(self)
 
+
 class ClientFactory(WebSocketClientFactory):
-    #
-    # Determines how connection deal with each other
-    #
+    '''
+    Determines how connections deal with each other
+    '''
 
     def __init__(self, url, clientType, func):
-        # url is a string in the format "ws://127.0.0.1:8008"
-        # clientType is the string "/motor"
-        # func is the handler function
+        '''
+        Initializes the class
+
+        Args:
+            url (str): The url in the format "ws://127.0.0.1:8008"
+            clientType (str): Example: "/motor"
+            func (function): The handler function
+        '''
+
         WebSocketClientFactory.__init__(self, url)
         self.connections = []
         self.clientType = clientType
@@ -100,19 +125,29 @@ class ClientFactory(WebSocketClientFactory):
         self.connectionRefusedCount = 0
 
     def register(self, client):
-        # remember this connection
+        '''
+        Called in `ClientProtocol.onConnect`
+        Remember this connection
+        '''
         if client not in self.connections:
             self.connections.append(client)
 
     def unregister(self, client):
-        # forget this connection
+        '''
+        Called in `ClientProtocol.onClose`
+        Forget this connection
+        '''
         if client in self.connections:
             self.connections.remove(client)
 
-    def broadcast(self): # only for surface
-        # send to all other connections
+    def broadcast(self):
+        '''
+        Send a message to all other connections
+        Only for surface pi
+        '''
+
         if not len(self.connections):
-            return # no connections
+            return  # no connections
 
         if self.clientType != 'surface':
             raise ValueError('Only surface py should broadcast data')
@@ -124,26 +159,40 @@ class ClientFactory(WebSocketClientFactory):
             c.sendMessage(txt.encode())
 
     def clientConnectionFailed(self, connector, error):
-        #reactor.stop()
+        '''
+        Called automatically when a connection
+        fails. Tells the reactor (Twisted's event manager)
+        to try to reconnect in 3 seconds
+        '''
         self.connectionRefusedCount += 1
         for _ in range(2):
             # clears two lines in the console
-            # don't know why though
             print('\r\033[K\033[A', end='')
         print(self.connectionRefusedCount, error.getErrorMessage())
 
         # try to connect again in 3 seconds
         reactor.callLater(3, connectTCP, self)
 
+
 def connectTCP(factory):
+    '''Tries to connect to the given IP and Port number'''
     global IP, PORT
+
     # connect to the ip and port
     reactor.connectTCP(IP, PORT, factory)
 
+
 def start(clientType, func, ip=None):
-    # when the module is imported by motor2020 or surface2020,
-    # those files call this method to use this module
-    # clientType specifies whether it is motor2020 or surface2020
+    '''
+    Called by motor2020 or surface2020
+    to use this module
+
+    Args:
+        clientType (str): Specifies whether it is motor pi or surface pi
+        func (function): The handler for messages
+        ip (str, optional): The ip address
+
+    '''
     global IP
     if ip:
         # set the default ip (localhost) to the given ip if it is specified
@@ -154,24 +203,25 @@ def start(clientType, func, ip=None):
 
     # new factory object
     factory = ClientFactory(
-            u'ws://{}:{}/{}'.format(IP , PORT, clientType),
+            u'ws://{}:{}/{}'.format(IP, PORT, clientType),
             clientType,
             func
         )
     factory.protocol = ClientProtocol
 
-    #reactor.connectTCP(IP, PORT, factory)
+    # reactor.connectTCP(IP, PORT, factory)
 
     connectTCP(factory)
 
     if clientType == 'surface':
         # if this us type surface, start a loop where every TIMEOUT number of seconds
         # it runs the given function to get the data and send it off
-        l = task.LoopingCall(factory.broadcast) # only for surface
+        l = task.LoopingCall(factory.broadcast)  # only for surface
         l.start(TIMEOUT)
 
     # start the code
     reactor.run()
+
 
 if __name__ == '__main__':
     # not to be run as the main module
