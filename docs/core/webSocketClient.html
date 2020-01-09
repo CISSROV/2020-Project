@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.2" />
+<title>webSocketClient API documentation</title>
+<meta name="description" content="Author: Jonathan Rotter …" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>webSocketClient</code></h1>
+</header>
+<section id="section-intro">
+<p>Author: Jonathan Rotter</p>
+<p>This module is required for motor2020 and surface2020
+and thus needs to be on both motor pi and surface pi.
+It handles the websocket stuff for both those programs.</p>
+<p>How to use:
+start( 'motor' or 'surface', func )
+if motor, func should take one string arg
+if surface, func should return a string
+func is a reference to a function, so NO parentheses next to it
+don't call it, pass the reference to the function itself</p>
+<p>Required 3rd-party libraries:
+<code>autobahn</code>
+<code>twisted</code></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/env python3.4
+&#39;&#39;&#39;Author: Jonathan Rotter
+
+This module is required for motor2020 and surface2020
+and thus needs to be on both motor pi and surface pi.
+It handles the websocket stuff for both those programs.
+
+
+How to use:
+    start( &#39;motor&#39; or &#39;surface&#39;, func )
+    if motor, func should take one string arg
+    if surface, func should return a string
+    func is a reference to a function, so NO parentheses next to it
+    don&#39;t call it, pass the reference to the function itself
+
+
+Required 3rd-party libraries:
+`autobahn`
+`twisted`
+&#39;&#39;&#39;
+
+# websocket stuff
+from autobahn.twisted.websocket import \
+    WebSocketClientProtocol, WebSocketClientFactory
+
+import sys
+
+# asynchronous stuff
+from twisted.python import log
+from twisted.internet import task, reactor
+
+IP = &#39;127.0.0.1&#39;
+&#39;&#39;&#39;ip is localhost, does not need to be changed&#39;&#39;&#39;
+
+PORT = 8008
+&#39;&#39;&#39;needs the be the same here as in server2020&#39;&#39;&#39;
+
+# frequency = 1/timeout
+TIMEOUT = 0.1
+&#39;&#39;&#39;time between surface2020 being run in seconds&#39;&#39;&#39;
+
+
+class ClientProtocol(WebSocketClientProtocol):
+    &#39;&#39;&#39;
+    Determines how the client will communicate with the server
+    &#39;&#39;&#39;
+
+    def onConnect(self, response):
+        &#39;&#39;&#39;
+        Called by the client factory when
+        connecting
+        &#39;&#39;&#39;
+        print(&#34;Server connected: {0}&#34;.format(response.peer))
+        # remember this connection
+        self.factory.register(self)
+
+    def onConnecting(self, transport_details):
+        &#39;&#39;&#39;
+        Called by the client factory when
+        connecting
+        &#39;&#39;&#39;
+        print(&#34;Connecting; transport details: {}&#34;.format(transport_details))
+        return None
+
+    def onOpen(self):
+        &#39;&#39;&#39;
+        Called by the client factory when
+        the connection is open
+        &#39;&#39;&#39;
+        print(&#34;WebSocket connection open.&#34;)
+
+    def onMessage(self, payload, isBinary):
+        &#39;&#39;&#39;
+        Called by the client factory when
+        receiving a message
+
+        Args:
+            payload (bytes): A bytes-like object
+            isBinary (bool): Almost always true
+        &#39;&#39;&#39;
+
+        # validate that the type is motor2020 or miniROV
+        # surface2020 shouldn&#39;t receive data
+        if self.factory.clientType in [&#39;motor&#39;, &#39;miniROV&#39;]:
+            # received instructions!
+            # decode bytes to string
+            txt = payload.decode()
+            # call the given function, passing the
+            # payload/message as an argument
+            self.factory.func(txt)
+
+        else:
+            # fail fast for debugging purposes
+            raise ValueError(&#39;Only motor pi / Mini ROV should receive data&#39;)
+
+    def onClose(self, wasClean, code, reason):
+        &#39;&#39;&#39;
+        Called by the client factory when closing
+        &#39;&#39;&#39;
+
+        print(&#34;WebSocket connection closed: {0}&#34;.format(reason))
+        # remove the remembered connection
+        self.factory.unregister(self)
+
+
+class ClientFactory(WebSocketClientFactory):
+    &#39;&#39;&#39;
+    Determines how connections deal with each other
+    &#39;&#39;&#39;
+
+    def __init__(self, url, clientType, func):
+        &#39;&#39;&#39;
+        Initializes the class
+
+        Args:
+            url (str): The url in the format &#34;ws://127.0.0.1:8008&#34;
+            clientType (str): Example: &#34;/motor&#34;
+            func (function): The handler function
+        &#39;&#39;&#39;
+
+        WebSocketClientFactory.__init__(self, url)
+        self.connections = []
+        self.clientType = clientType
+        self.func = func
+        self.connectionRefusedCount = 0
+
+    def register(self, client):
+        &#39;&#39;&#39;
+        Called in `ClientProtocol.onConnect`
+        Remember this connection
+        &#39;&#39;&#39;
+        if client not in self.connections:
+            self.connections.append(client)
+
+    def unregister(self, client):
+        &#39;&#39;&#39;
+        Called in `ClientProtocol.onClose`
+        Forget this connection
+        &#39;&#39;&#39;
+        if client in self.connections:
+            self.connections.remove(client)
+
+    def broadcast(self):
+        &#39;&#39;&#39;
+        Send a message to all other connections
+        Only for surface pi
+        &#39;&#39;&#39;
+
+        if not len(self.connections):
+            return  # no connections
+
+        if self.clientType != &#39;surface&#39;:
+            raise ValueError(&#39;Only surface py should broadcast data&#39;)
+
+        # get data by calling the given function
+        txt = self.func()
+        for c in self.connections:
+            # send that data to the connected clients
+            c.sendMessage(txt.encode())
+
+    def clientConnectionFailed(self, connector, error):
+        &#39;&#39;&#39;
+        Called automatically when a connection
+        fails. Tells the reactor (Twisted&#39;s event manager)
+        to try to reconnect in 3 seconds
+        &#39;&#39;&#39;
+        self.connectionRefusedCount += 1
+        for _ in range(2):
+            # clears two lines in the console
+            print(&#39;\r\033[K\033[A&#39;, end=&#39;&#39;)
+        print(self.connectionRefusedCount, error.getErrorMessage())
+
+        # try to connect again in 3 seconds
+        reactor.callLater(3, connectTCP, self)
+
+
+def connectTCP(factory):
+    &#39;&#39;&#39;Tries to connect to the given IP and Port number&#39;&#39;&#39;
+    global IP, PORT
+
+    # connect to the ip and port
+    reactor.connectTCP(IP, PORT, factory)
+
+
+def start(clientType, func, ip=None):
+    &#39;&#39;&#39;
+    Called by motor2020 or surface2020
+    to use this module
+
+    Args:
+        clientType (str): Specifies whether it is motor pi or surface pi
+        func (function): The handler for messages
+        ip (str, optional): The ip address
+
+    &#39;&#39;&#39;
+    global IP
+    if ip:
+        # set the default ip (localhost) to the given ip if it is specified
+        IP = ip
+
+    # display debug info on stdout
+    log.startLogging(sys.stdout)
+
+    # new factory object
+    factory = ClientFactory(
+            u&#39;ws://{}:{}/{}&#39;.format(IP, PORT, clientType),
+            clientType,
+            func
+        )
+    factory.protocol = ClientProtocol
+
+    # reactor.connectTCP(IP, PORT, factory)
+
+    connectTCP(factory)
+
+    if clientType == &#39;surface&#39;:
+        # if this us type surface, start a loop where every TIMEOUT number of seconds
+        # it runs the given function to get the data and send it off
+        l = task.LoopingCall(factory.broadcast)  # only for surface
+        l.start(TIMEOUT)
+
+    # start the code
+    reactor.run()
+
+
+if __name__ == &#39;__main__&#39;:
+    # not to be run as the main module
+    raise Exception(&#39;This code is only to be imported!!!&#39;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-variables">Global variables</h2>
+<dl>
+<dt id="webSocketClient.IP"><code class="name">var <span class="ident">IP</span></code></dt>
+<dd>
+<section class="desc"><p>ip is localhost, does not need to be changed</p></section>
+</dd>
+<dt id="webSocketClient.PORT"><code class="name">var <span class="ident">PORT</span></code></dt>
+<dd>
+<section class="desc"><p>needs the be the same here as in server2020</p></section>
+</dd>
+<dt id="webSocketClient.TIMEOUT"><code class="name">var <span class="ident">TIMEOUT</span></code></dt>
+<dd>
+<section class="desc"><p>time between surface2020 being run in seconds</p></section>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="webSocketClient.connectTCP"><code class="name flex">
+<span>def <span class="ident">connectTCP</span></span>(<span>factory)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Tries to connect to the given IP and Port number</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def connectTCP(factory):
+    &#39;&#39;&#39;Tries to connect to the given IP and Port number&#39;&#39;&#39;
+    global IP, PORT
+
+    # connect to the ip and port
+    reactor.connectTCP(IP, PORT, factory)</code></pre>
+</details>
+</dd>
+<dt id="webSocketClient.start"><code class="name flex">
+<span>def <span class="ident">start</span></span>(<span>clientType, func, ip=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called by motor2020 or surface2020
+to use this module</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>clientType</code></strong> :&ensp;<code>str</code></dt>
+<dd>Specifies whether it is motor pi or surface pi</dd>
+<dt><strong><code>func</code></strong> :&ensp;<code>function</code></dt>
+<dd>The handler for messages</dd>
+<dt><strong><code>ip</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>The ip address</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start(clientType, func, ip=None):
+    &#39;&#39;&#39;
+    Called by motor2020 or surface2020
+    to use this module
+
+    Args:
+        clientType (str): Specifies whether it is motor pi or surface pi
+        func (function): The handler for messages
+        ip (str, optional): The ip address
+
+    &#39;&#39;&#39;
+    global IP
+    if ip:
+        # set the default ip (localhost) to the given ip if it is specified
+        IP = ip
+
+    # display debug info on stdout
+    log.startLogging(sys.stdout)
+
+    # new factory object
+    factory = ClientFactory(
+            u&#39;ws://{}:{}/{}&#39;.format(IP, PORT, clientType),
+            clientType,
+            func
+        )
+    factory.protocol = ClientProtocol
+
+    # reactor.connectTCP(IP, PORT, factory)
+
+    connectTCP(factory)
+
+    if clientType == &#39;surface&#39;:
+        # if this us type surface, start a loop where every TIMEOUT number of seconds
+        # it runs the given function to get the data and send it off
+        l = task.LoopingCall(factory.broadcast)  # only for surface
+        l.start(TIMEOUT)
+
+    # start the code
+    reactor.run()</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="webSocketClient.ClientFactory"><code class="flex name class">
+<span>class <span class="ident">ClientFactory</span></span>
+<span>(</span><span>url, clientType, func)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Determines how connections deal with each other</p>
+<p>Initializes the class</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>The url in the format "ws://127.0.0.1:8008"</dd>
+<dt><strong><code>clientType</code></strong> :&ensp;<code>str</code></dt>
+<dd>Example: "/motor"</dd>
+<dt><strong><code>func</code></strong> :&ensp;<code>function</code></dt>
+<dd>The handler function</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ClientFactory(WebSocketClientFactory):
+    &#39;&#39;&#39;
+    Determines how connections deal with each other
+    &#39;&#39;&#39;
+
+    def __init__(self, url, clientType, func):
+        &#39;&#39;&#39;
+        Initializes the class
+
+        Args:
+            url (str): The url in the format &#34;ws://127.0.0.1:8008&#34;
+            clientType (str): Example: &#34;/motor&#34;
+            func (function): The handler function
+        &#39;&#39;&#39;
+
+        WebSocketClientFactory.__init__(self, url)
+        self.connections = []
+        self.clientType = clientType
+        self.func = func
+        self.connectionRefusedCount = 0
+
+    def register(self, client):
+        &#39;&#39;&#39;
+        Called in `ClientProtocol.onConnect`
+        Remember this connection
+        &#39;&#39;&#39;
+        if client not in self.connections:
+            self.connections.append(client)
+
+    def unregister(self, client):
+        &#39;&#39;&#39;
+        Called in `ClientProtocol.onClose`
+        Forget this connection
+        &#39;&#39;&#39;
+        if client in self.connections:
+            self.connections.remove(client)
+
+    def broadcast(self):
+        &#39;&#39;&#39;
+        Send a message to all other connections
+        Only for surface pi
+        &#39;&#39;&#39;
+
+        if not len(self.connections):
+            return  # no connections
+
+        if self.clientType != &#39;surface&#39;:
+            raise ValueError(&#39;Only surface py should broadcast data&#39;)
+
+        # get data by calling the given function
+        txt = self.func()
+        for c in self.connections:
+            # send that data to the connected clients
+            c.sendMessage(txt.encode())
+
+    def clientConnectionFailed(self, connector, error):
+        &#39;&#39;&#39;
+        Called automatically when a connection
+        fails. Tells the reactor (Twisted&#39;s event manager)
+        to try to reconnect in 3 seconds
+        &#39;&#39;&#39;
+        self.connectionRefusedCount += 1
+        for _ in range(2):
+            # clears two lines in the console
+            print(&#39;\r\033[K\033[A&#39;, end=&#39;&#39;)
+        print(self.connectionRefusedCount, error.getErrorMessage())
+
+        # try to connect again in 3 seconds
+        reactor.callLater(3, connectTCP, self)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>autobahn.twisted.websocket.WebSocketClientFactory</li>
+<li>autobahn.twisted.websocket.WebSocketAdapterFactory</li>
+<li>autobahn.websocket.protocol.WebSocketClientFactory</li>
+<li>autobahn.websocket.protocol.WebSocketFactory</li>
+<li>twisted.internet.protocol.ClientFactory</li>
+<li>twisted.internet.protocol.Factory</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="webSocketClient.ClientFactory.broadcast"><code class="name flex">
+<span>def <span class="ident">broadcast</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Send a message to all other connections
+Only for surface pi</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def broadcast(self):
+    &#39;&#39;&#39;
+    Send a message to all other connections
+    Only for surface pi
+    &#39;&#39;&#39;
+
+    if not len(self.connections):
+        return  # no connections
+
+    if self.clientType != &#39;surface&#39;:
+        raise ValueError(&#39;Only surface py should broadcast data&#39;)
+
+    # get data by calling the given function
+    txt = self.func()
+    for c in self.connections:
+        # send that data to the connected clients
+        c.sendMessage(txt.encode())</code></pre>
+</details>
+</dd>
+<dt id="webSocketClient.ClientFactory.clientConnectionFailed"><code class="name flex">
+<span>def <span class="ident">clientConnectionFailed</span></span>(<span>self, connector, error)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called automatically when a connection
+fails. Tells the reactor (Twisted's event manager)
+to try to reconnect in 3 seconds</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clientConnectionFailed(self, connector, error):
+    &#39;&#39;&#39;
+    Called automatically when a connection
+    fails. Tells the reactor (Twisted&#39;s event manager)
+    to try to reconnect in 3 seconds
+    &#39;&#39;&#39;
+    self.connectionRefusedCount += 1
+    for _ in range(2):
+        # clears two lines in the console
+        print(&#39;\r\033[K\033[A&#39;, end=&#39;&#39;)
+    print(self.connectionRefusedCount, error.getErrorMessage())
+
+    # try to connect again in 3 seconds
+    reactor.callLater(3, connectTCP, self)</code></pre>
+</details>
+</dd>
+<dt id="webSocketClient.ClientFactory.register"><code class="name flex">
+<span>def <span class="ident">register</span></span>(<span>self, client)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called in <a title="webSocketClient.ClientProtocol.onConnect" href="#webSocketClient.ClientProtocol.onConnect"><code>ClientProtocol.onConnect()</code></a>
+Remember this connection</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def register(self, client):
+    &#39;&#39;&#39;
+    Called in `ClientProtocol.onConnect`
+    Remember this connection
+    &#39;&#39;&#39;
+    if client not in self.connections:
+        self.connections.append(client)</code></pre>
+</details>
+</dd>
+<dt id="webSocketClient.ClientFactory.unregister"><code class="name flex">
+<span>def <span class="ident">unregister</span></span>(<span>self, client)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called in <a title="webSocketClient.ClientProtocol.onClose" href="#webSocketClient.ClientProtocol.onClose"><code>ClientProtocol.onClose()</code></a>
+Forget this connection</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def unregister(self, client):
+    &#39;&#39;&#39;
+    Called in `ClientProtocol.onClose`
+    Forget this connection
+    &#39;&#39;&#39;
+    if client in self.connections:
+        self.connections.remove(client)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="webSocketClient.ClientProtocol"><code class="flex name class">
+<span>class <span class="ident">ClientProtocol</span></span>
+</code></dt>
+<dd>
+<section class="desc"><p>Determines how the client will communicate with the server</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ClientProtocol(WebSocketClientProtocol):
+    &#39;&#39;&#39;
+    Determines how the client will communicate with the server
+    &#39;&#39;&#39;
+
+    def onConnect(self, response):
+        &#39;&#39;&#39;
+        Called by the client factory when
+        connecting
+        &#39;&#39;&#39;
+        print(&#34;Server connected: {0}&#34;.format(response.peer))
+        # remember this connection
+        self.factory.register(self)
+
+    def onConnecting(self, transport_details):
+        &#39;&#39;&#39;
+        Called by the client factory when
+        connecting
+        &#39;&#39;&#39;
+        print(&#34;Connecting; transport details: {}&#34;.format(transport_details))
+        return None
+
+    def onOpen(self):
+        &#39;&#39;&#39;
+        Called by the client factory when
+        the connection is open
+        &#39;&#39;&#39;
+        print(&#34;WebSocket connection open.&#34;)
+
+    def onMessage(self, payload, isBinary):
+        &#39;&#39;&#39;
+        Called by the client factory when
+        receiving a message
+
+        Args:
+            payload (bytes): A bytes-like object
+            isBinary (bool): Almost always true
+        &#39;&#39;&#39;
+
+        # validate that the type is motor2020 or miniROV
+        # surface2020 shouldn&#39;t receive data
+        if self.factory.clientType in [&#39;motor&#39;, &#39;miniROV&#39;]:
+            # received instructions!
+            # decode bytes to string
+            txt = payload.decode()
+            # call the given function, passing the
+            # payload/message as an argument
+            self.factory.func(txt)
+
+        else:
+            # fail fast for debugging purposes
+            raise ValueError(&#39;Only motor pi / Mini ROV should receive data&#39;)
+
+    def onClose(self, wasClean, code, reason):
+        &#39;&#39;&#39;
+        Called by the client factory when closing
+        &#39;&#39;&#39;
+
+        print(&#34;WebSocket connection closed: {0}&#34;.format(reason))
+        # remove the remembered connection
+        self.factory.unregister(self)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>autobahn.twisted.websocket.WebSocketClientProtocol</li>
+<li>autobahn.twisted.websocket.WebSocketAdapterProtocol</li>
+<li>twisted.internet.protocol.Protocol</li>
+<li>twisted.internet.protocol.BaseProtocol</li>
+<li>autobahn.websocket.protocol.WebSocketClientProtocol</li>
+<li>autobahn.websocket.protocol.WebSocketProtocol</li>
+<li>autobahn.util.ObservableMixin</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="webSocketClient.ClientProtocol.onClose"><code class="name flex">
+<span>def <span class="ident">onClose</span></span>(<span>self, wasClean, code, reason)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called by the client factory when closing</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def onClose(self, wasClean, code, reason):
+    &#39;&#39;&#39;
+    Called by the client factory when closing
+    &#39;&#39;&#39;
+
+    print(&#34;WebSocket connection closed: {0}&#34;.format(reason))
+    # remove the remembered connection
+    self.factory.unregister(self)</code></pre>
+</details>
+</dd>
+<dt id="webSocketClient.ClientProtocol.onConnect"><code class="name flex">
+<span>def <span class="ident">onConnect</span></span>(<span>self, response)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called by the client factory when
+connecting</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def onConnect(self, response):
+    &#39;&#39;&#39;
+    Called by the client factory when
+    connecting
+    &#39;&#39;&#39;
+    print(&#34;Server connected: {0}&#34;.format(response.peer))
+    # remember this connection
+    self.factory.register(self)</code></pre>
+</details>
+</dd>
+<dt id="webSocketClient.ClientProtocol.onConnecting"><code class="name flex">
+<span>def <span class="ident">onConnecting</span></span>(<span>self, transport_details)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called by the client factory when
+connecting</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def onConnecting(self, transport_details):
+    &#39;&#39;&#39;
+    Called by the client factory when
+    connecting
+    &#39;&#39;&#39;
+    print(&#34;Connecting; transport details: {}&#34;.format(transport_details))
+    return None</code></pre>
+</details>
+</dd>
+<dt id="webSocketClient.ClientProtocol.onMessage"><code class="name flex">
+<span>def <span class="ident">onMessage</span></span>(<span>self, payload, isBinary)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called by the client factory when
+receiving a message</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>payload</code></strong> :&ensp;<code>bytes</code></dt>
+<dd>A bytes-like object</dd>
+<dt><strong><code>isBinary</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Almost always true</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def onMessage(self, payload, isBinary):
+    &#39;&#39;&#39;
+    Called by the client factory when
+    receiving a message
+
+    Args:
+        payload (bytes): A bytes-like object
+        isBinary (bool): Almost always true
+    &#39;&#39;&#39;
+
+    # validate that the type is motor2020 or miniROV
+    # surface2020 shouldn&#39;t receive data
+    if self.factory.clientType in [&#39;motor&#39;, &#39;miniROV&#39;]:
+        # received instructions!
+        # decode bytes to string
+        txt = payload.decode()
+        # call the given function, passing the
+        # payload/message as an argument
+        self.factory.func(txt)
+
+    else:
+        # fail fast for debugging purposes
+        raise ValueError(&#39;Only motor pi / Mini ROV should receive data&#39;)</code></pre>
+</details>
+</dd>
+<dt id="webSocketClient.ClientProtocol.onOpen"><code class="name flex">
+<span>def <span class="ident">onOpen</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called by the client factory when
+the connection is open</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def onOpen(self):
+    &#39;&#39;&#39;
+    Called by the client factory when
+    the connection is open
+    &#39;&#39;&#39;
+    print(&#34;WebSocket connection open.&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-variables">Global variables</a></h3>
+<ul class="">
+<li><code><a title="webSocketClient.IP" href="#webSocketClient.IP">IP</a></code></li>
+<li><code><a title="webSocketClient.PORT" href="#webSocketClient.PORT">PORT</a></code></li>
+<li><code><a title="webSocketClient.TIMEOUT" href="#webSocketClient.TIMEOUT">TIMEOUT</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="webSocketClient.connectTCP" href="#webSocketClient.connectTCP">connectTCP</a></code></li>
+<li><code><a title="webSocketClient.start" href="#webSocketClient.start">start</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="webSocketClient.ClientFactory" href="#webSocketClient.ClientFactory">ClientFactory</a></code></h4>
+<ul class="">
+<li><code><a title="webSocketClient.ClientFactory.broadcast" href="#webSocketClient.ClientFactory.broadcast">broadcast</a></code></li>
+<li><code><a title="webSocketClient.ClientFactory.clientConnectionFailed" href="#webSocketClient.ClientFactory.clientConnectionFailed">clientConnectionFailed</a></code></li>
+<li><code><a title="webSocketClient.ClientFactory.register" href="#webSocketClient.ClientFactory.register">register</a></code></li>
+<li><code><a title="webSocketClient.ClientFactory.unregister" href="#webSocketClient.ClientFactory.unregister">unregister</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="webSocketClient.ClientProtocol" href="#webSocketClient.ClientProtocol">ClientProtocol</a></code></h4>
+<ul class="">
+<li><code><a title="webSocketClient.ClientProtocol.onClose" href="#webSocketClient.ClientProtocol.onClose">onClose</a></code></li>
+<li><code><a title="webSocketClient.ClientProtocol.onConnect" href="#webSocketClient.ClientProtocol.onConnect">onConnect</a></code></li>
+<li><code><a title="webSocketClient.ClientProtocol.onConnecting" href="#webSocketClient.ClientProtocol.onConnecting">onConnecting</a></code></li>
+<li><code><a title="webSocketClient.ClientProtocol.onMessage" href="#webSocketClient.ClientProtocol.onMessage">onMessage</a></code></li>
+<li><code><a title="webSocketClient.ClientProtocol.onOpen" href="#webSocketClient.ClientProtocol.onOpen">onOpen</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

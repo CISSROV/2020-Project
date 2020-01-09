@@ -31,11 +31,14 @@ m4 = motorInterface.motor(4, 18) # side (maybe right)
 def move1(pow):
     m1.set(pow)
 
+
 def move2(pow):
     m2.set(pow)
 
+
 def move3(pow):
     m3.set(pow)
+
 
 def move4(pow):
     m4.set(pow)

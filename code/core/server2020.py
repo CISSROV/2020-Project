@@ -198,20 +198,21 @@ class ServerFactory(WebSocketServerFactory):
             print('Mini ROV isn\'t supposed to send stuff')
 
 
-# display debug information to stdout for now
-log.startLogging(sys.stdout)  # TODO: replace with log file (maybe)
+if __name__ == '__main__':
+    # display debug information to stdout for now
+    log.startLogging(sys.stdout)  # TODO: replace with log file (maybe)
 
-# Setup server factory
-server = ServerFactory(u'ws://{}:{}'.format(IP, PORT))
-server.protocol = ServerProtocol
+    # Setup server factory
+    server = ServerFactory(u'ws://{}:{}'.format(IP, PORT))
+    server.protocol = ServerProtocol
 
-# setup listening server
-reactor.listenTCP(PORT, server)
+    # setup listening server
+    reactor.listenTCP(PORT, server)
 
-try:
-    # start listening for and handling connections
-    reactor.run()
-finally:
-    pass
-    # if logs are sent to a file instead of stdout
-    # the file should be closed here with f.close()
+    try:
+        # start listening for and handling connections
+        reactor.run()
+    finally:
+        pass
+        # if logs are sent to a file instead of stdout
+        # the file should be closed here with f.close()

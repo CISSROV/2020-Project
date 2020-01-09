@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.2" />
+<title>motor2020 API documentation</title>
+<meta name="description" content="Author: Jonathan Rotter …" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>motor2020</code></h1>
+</header>
+<section id="section-intro">
+<p>Author: Jonathan Rotter</p>
+<p>look at motor2020++.py for comments</p>
+<p>motor2020++.py features throttling of the vertical thrusters
+as the ensuing power surges have cause brown-outs during
+the 2019 competition, requiring a full restart of the ROV</p>
+<p>This is the old code that does not feature this throttling
+And cause I'm lazy and the two files are almost the same,
+look at the other one for comments</p>
+<p>Required 3rd-party libraries:
+<code>autobahn</code>
+<code>twisted</code>
+<code>pyfirmata</code></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/env python3.4
+&#39;&#39;&#39;Author: Jonathan Rotter
+
+look at motor2020++.py for comments
+
+motor2020++.py features throttling of the vertical thrusters
+as the ensuing power surges have cause brown-outs during
+the 2019 competition, requiring a full restart of the ROV
+
+This is the old code that does not feature this throttling
+And cause I&#39;m lazy and the two files are almost the same,
+look at the other one for comments
+
+Required 3rd-party libraries:
+`autobahn`
+`twisted`
+`pyfirmata`
+&#39;&#39;&#39;
+
+from sys import version
+if version[0] != &#39;3&#39;:
+    raise Exception(&#39;This is Python3 code&#39;)
+
+import webSocketClient
+import json
+
+
+axis = [&#39;xLeft&#39;, &#39;yLeft&#39;, &#39;triggerLeft&#39;, &#39;xRight&#39;, &#39;yRight&#39;, &#39;triggerRight&#39;]
+&#39;&#39;&#39;List of axis controls on the XBox controllers&#39;&#39;&#39;
+
+buttons = [&#39;A&#39;, &#39;B&#39;, &#39;X&#39;, &#39;Y&#39;, &#39;LB&#39;, &#39;RB&#39;]
+&#39;&#39;&#39;List of buttons on the XBox controllers&#39;&#39;&#39;
+
+PORT = &#39;/dev/ttyACM0&#39;
+&#39;&#39;&#39;Location where the Arduino Mega can be found for pyfirmata&#39;&#39;&#39;
+
+trimUp = {
+    &#39;left&#39;: 0.0,
+    &#39;right&#39;: 0.0
+}
+&#39;&#39;&#39;Stores the default power level of the vertical thrusters.
+As the ROV does not have perfect density,
+this value can be adjusted by the bumpers (LB, RB) on the controller
+to keep the ROV at constant depth when at rest&#39;&#39;&#39;
+
+justPressed = [
+    {
+        &#39;A&#39;: False,
+        &#39;B&#39;: False,
+        &#39;X&#39;: False,
+        &#39;Y&#39;: False,
+        &#39;LB&#39;: False,
+        &#39;RB&#39;: False
+    },
+    {
+        &#39;A&#39;: False,
+        &#39;B&#39;: False,
+        &#39;X&#39;: False,
+        &#39;Y&#39;: False,
+        &#39;LB&#39;: False,
+        &#39;RB&#39;: False
+    }
+]
+&#39;&#39;&#39;
+Stores which buttons are currently pressed
+so that code activates only once per
+button press and does not repeat
+&#39;&#39;&#39;
+
+emergencyPower = False
+&#39;&#39;&#39;Controls whether or not the vertical thrusters
+are restrained in their power usage as the
+low quality motor controllers make them cause
+a voltage drop that can and has caused a brown-out
+in the raspberry pis&#39;&#39;&#39;
+
+if __name__ == &#39;__main__&#39;:
+    import pyfirmata
+
+    # setup pyFirmata
+    BOARD = pyfirmata.Arduino(PORT)
+
+    # setup an iterator for safety
+    iter8 = pyfirmata.util.Iterator(BOARD)
+    iter8.start()
+
+    # locate pins
+    pins = [
+        None,  # no pin 0
+        None,  # no pin 1
+        BOARD.get_pin(&#39;d:2:s&#39;),  # motor 2
+        BOARD.get_pin(&#39;d:3:s&#39;),  # motor 3
+        BOARD.get_pin(&#39;d:4:s&#39;),  # motor 4
+        BOARD.get_pin(&#39;d:5:s&#39;),  # motor 5
+        BOARD.get_pin(&#39;d:6:s&#39;),  # motor 6 - vertical thruster
+        BOARD.get_pin(&#39;d:7:s&#39;),  # motor 7 - vertical thruster
+        BOARD.get_pin(&#39;d:8:s&#39;),  # motor 8 - claw
+        BOARD.get_pin(&#39;d:9:s&#39;),  # motor 9
+        BOARD.get_pin(&#39;d:10:s&#39;),  # motor 10
+        None,  # no pin 11
+        BOARD.get_pin(&#39;d:12:s&#39;),  # motor 12
+    ]
+    &#39;&#39;&#39;All pins are put into a list
+    so that they can conveniently be referred to
+    via pins[pin num]
+    example: pins[8].write(150)
+    &#39;&#39;&#39;
+
+
+def buttonPressed(button, num):
+    &#39;&#39;&#39;Specifies what to do if a button is pressed
+
+    Args:
+        button (str): The button name: [&#39;A&#39;, &#39;B&#39;, &#39;X&#39;, &#39;Y&#39;, &#39;LB&#39;, &#39;RB&#39;]
+        num (int): The joystick number, should be either 0 or 1
+    &#39;&#39;&#39;
+
+    global trimUp, emergencyPower
+    # num is zero or one
+    if num == 0:
+        if button == &#39;LB&#39;:
+            trimUp[&#39;left&#39;] += 1
+            trimUp[&#39;right&#39;] += 1
+        elif button == &#39;RB&#39;:
+            trimUp[&#39;left&#39;] -= 1
+            trimUp[&#39;right&#39;] -= 1
+        elif button == &#39;X&#39;:
+            emergencyPower = True
+        elif button == &#39;Y&#39;:
+            emergencyPower = False
+
+
+def process(data):
+    &#39;&#39;&#39;Uses a json file of the state of the XBox controller
+    to set the motors. The json passed in as `data` must have
+    all the labels found in axis and buttons, twice, once
+    for each controller. The first twelve are controller 1,
+    the second twelve are controller 2
+
+    Args:
+        data (str): A json string representing a dict of the controller&#39;s state
+    &#39;&#39;&#39;
+
+    joysticks = json.loads(data)
+    assert len(joysticks) == 24  # verify correct count
+
+    joystick1 = dict(zip(axis + buttons, joysticks[:12]))
+    joystick2 = dict(zip(axis + buttons, joysticks[12:]))
+
+    old = []  # for debugging
+
+    del data
+
+    global justPressed
+
+    stickNum = 0
+    for stick, jPressed in zip((joystick1, joystick2), justPressed):
+        for k in stick:
+            if k not in buttons:
+                continue
+
+            v = stick[k]
+            if v == 1 and not jPressed[k]:
+                # just pressed
+                buttonPressed(k, stickNum)
+                jPressed[k] = True
+            elif v == 0 and jPressed[k]:
+                # just released
+                jPressed[k] = False
+            elif v not in [1, 0]:
+                raise ValueError(&#39;Got {0}, expected 0 or 1&#39;.format(v))
+            else:
+                pass
+
+        stickNum += 1
+
+    del stickNum
+
+    motor_claw = 90
+
+    # print(joystick1)
+    if joystick1[&#39;A&#39;] and joystick1[&#39;B&#39;]:
+        pass  # do nothing cause both are pressed
+    elif joystick1[&#39;A&#39;]:
+        motor_claw = 150
+    elif joystick1[&#39;B&#39;]:
+        motor_claw = 30
+
+    # motor setup
+    #       150    150
+    #       /a/    \b\
+    #  4  /////    \\\\\  2
+    #
+    #               150
+    #  5  \\\\\    /////  3
+    #      \d\     /c/
+    #      150
+    # ______________a_b_c_d
+    # Back          - - + +
+    # Front         + + - -
+    # Strafe Left   - + - +
+    # Strafe Right  + - + -
+    # Rotate Left   - + + -
+    # Rotate Right  + - - +
+    #
+
+    yLeft = 60 * joystick1[&#39;yLeft&#39;]
+    xLeft = 60 * joystick1[&#39;xLeft&#39;]  # should be strafe
+
+    global emergencyPower
+    if emergencyPower:
+        yRight = 60 * joystick1[&#39;yRight&#39;]
+    else:
+        yRight = 30 * joystick1[&#39;yRight&#39;]
+        # reduce power to avoid brown outs
+
+    spin = 0
+
+    joystick1[&#39;triggerRight&#39;] = (joystick1[&#39;triggerRight&#39;] + 1) / 2
+    joystick1[&#39;triggerLeft&#39;] = (joystick1[&#39;triggerLeft&#39;] + 1) / 2
+
+    joystick2[&#39;triggerRight&#39;] = (joystick2[&#39;triggerRight&#39;] + 1) / 2
+    joystick2[&#39;triggerLeft&#39;] = (joystick2[&#39;triggerLeft&#39;] + 1) / 2
+
+    if joystick1[&#39;triggerRight&#39;] &gt;= 0.1 and joystick1[&#39;triggerLeft&#39;] &gt;= 0.1:
+        pass  # do nothing cause both are pressed
+    else:
+        if joystick1[&#39;triggerRight&#39;] &gt; 0.1:
+            # spin right
+            spin = joystick1[&#39;triggerRight&#39;] * 60
+
+        if joystick1[&#39;triggerLeft&#39;] &gt; 0.1:
+            # spin left
+            spin = -joystick1[&#39;triggerLeft&#39;] * 60
+
+    motor_a = 90 + yLeft - xLeft - spin
+
+    motor_b = 90 + yLeft + xLeft + spin
+
+    motor_c = 90 - yLeft + xLeft - spin
+
+    motor_d = 90 - yLeft - xLeft + spin
+
+    # mixing
+    # m1 = 90+forwardval+strafeval+turnval
+    # m2 = 90+forwardval-strafeval-turnval
+    # m3 = 90-forwardval+strafeval
+    # m4 = 90-forwardval-strafeval
+
+    global trimUp
+
+    # motors are not running at 93 instead of 90
+    # why? I wish I knew
+    motor_up_left = 93 - (trimUp[&#39;left&#39;] + yRight)
+    motor_up_right = 93 - (trimUp[&#39;right&#39;] + yRight)  # thrusters reversed
+
+    def bounds(x):
+        if x &lt; 30:
+            return 30
+        if x &gt; 150:
+            return 150
+        return round(x, 3)
+
+    def specialBounds(x):
+        if x &lt; 20:
+            return 20
+        if x &gt; 210:
+            return 210
+        return round(x, 3)
+
+    motor_a = bounds(motor_a)
+    motor_b = bounds(motor_b)
+    motor_c = bounds(180 - motor_c)  # reverse # de reverse
+    motor_d = bounds(motor_d)
+
+    motor_up_left = specialBounds(motor_up_left)
+    motor_up_right = specialBounds(motor_up_right)
+
+    # right
+    pins[4].write(motor_a)
+    pins[2].write(motor_b)
+    pins[3].write(motor_c)
+    pins[5].write(motor_d)
+
+    # 150 down up, 30 move up
+    pins[6].write(motor_up_right)  # stop on 93
+    pins[7].write(motor_up_left)  # stop on 93
+
+    pins[8].write(motor_claw)
+
+    # print datalist
+    for i in range(30):
+        # \r is a special character that makes print
+        # start at the beginning of the line, overwritting
+        # what is already there
+        #
+        # \033 is the ascii escape character for special
+        # terminal instructions
+        # \033[A moves the cursor up a line
+        # \033[K clears the line
+        # refer to http://ascii-table.com/ansi-escape-sequences.php
+        #
+        # the point of these are to clear the terminal screen
+        print(&#39;\r\033[A\033[K&#39;, end=&#39;&#39;)
+
+    print(&#39;Trim: [{0}, {1}]&#39;.format(trimUp[&#39;left&#39;], trimUp[&#39;right&#39;]))
+    print(joystick1)
+    print(joystick2)
+    print(motor_a, motor_b)
+    print(180-motor_c, motor_d)
+    print()
+    print(motor_up_left, motor_up_right)
+    print(motor_claw)
+    # global emergencyPower
+    if emergencyPower:
+        print(&#39;-----------------------&#39;)
+        print(&#39;-- MAX POWER ENABLED --&#39;)
+        print(&#39;-----------------------&#39;)
+
+    index = 0
+    for i in old:
+        print(index, i)
+        index += 1
+
+
+if __name__ == &#39;__main__&#39;:
+    webSocketClient.start(&#39;motor&#39;, process, ip=&#34;192.168.1.2&#34;)
+    # assumes that motor pi has ip 192.168.1.2</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-variables">Global variables</h2>
+<dl>
+<dt id="motor2020.PORT"><code class="name">var <span class="ident">PORT</span></code></dt>
+<dd>
+<section class="desc"><p>Location where the Arduino Mega can be found for pyfirmata</p></section>
+</dd>
+<dt id="motor2020.axis"><code class="name">var <span class="ident">axis</span></code></dt>
+<dd>
+<section class="desc"><p>List of axis controls on the XBox controllers</p></section>
+</dd>
+<dt id="motor2020.buttons"><code class="name">var <span class="ident">buttons</span></code></dt>
+<dd>
+<section class="desc"><p>List of buttons on the XBox controllers</p></section>
+</dd>
+<dt id="motor2020.emergencyPower"><code class="name">var <span class="ident">emergencyPower</span></code></dt>
+<dd>
+<section class="desc"><p>Controls whether or not the vertical thrusters
+are restrained in their power usage as the
+low quality motor controllers make them cause
+a voltage drop that can and has caused a brown-out
+in the raspberry pis</p></section>
+</dd>
+<dt id="motor2020.justPressed"><code class="name">var <span class="ident">justPressed</span></code></dt>
+<dd>
+<section class="desc"><p>Stores which buttons are currently pressed
+so that code activates only once per
+button press and does not repeat</p></section>
+</dd>
+<dt id="motor2020.trimUp"><code class="name">var <span class="ident">trimUp</span></code></dt>
+<dd>
+<section class="desc"><p>Stores the default power level of the vertical thrusters.
+As the ROV does not have perfect density,
+this value can be adjusted by the bumpers (LB, RB) on the controller
+to keep the ROV at constant depth when at rest</p></section>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="motor2020.buttonPressed"><code class="name flex">
+<span>def <span class="ident">buttonPressed</span></span>(<span>button, num)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Specifies what to do if a button is pressed</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>button</code></strong> :&ensp;<code>str</code></dt>
+<dd>The button name: ['A', 'B', 'X', 'Y', 'LB', 'RB']</dd>
+<dt><strong><code>num</code></strong> :&ensp;<code>int</code></dt>
+<dd>The joystick number, should be either 0 or 1</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def buttonPressed(button, num):
+    &#39;&#39;&#39;Specifies what to do if a button is pressed
+
+    Args:
+        button (str): The button name: [&#39;A&#39;, &#39;B&#39;, &#39;X&#39;, &#39;Y&#39;, &#39;LB&#39;, &#39;RB&#39;]
+        num (int): The joystick number, should be either 0 or 1
+    &#39;&#39;&#39;
+
+    global trimUp, emergencyPower
+    # num is zero or one
+    if num == 0:
+        if button == &#39;LB&#39;:
+            trimUp[&#39;left&#39;] += 1
+            trimUp[&#39;right&#39;] += 1
+        elif button == &#39;RB&#39;:
+            trimUp[&#39;left&#39;] -= 1
+            trimUp[&#39;right&#39;] -= 1
+        elif button == &#39;X&#39;:
+            emergencyPower = True
+        elif button == &#39;Y&#39;:
+            emergencyPower = False</code></pre>
+</details>
+</dd>
+<dt id="motor2020.process"><code class="name flex">
+<span>def <span class="ident">process</span></span>(<span>data)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Uses a json file of the state of the XBox controller
+to set the motors. The json passed in as <code>data</code> must have
+all the labels found in axis and buttons, twice, once
+for each controller. The first twelve are controller 1,
+the second twelve are controller 2</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>data</code></strong> :&ensp;<code>str</code></dt>
+<dd>A json string representing a dict of the controller's state</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def process(data):
+    &#39;&#39;&#39;Uses a json file of the state of the XBox controller
+    to set the motors. The json passed in as `data` must have
+    all the labels found in axis and buttons, twice, once
+    for each controller. The first twelve are controller 1,
+    the second twelve are controller 2
+
+    Args:
+        data (str): A json string representing a dict of the controller&#39;s state
+    &#39;&#39;&#39;
+
+    joysticks = json.loads(data)
+    assert len(joysticks) == 24  # verify correct count
+
+    joystick1 = dict(zip(axis + buttons, joysticks[:12]))
+    joystick2 = dict(zip(axis + buttons, joysticks[12:]))
+
+    old = []  # for debugging
+
+    del data
+
+    global justPressed
+
+    stickNum = 0
+    for stick, jPressed in zip((joystick1, joystick2), justPressed):
+        for k in stick:
+            if k not in buttons:
+                continue
+
+            v = stick[k]
+            if v == 1 and not jPressed[k]:
+                # just pressed
+                buttonPressed(k, stickNum)
+                jPressed[k] = True
+            elif v == 0 and jPressed[k]:
+                # just released
+                jPressed[k] = False
+            elif v not in [1, 0]:
+                raise ValueError(&#39;Got {0}, expected 0 or 1&#39;.format(v))
+            else:
+                pass
+
+        stickNum += 1
+
+    del stickNum
+
+    motor_claw = 90
+
+    # print(joystick1)
+    if joystick1[&#39;A&#39;] and joystick1[&#39;B&#39;]:
+        pass  # do nothing cause both are pressed
+    elif joystick1[&#39;A&#39;]:
+        motor_claw = 150
+    elif joystick1[&#39;B&#39;]:
+        motor_claw = 30
+
+    # motor setup
+    #       150    150
+    #       /a/    \b\
+    #  4  /////    \\\\\  2
+    #
+    #               150
+    #  5  \\\\\    /////  3
+    #      \d\     /c/
+    #      150
+    # ______________a_b_c_d
+    # Back          - - + +
+    # Front         + + - -
+    # Strafe Left   - + - +
+    # Strafe Right  + - + -
+    # Rotate Left   - + + -
+    # Rotate Right  + - - +
+    #
+
+    yLeft = 60 * joystick1[&#39;yLeft&#39;]
+    xLeft = 60 * joystick1[&#39;xLeft&#39;]  # should be strafe
+
+    global emergencyPower
+    if emergencyPower:
+        yRight = 60 * joystick1[&#39;yRight&#39;]
+    else:
+        yRight = 30 * joystick1[&#39;yRight&#39;]
+        # reduce power to avoid brown outs
+
+    spin = 0
+
+    joystick1[&#39;triggerRight&#39;] = (joystick1[&#39;triggerRight&#39;] + 1) / 2
+    joystick1[&#39;triggerLeft&#39;] = (joystick1[&#39;triggerLeft&#39;] + 1) / 2
+
+    joystick2[&#39;triggerRight&#39;] = (joystick2[&#39;triggerRight&#39;] + 1) / 2
+    joystick2[&#39;triggerLeft&#39;] = (joystick2[&#39;triggerLeft&#39;] + 1) / 2
+
+    if joystick1[&#39;triggerRight&#39;] &gt;= 0.1 and joystick1[&#39;triggerLeft&#39;] &gt;= 0.1:
+        pass  # do nothing cause both are pressed
+    else:
+        if joystick1[&#39;triggerRight&#39;] &gt; 0.1:
+            # spin right
+            spin = joystick1[&#39;triggerRight&#39;] * 60
+
+        if joystick1[&#39;triggerLeft&#39;] &gt; 0.1:
+            # spin left
+            spin = -joystick1[&#39;triggerLeft&#39;] * 60
+
+    motor_a = 90 + yLeft - xLeft - spin
+
+    motor_b = 90 + yLeft + xLeft + spin
+
+    motor_c = 90 - yLeft + xLeft - spin
+
+    motor_d = 90 - yLeft - xLeft + spin
+
+    # mixing
+    # m1 = 90+forwardval+strafeval+turnval
+    # m2 = 90+forwardval-strafeval-turnval
+    # m3 = 90-forwardval+strafeval
+    # m4 = 90-forwardval-strafeval
+
+    global trimUp
+
+    # motors are not running at 93 instead of 90
+    # why? I wish I knew
+    motor_up_left = 93 - (trimUp[&#39;left&#39;] + yRight)
+    motor_up_right = 93 - (trimUp[&#39;right&#39;] + yRight)  # thrusters reversed
+
+    def bounds(x):
+        if x &lt; 30:
+            return 30
+        if x &gt; 150:
+            return 150
+        return round(x, 3)
+
+    def specialBounds(x):
+        if x &lt; 20:
+            return 20
+        if x &gt; 210:
+            return 210
+        return round(x, 3)
+
+    motor_a = bounds(motor_a)
+    motor_b = bounds(motor_b)
+    motor_c = bounds(180 - motor_c)  # reverse # de reverse
+    motor_d = bounds(motor_d)
+
+    motor_up_left = specialBounds(motor_up_left)
+    motor_up_right = specialBounds(motor_up_right)
+
+    # right
+    pins[4].write(motor_a)
+    pins[2].write(motor_b)
+    pins[3].write(motor_c)
+    pins[5].write(motor_d)
+
+    # 150 down up, 30 move up
+    pins[6].write(motor_up_right)  # stop on 93
+    pins[7].write(motor_up_left)  # stop on 93
+
+    pins[8].write(motor_claw)
+
+    # print datalist
+    for i in range(30):
+        # \r is a special character that makes print
+        # start at the beginning of the line, overwritting
+        # what is already there
+        #
+        # \033 is the ascii escape character for special
+        # terminal instructions
+        # \033[A moves the cursor up a line
+        # \033[K clears the line
+        # refer to http://ascii-table.com/ansi-escape-sequences.php
+        #
+        # the point of these are to clear the terminal screen
+        print(&#39;\r\033[A\033[K&#39;, end=&#39;&#39;)
+
+    print(&#39;Trim: [{0}, {1}]&#39;.format(trimUp[&#39;left&#39;], trimUp[&#39;right&#39;]))
+    print(joystick1)
+    print(joystick2)
+    print(motor_a, motor_b)
+    print(180-motor_c, motor_d)
+    print()
+    print(motor_up_left, motor_up_right)
+    print(motor_claw)
+    # global emergencyPower
+    if emergencyPower:
+        print(&#39;-----------------------&#39;)
+        print(&#39;-- MAX POWER ENABLED --&#39;)
+        print(&#39;-----------------------&#39;)
+
+    index = 0
+    for i in old:
+        print(index, i)
+        index += 1</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-variables">Global variables</a></h3>
+<ul class="two-column">
+<li><code><a title="motor2020.PORT" href="#motor2020.PORT">PORT</a></code></li>
+<li><code><a title="motor2020.axis" href="#motor2020.axis">axis</a></code></li>
+<li><code><a title="motor2020.buttons" href="#motor2020.buttons">buttons</a></code></li>
+<li><code><a title="motor2020.emergencyPower" href="#motor2020.emergencyPower">emergencyPower</a></code></li>
+<li><code><a title="motor2020.justPressed" href="#motor2020.justPressed">justPressed</a></code></li>
+<li><code><a title="motor2020.trimUp" href="#motor2020.trimUp">trimUp</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="motor2020.buttonPressed" href="#motor2020.buttonPressed">buttonPressed</a></code></li>
+<li><code><a title="motor2020.process" href="#motor2020.process">process</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

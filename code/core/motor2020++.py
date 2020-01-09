@@ -79,36 +79,37 @@ currentPower = {
 }
 '''Current power level sent to the vertical thrusters'''
 
-import pyfirmata
+if __name__ == '__main__':
+    import pyfirmata
 
-# Setup pyFirmata
-BOARD =  pyfirmata.Arduino(PORT)
+    # Setup pyFirmata
+    BOARD = pyfirmata.Arduino(PORT)
 
-# Setup an iterator for safety (no idea what that means, ask Danny or Yilou)
-iter8 = pyfirmata.util.Iterator(BOARD)
-iter8.start()
+    # Setup an iterator for safety (no idea what that means, ask Danny or Yilou)
+    iter8 = pyfirmata.util.Iterator(BOARD)
+    iter8.start()
 
-# Setup pins
-pins = [
-    None, # no pin 0
-    None, # no pin 1
-    BOARD.get_pin('d:2:s'), #motor 2
-    BOARD.get_pin('d:3:s'), #motor 3
-    BOARD.get_pin('d:4:s'), #motor 4
-    BOARD.get_pin('d:5:s'), #motor 5
-    BOARD.get_pin('d:6:s'), #motor 6 - vertical thruster
-    BOARD.get_pin('d:7:s'), #motor 7 - vertical thruster
-    BOARD.get_pin('d:8:s'), #motor 8 - claw
-    BOARD.get_pin('d:9:s'), #motor 9
-    BOARD.get_pin('d:10:s'), #motor 10
-    None, # no pin 11
-    BOARD.get_pin('d:12:s'), #motor 12
-]
-'''All pins are put into a list
-so that they can conveniently be referred to
-via pins[pin num]
-example: pins[8].write(150)
-'''
+    # Setup pins
+    pins = [
+        None,  # no pin 0
+        None,  # no pin 1
+        BOARD.get_pin('d:2:s'),  # motor 2
+        BOARD.get_pin('d:3:s'),  # motor 3
+        BOARD.get_pin('d:4:s'),  # motor 4
+        BOARD.get_pin('d:5:s'),  # motor 5
+        BOARD.get_pin('d:6:s'),  # motor 6 - vertical thruster
+        BOARD.get_pin('d:7:s'),  # motor 7 - vertical thruster
+        BOARD.get_pin('d:8:s'),  # motor 8 - claw
+        BOARD.get_pin('d:9:s'),  # motor 9
+        BOARD.get_pin('d:10:s'),  # motor 10
+        None,  # no pin 11
+        BOARD.get_pin('d:12:s'),  # motor 12
+    ]
+    '''All pins are put into a list
+    so that they can conveniently be referred to
+    via pins[pin num]
+    example: pins[8].write(150)
+    '''
 
 
 def buttonPressed(button, num):
@@ -439,4 +440,5 @@ def process(data):
 # start a web socket client
 # type is "motor", handling function is process
 # ip is that of the server
-webSocketClient.start('motor', process, ip="192.168.1.2")
+if __name__ == '__main__':
+    webSocketClient.start('motor', process, ip="192.168.1.2")
