@@ -1,9 +1,15 @@
 #!/usr/bin/env python3.4
-# Author: Jonathan Rotter
+'''
+Author: Jonathan Rotter
+
+Finds the process id of the data
+collection program to ensure
+that it is currently running
+'''
 import os
 
 # Print header specifying file type
-print ("Content-type: text/html\n\n")
+print("Content-type: text/html\n\n")
 
 # Search for a process name beginning with "sudo python3.4 data"
 # Runs it in a subshell and returns the result

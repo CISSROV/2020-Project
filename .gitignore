@@ -4,4 +4,4 @@ code/.DS_Store
 code/web/.DS_Store
 code/web/artificial_horizon/.DS_Store
 .vscode/settings.json
-code/core/__pycache__/
+**/__pycache__/

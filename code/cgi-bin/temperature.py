@@ -1,26 +1,37 @@
 #!/usr/bin/env python3.4
-# Author: Jonathan Rotter
+'''
+Author: Jonathan Rotter
 
-# Add a location for python to search for modules to import
-from sys import path
-path.append('/var/www/scripts')
+Uses tempSensor.py located
+in `/var/www/scripts` to fetch
+the temperature from the
+external thermometer.
+'''
 
-# Import tempSensor module located in "/var/www/scripts"
-import tempSensor
+if __name__ == '__main__':
+    # Add a location for python to search for modules to import
+    from sys import path
+    path.append('/var/www/scripts')
 
-# Print header specifying file type
-print ("Content-type: text/html\n\n")
+    # Import tempSensor module located in "/var/www/scripts"
+    try:
+        import tempSensor
+    except ModuleNotFoundError:
+        raise ModuleNotFoundError("tempSensor.py is missing in /var/www/scripts")
 
-# Open and read the html file
-f = open('temperature.html')
-txt = f.read()
-f.close()
+    # Print header specifying file type
+    print("Content-type: text/html\n\n")
 
-# Get the temperature using the tempSensor module
-data = tempSensor.getTemp()
+    # Open and read the html file
+    f = open('temperature.html')
+    txt = f.read()
+    f.close()
 
-# Put the temperature into the html file where the comment "<!-- tag -->" is
-txt = txt.replace('<!-- tag -->', str(data))
+    # Get the temperature using the tempSensor module
+    data = tempSensor.getTemp()
 
-# Print final html
-print(txt)
+    # Put the temperature into the html file where the comment "<!-- tag -->" is
+    txt = txt.replace('<!-- tag -->', str(data))
+
+    # Print final html
+    print(txt)
