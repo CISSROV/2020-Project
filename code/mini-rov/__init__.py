@@ -7,4 +7,4 @@ in the page hosted on surface pi.
 '''
 
 import sys
-sys.path.append(sys.path[0] + '/cgi-bin')
+sys.path.append(sys.path[0] + '/mini-rov')

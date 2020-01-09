@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.2" />
+<title>mini-rov.hydrogenMiniROVClient2020 API documentation</title>
+<meta name="description" content="Author: Jonathan Rotter …" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>mini-rov.hydrogenMiniROVClient2020</code></h1>
+</header>
+<section id="section-intro">
+<p>Author: Jonathan Rotter</p>
+<p>Module for interpreting the state
+of the XBox controller into instructions
+for the motors of the mini ROV</p>
+<p>May no longer be useful as a mini ROV
+was only part of the MATE 2019 Competition</p>
+<p>Required 3rd-party libraries:
+<code>autobahn</code>
+<code>twisted</code></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/env python3.4
+&#39;&#39;&#39;Author: Jonathan Rotter
+
+Module for interpreting the state
+of the XBox controller into instructions
+for the motors of the mini ROV
+
+May no longer be useful as a mini ROV
+was only part of the MATE 2019 Competition
+
+Required 3rd-party libraries:
+`autobahn`
+`twisted`
+&#39;&#39;&#39;
+if __name__ == &#39;mini-rov.hydrogenMiniROVClient2020&#39;:
+    # imported from module
+    import core.webSocketClient as webSocketClient
+else:
+    import webSocketClient
+
+import motorInterface
+import json
+
+axis = [&#39;xLeft&#39;, &#39;yLeft&#39;, &#39;triggerLeft&#39;, &#39;xRight&#39;, &#39;yRight&#39;, &#39;triggerRight&#39;]
+&#39;&#39;&#39;List of axis controls on the XBox controllers&#39;&#39;&#39;
+
+buttons = [&#39;A&#39;, &#39;B&#39;, &#39;X&#39;, &#39;Y&#39;, &#39;LB&#39;, &#39;RB&#39;]
+&#39;&#39;&#39;List of buttons on the XBox controllers&#39;&#39;&#39;
+
+# trim to adjust for buoyancy of the miniROV
+trimUp = {
+    &#39;center&#39;: 0.0
+}
+&#39;&#39;&#39;Stores the default power level of the vertical thrusters.
+As the ROV does not have perfect density,
+this value can be adjusted by the bumpers (LB, RB) on the controller
+to keep the ROV at constant depth when at rest&#39;&#39;&#39;
+
+
+# don&#39;t know what that means
+#   ||
+#   \/
+# these are in a row
+# the pins on the motor controller
+
+
+m1 = motorInterface.motor(16, 26)  # vertical
+&#39;&#39;&#39;
+This motor is IN3/4 on the edge of the motor controller
+these pins are based on how the 2019 miniROV was wired up
+&#39;&#39;&#39;
+m2 = motorInterface.motor(12, 13)  # unused
+
+
+# 2nd motor controller
+m3 = motorInterface.motor(27, 23)
+&#39;&#39;&#39;object representing the side motor (maybe left)&#39;&#39;&#39;
+m4 = motorInterface.motor(4, 18)
+&#39;&#39;&#39;object representing the side motor (maybe right)&#39;&#39;&#39;
+
+
+# functions for no real reason
+def move1(pow):
+    &#39;&#39;&#39;Sets the power level of `m1`&#39;&#39;&#39;
+    m1.set(pow)
+
+
+def move2(pow):
+    &#39;&#39;&#39;Sets the power level of `m2`&#39;&#39;&#39;
+    m2.set(pow)
+
+
+def move3(pow):
+    &#39;&#39;&#39;Sets the power level of `m3`&#39;&#39;&#39;
+    m3.set(pow)
+
+
+def move4(pow):
+    &#39;&#39;&#39;Sets the power level of `m4`&#39;&#39;&#39;
+    m4.set(pow)
+
+# Used to keep track when a button is pressed and when released
+# so that functions won&#39;t fire twice from one button press
+justPressed = [
+    {
+        &#39;A&#39;: False,
+        &#39;B&#39;: False,
+        &#39;X&#39;: False,
+        &#39;Y&#39;: False,
+        &#39;LB&#39;: False,
+        &#39;RB&#39;: False
+    },
+    {
+        &#39;A&#39;: False,
+        &#39;B&#39;: False,
+        &#39;X&#39;: False,
+        &#39;Y&#39;: False,
+        &#39;LB&#39;: False,
+        &#39;RB&#39;: False
+    }
+]
+&#39;&#39;&#39;
+Stores which buttons are currently pressed
+so that code activates only once per
+button press and does not repeat
+&#39;&#39;&#39;
+
+
+def buttonPressed(button, num):
+    &#39;&#39;&#39;Specifies what to do if a button is pressed.
+    All button related features should be added here.
+
+    Args:
+        button (str): The button name: [&#39;A&#39;, &#39;B&#39;, &#39;X&#39;, &#39;Y&#39;, &#39;LB&#39;, &#39;RB&#39;]
+        num (int): The joystick number, should be either 0 or 1
+    &#39;&#39;&#39;
+    global trimUp
+    # num is 0 or 1, representing if it&#39;s the first or second xbox controller
+
+    # 0 is 1st controller
+    # 1 is 2nd controller
+
+    # LB and RB are used to set the trim of the miniROV
+    if num == 1:  # 2nd controller
+        if button == &#39;LB&#39;:
+            trimUp[&#39;center&#39;] += 1  # trim up when LB is pressed
+        elif button == &#39;RB&#39;:
+            trimUp[&#39;center&#39;] -= 1  # trim down when RB is pressed
+
+
+def process(data):
+    &#39;&#39;&#39;Uses a json file of the state of the XBox controller
+    to set the motors. The json passed in as `data` must have
+    all the labels found in axis and buttons, twice, once
+    for each controller. The first twelve are controller 1,
+    the second twelve are controller 2
+
+    Args:
+        data (str): A json string representing a dict of the controller&#39;s state
+    &#39;&#39;&#39;
+
+    # turn the data json string into a list
+    # data contains the value of the joysticks buttons/axis
+    joysticks = json.loads(data)
+    # make sure it has the right number of buttons/axis
+    assert len(joysticks) == 24
+
+    # axis and buttons are the labels
+
+    # match up the labels with the data values to make a dictionary
+    joystick1 = dict(zip(axis + buttons, joysticks[:12]))
+    joystick2 = dict(zip(axis + buttons, joysticks[12:]))
+
+    old = []  # for debugging
+
+    del data
+
+    global justPressed
+
+    stickNum = 0
+    # for each xbox controller
+    # (joystick1, joystick2) is a tuple of two dicts
+    # justPressed is a list of two dicts
+    for stick, jPressed in zip((joystick1, joystick2), justPressed):
+        # stick is a dictionary containing the labels and values of each button/axis on
+        # one of the joysticks
+
+        # jPressed is one of the dictionaries from the justPressed list
+
+        # for every button/axis on this xbox controller
+        for k in stick:
+            # k is the button/axis label
+
+            # ignore axis
+            if k not in buttons:
+                continue
+
+            # v is the value of button k
+            v = stick[k]
+
+            # if button k is pressed and wasn&#39;t pressed already
+            if v == 1 and not jPressed[k]:
+                # process that this button was just pressed
+                buttonPressed(k, stickNum)
+
+                # Update jPressed so that buttonPressed()
+                # won&#39;t fire twice for one button press
+                jPressed[k] = True
+
+            # if button k is not pressed but it was pressed before
+            elif v == 0 and jPressed[k]:
+                # Button k was just released
+
+                # Update that jPressed is no longer pressed
+                # so that buttonPressed() will activate again if it is pressed again
+                jPressed[k] = False
+
+            # if button k has a value other than the normal 0 or 1
+            elif v not in [1, 0]:
+                # should never happen
+                raise ValueError(&#39;Got {0}, expected 0 or 1&#39;.format(v))
+
+            # if button k hasn&#39;t changed status
+            else:
+                pass
+
+        # add one to stickNum
+        # it is needed for buttonPressed()
+        stickNum += 1
+
+    del stickNum
+
+    # for mixing controls
+    yLeft = 50 * joystick2[&#39;yLeft&#39;]
+    yRight = 50 * joystick2[&#39;yRight&#39;]
+
+    # triggerRight and triggerLeft have values of -1 to +1,
+    # so adjust them to be 0 to +1
+    joystick2[&#39;triggerRight&#39;] = (joystick2[&#39;triggerRight&#39;] + 1) / 2
+    joystick2[&#39;triggerLeft&#39;] = (joystick2[&#39;triggerLeft&#39;] + 1) / 2
+
+    # vertical power level
+    vertical = 0
+
+    if joystick2[&#39;triggerRight&#39;] &gt;= 0.1 and joystick2[&#39;triggerLeft&#39;] &gt;= 0.1:
+        pass  # do nothing cause both are pressed
+    else:
+        # the axis might not go to exact 0 so the if statements try to cut it out
+
+        if joystick2[&#39;triggerRight&#39;] &gt; 0.1:
+            vertical = joystick2[&#39;triggerRight&#39;] * 50
+
+        if joystick2[&#39;triggerLeft&#39;] &gt; 0.1:
+            vertical = -joystick2[&#39;triggerLeft&#39;] * 50
+
+    # Mini-ROV motor setup
+    #   top view
+    #     ____
+    #    |    |
+    # /a\|    |/b\
+    #    |____|
+    #     (up)
+    #
+
+    motor_a = yLeft
+
+    motor_b = yRight
+
+    global trimUp
+
+    # add the trim to the vertical power level
+    motor_up = trimUp[&#39;center&#39;] + vertical
+
+    
+    def bounds(x):
+        &#39;&#39;&#39;
+        Ensures that -50 &lt;= x &lt;= 50 for the motors.
+        The maximum power setting is -100 to 100.
+        Rounds result to three decimal points
+
+        Args:
+            x (int): Number to ensure is within 30 to 150
+
+        Returns:
+            x: An int that fits 30 &lt;= x &lt;= 150
+        &#39;&#39;&#39;
+        if x &lt; -50:
+            return -50
+        if x &gt; 50:
+            return 50
+
+        # round the result just to have cleaner decimals
+        return round(x, 2)
+
+    # make sure each is within allowed bounds
+    motor_a = bounds(motor_a)
+    motor_b = bounds(motor_b)
+    motor_up = bounds(motor_up)
+
+    # set the motors
+    # which motor is which depends on the wiring of the miniROV
+    # This is set to the wiring of the 2019 miniROV
+    move1(motor_up)
+    move4(motor_a)
+    move3(motor_b)
+
+    # -----   print information   -----
+
+    # clear the console window
+    for i in range(30):
+        # \r goes the the front of the line on the console
+        # \033[A goes up a line
+        # \033[K clears the line
+        print(&#39;\r\033[A\033[K&#39;, end=&#39;&#39;)
+
+    # display trim
+    print(&#39;Trim: {0}&#39;.format(trimUp[&#39;center&#39;]))
+    # display joystick values
+    print(joystick1)
+    print(joystick2)
+    # display power levels
+    print(motor_a, motor_b)
+    print(motor_up)
+    print()
+
+    #
+    # for debugging
+    # anything added to the old list will be printed here
+    #
+    # !!! IMPORTANT FOR DEBUGGING !!!
+    # because of the screen clearing,
+    # nothing printed before it will actually be visible
+    # as it will be deleted by the screen clearing.
+    # thus, any debug info to print must be added to old
+    # so that it is printed here after the screen clearing
+    #
+    index = 0
+    for i in old:
+        print(index, i)
+        index += 1
+
+# start the code
+# ip should be of the surface pi
+# type is &#39;miniROV&#39;
+if __name__ == &#39;__main__&#39;:
+    webSocketClient.start(&#39;miniROV&#39;, process, ip=&#34;192.168.1.2&#34;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-variables">Global variables</h2>
+<dl>
+<dt id="mini-rov.hydrogenMiniROVClient2020.axis"><code class="name">var <span class="ident">axis</span></code></dt>
+<dd>
+<section class="desc"><p>List of axis controls on the XBox controllers</p></section>
+</dd>
+<dt id="mini-rov.hydrogenMiniROVClient2020.buttons"><code class="name">var <span class="ident">buttons</span></code></dt>
+<dd>
+<section class="desc"><p>List of buttons on the XBox controllers</p></section>
+</dd>
+<dt id="mini-rov.hydrogenMiniROVClient2020.justPressed"><code class="name">var <span class="ident">justPressed</span></code></dt>
+<dd>
+<section class="desc"><p>Stores which buttons are currently pressed
+so that code activates only once per
+button press and does not repeat</p></section>
+</dd>
+<dt id="mini-rov.hydrogenMiniROVClient2020.m1"><code class="name">var <span class="ident">m1</span></code></dt>
+<dd>
+<section class="desc"><p>This motor is IN3/4 on the edge of the motor controller
+these pins are based on how the 2019 miniROV was wired up</p></section>
+</dd>
+<dt id="mini-rov.hydrogenMiniROVClient2020.m3"><code class="name">var <span class="ident">m3</span></code></dt>
+<dd>
+<section class="desc"><p>object representing the side motor (maybe left)</p></section>
+</dd>
+<dt id="mini-rov.hydrogenMiniROVClient2020.m4"><code class="name">var <span class="ident">m4</span></code></dt>
+<dd>
+<section class="desc"><p>object representing the side motor (maybe right)</p></section>
+</dd>
+<dt id="mini-rov.hydrogenMiniROVClient2020.trimUp"><code class="name">var <span class="ident">trimUp</span></code></dt>
+<dd>
+<section class="desc"><p>Stores the default power level of the vertical thrusters.
+As the ROV does not have perfect density,
+this value can be adjusted by the bumpers (LB, RB) on the controller
+to keep the ROV at constant depth when at rest</p></section>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="mini-rov.hydrogenMiniROVClient2020.buttonPressed"><code class="name flex">
+<span>def <span class="ident">buttonPressed</span></span>(<span>button, num)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Specifies what to do if a button is pressed.
+All button related features should be added here.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>button</code></strong> :&ensp;<code>str</code></dt>
+<dd>The button name: ['A', 'B', 'X', 'Y', 'LB', 'RB']</dd>
+<dt><strong><code>num</code></strong> :&ensp;<code>int</code></dt>
+<dd>The joystick number, should be either 0 or 1</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def buttonPressed(button, num):
+    &#39;&#39;&#39;Specifies what to do if a button is pressed.
+    All button related features should be added here.
+
+    Args:
+        button (str): The button name: [&#39;A&#39;, &#39;B&#39;, &#39;X&#39;, &#39;Y&#39;, &#39;LB&#39;, &#39;RB&#39;]
+        num (int): The joystick number, should be either 0 or 1
+    &#39;&#39;&#39;
+    global trimUp
+    # num is 0 or 1, representing if it&#39;s the first or second xbox controller
+
+    # 0 is 1st controller
+    # 1 is 2nd controller
+
+    # LB and RB are used to set the trim of the miniROV
+    if num == 1:  # 2nd controller
+        if button == &#39;LB&#39;:
+            trimUp[&#39;center&#39;] += 1  # trim up when LB is pressed
+        elif button == &#39;RB&#39;:
+            trimUp[&#39;center&#39;] -= 1  # trim down when RB is pressed</code></pre>
+</details>
+</dd>
+<dt id="mini-rov.hydrogenMiniROVClient2020.move1"><code class="name flex">
+<span>def <span class="ident">move1</span></span>(<span>pow)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Sets the power level of <a title="mini-rov.hydrogenMiniROVClient2020.m1" href="#mini-rov.hydrogenMiniROVClient2020.m1"><code>m1</code></a></p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def move1(pow):
+    &#39;&#39;&#39;Sets the power level of `m1`&#39;&#39;&#39;
+    m1.set(pow)</code></pre>
+</details>
+</dd>
+<dt id="mini-rov.hydrogenMiniROVClient2020.move2"><code class="name flex">
+<span>def <span class="ident">move2</span></span>(<span>pow)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Sets the power level of <code>m2</code></p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def move2(pow):
+    &#39;&#39;&#39;Sets the power level of `m2`&#39;&#39;&#39;
+    m2.set(pow)</code></pre>
+</details>
+</dd>
+<dt id="mini-rov.hydrogenMiniROVClient2020.move3"><code class="name flex">
+<span>def <span class="ident">move3</span></span>(<span>pow)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Sets the power level of <a title="mini-rov.hydrogenMiniROVClient2020.m3" href="#mini-rov.hydrogenMiniROVClient2020.m3"><code>m3</code></a></p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def move3(pow):
+    &#39;&#39;&#39;Sets the power level of `m3`&#39;&#39;&#39;
+    m3.set(pow)</code></pre>
+</details>
+</dd>
+<dt id="mini-rov.hydrogenMiniROVClient2020.move4"><code class="name flex">
+<span>def <span class="ident">move4</span></span>(<span>pow)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Sets the power level of <a title="mini-rov.hydrogenMiniROVClient2020.m4" href="#mini-rov.hydrogenMiniROVClient2020.m4"><code>m4</code></a></p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def move4(pow):
+    &#39;&#39;&#39;Sets the power level of `m4`&#39;&#39;&#39;
+    m4.set(pow)</code></pre>
+</details>
+</dd>
+<dt id="mini-rov.hydrogenMiniROVClient2020.process"><code class="name flex">
+<span>def <span class="ident">process</span></span>(<span>data)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Uses a json file of the state of the XBox controller
+to set the motors. The json passed in as <code>data</code> must have
+all the labels found in axis and buttons, twice, once
+for each controller. The first twelve are controller 1,
+the second twelve are controller 2</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>data</code></strong> :&ensp;<code>str</code></dt>
+<dd>A json string representing a dict of the controller's state</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def process(data):
+    &#39;&#39;&#39;Uses a json file of the state of the XBox controller
+    to set the motors. The json passed in as `data` must have
+    all the labels found in axis and buttons, twice, once
+    for each controller. The first twelve are controller 1,
+    the second twelve are controller 2
+
+    Args:
+        data (str): A json string representing a dict of the controller&#39;s state
+    &#39;&#39;&#39;
+
+    # turn the data json string into a list
+    # data contains the value of the joysticks buttons/axis
+    joysticks = json.loads(data)
+    # make sure it has the right number of buttons/axis
+    assert len(joysticks) == 24
+
+    # axis and buttons are the labels
+
+    # match up the labels with the data values to make a dictionary
+    joystick1 = dict(zip(axis + buttons, joysticks[:12]))
+    joystick2 = dict(zip(axis + buttons, joysticks[12:]))
+
+    old = []  # for debugging
+
+    del data
+
+    global justPressed
+
+    stickNum = 0
+    # for each xbox controller
+    # (joystick1, joystick2) is a tuple of two dicts
+    # justPressed is a list of two dicts
+    for stick, jPressed in zip((joystick1, joystick2), justPressed):
+        # stick is a dictionary containing the labels and values of each button/axis on
+        # one of the joysticks
+
+        # jPressed is one of the dictionaries from the justPressed list
+
+        # for every button/axis on this xbox controller
+        for k in stick:
+            # k is the button/axis label
+
+            # ignore axis
+            if k not in buttons:
+                continue
+
+            # v is the value of button k
+            v = stick[k]
+
+            # if button k is pressed and wasn&#39;t pressed already
+            if v == 1 and not jPressed[k]:
+                # process that this button was just pressed
+                buttonPressed(k, stickNum)
+
+                # Update jPressed so that buttonPressed()
+                # won&#39;t fire twice for one button press
+                jPressed[k] = True
+
+            # if button k is not pressed but it was pressed before
+            elif v == 0 and jPressed[k]:
+                # Button k was just released
+
+                # Update that jPressed is no longer pressed
+                # so that buttonPressed() will activate again if it is pressed again
+                jPressed[k] = False
+
+            # if button k has a value other than the normal 0 or 1
+            elif v not in [1, 0]:
+                # should never happen
+                raise ValueError(&#39;Got {0}, expected 0 or 1&#39;.format(v))
+
+            # if button k hasn&#39;t changed status
+            else:
+                pass
+
+        # add one to stickNum
+        # it is needed for buttonPressed()
+        stickNum += 1
+
+    del stickNum
+
+    # for mixing controls
+    yLeft = 50 * joystick2[&#39;yLeft&#39;]
+    yRight = 50 * joystick2[&#39;yRight&#39;]
+
+    # triggerRight and triggerLeft have values of -1 to +1,
+    # so adjust them to be 0 to +1
+    joystick2[&#39;triggerRight&#39;] = (joystick2[&#39;triggerRight&#39;] + 1) / 2
+    joystick2[&#39;triggerLeft&#39;] = (joystick2[&#39;triggerLeft&#39;] + 1) / 2
+
+    # vertical power level
+    vertical = 0
+
+    if joystick2[&#39;triggerRight&#39;] &gt;= 0.1 and joystick2[&#39;triggerLeft&#39;] &gt;= 0.1:
+        pass  # do nothing cause both are pressed
+    else:
+        # the axis might not go to exact 0 so the if statements try to cut it out
+
+        if joystick2[&#39;triggerRight&#39;] &gt; 0.1:
+            vertical = joystick2[&#39;triggerRight&#39;] * 50
+
+        if joystick2[&#39;triggerLeft&#39;] &gt; 0.1:
+            vertical = -joystick2[&#39;triggerLeft&#39;] * 50
+
+    # Mini-ROV motor setup
+    #   top view
+    #     ____
+    #    |    |
+    # /a\|    |/b\
+    #    |____|
+    #     (up)
+    #
+
+    motor_a = yLeft
+
+    motor_b = yRight
+
+    global trimUp
+
+    # add the trim to the vertical power level
+    motor_up = trimUp[&#39;center&#39;] + vertical
+
+    
+    def bounds(x):
+        &#39;&#39;&#39;
+        Ensures that -50 &lt;= x &lt;= 50 for the motors.
+        The maximum power setting is -100 to 100.
+        Rounds result to three decimal points
+
+        Args:
+            x (int): Number to ensure is within 30 to 150
+
+        Returns:
+            x: An int that fits 30 &lt;= x &lt;= 150
+        &#39;&#39;&#39;
+        if x &lt; -50:
+            return -50
+        if x &gt; 50:
+            return 50
+
+        # round the result just to have cleaner decimals
+        return round(x, 2)
+
+    # make sure each is within allowed bounds
+    motor_a = bounds(motor_a)
+    motor_b = bounds(motor_b)
+    motor_up = bounds(motor_up)
+
+    # set the motors
+    # which motor is which depends on the wiring of the miniROV
+    # This is set to the wiring of the 2019 miniROV
+    move1(motor_up)
+    move4(motor_a)
+    move3(motor_b)
+
+    # -----   print information   -----
+
+    # clear the console window
+    for i in range(30):
+        # \r goes the the front of the line on the console
+        # \033[A goes up a line
+        # \033[K clears the line
+        print(&#39;\r\033[A\033[K&#39;, end=&#39;&#39;)
+
+    # display trim
+    print(&#39;Trim: {0}&#39;.format(trimUp[&#39;center&#39;]))
+    # display joystick values
+    print(joystick1)
+    print(joystick2)
+    # display power levels
+    print(motor_a, motor_b)
+    print(motor_up)
+    print()
+
+    #
+    # for debugging
+    # anything added to the old list will be printed here
+    #
+    # !!! IMPORTANT FOR DEBUGGING !!!
+    # because of the screen clearing,
+    # nothing printed before it will actually be visible
+    # as it will be deleted by the screen clearing.
+    # thus, any debug info to print must be added to old
+    # so that it is printed here after the screen clearing
+    #
+    index = 0
+    for i in old:
+        print(index, i)
+        index += 1</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="mini-rov" href="index.html">mini-rov</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-variables">Global variables</a></h3>
+<ul class="two-column">
+<li><code><a title="mini-rov.hydrogenMiniROVClient2020.axis" href="#mini-rov.hydrogenMiniROVClient2020.axis">axis</a></code></li>
+<li><code><a title="mini-rov.hydrogenMiniROVClient2020.buttons" href="#mini-rov.hydrogenMiniROVClient2020.buttons">buttons</a></code></li>
+<li><code><a title="mini-rov.hydrogenMiniROVClient2020.justPressed" href="#mini-rov.hydrogenMiniROVClient2020.justPressed">justPressed</a></code></li>
+<li><code><a title="mini-rov.hydrogenMiniROVClient2020.m1" href="#mini-rov.hydrogenMiniROVClient2020.m1">m1</a></code></li>
+<li><code><a title="mini-rov.hydrogenMiniROVClient2020.m3" href="#mini-rov.hydrogenMiniROVClient2020.m3">m3</a></code></li>
+<li><code><a title="mini-rov.hydrogenMiniROVClient2020.m4" href="#mini-rov.hydrogenMiniROVClient2020.m4">m4</a></code></li>
+<li><code><a title="mini-rov.hydrogenMiniROVClient2020.trimUp" href="#mini-rov.hydrogenMiniROVClient2020.trimUp">trimUp</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="mini-rov.hydrogenMiniROVClient2020.buttonPressed" href="#mini-rov.hydrogenMiniROVClient2020.buttonPressed">buttonPressed</a></code></li>
+<li><code><a title="mini-rov.hydrogenMiniROVClient2020.move1" href="#mini-rov.hydrogenMiniROVClient2020.move1">move1</a></code></li>
+<li><code><a title="mini-rov.hydrogenMiniROVClient2020.move2" href="#mini-rov.hydrogenMiniROVClient2020.move2">move2</a></code></li>
+<li><code><a title="mini-rov.hydrogenMiniROVClient2020.move3" href="#mini-rov.hydrogenMiniROVClient2020.move3">move3</a></code></li>
+<li><code><a title="mini-rov.hydrogenMiniROVClient2020.move4" href="#mini-rov.hydrogenMiniROVClient2020.move4">move4</a></code></li>
+<li><code><a title="mini-rov.hydrogenMiniROVClient2020.process" href="#mini-rov.hydrogenMiniROVClient2020.process">process</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

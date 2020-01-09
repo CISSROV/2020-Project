@@ -255,6 +255,17 @@ def process(data):
     motor_up_right = 93 - (trimUp['right'] + yRight)  # thrusters reversed
 
     def bounds(x):
+        '''
+        Ensures that 30 <= x <= 150 for the motors
+        The motors don't respond to higher or lower values
+        Rounds result to three decimal points
+
+        Args:
+            x (int): Number to ensure is within 30 to 150
+
+        Returns:
+            x: An int that fits 30 <= x <= 150
+        '''
         if x < 30:
             return 30
         if x > 150:
@@ -262,6 +273,16 @@ def process(data):
         return round(x, 3)
 
     def specialBounds(x):
+        '''
+        Ensures that 20 <= x <= 210 for the vertical thrusters
+        Rounds result to three decimal points
+
+        Args:
+            x (int): Number to ensure is within 20 to 210
+
+        Returns:
+            x: An int that fits 20 <= x <= 210
+        '''
         if x < 20:
             return 20
         if x > 210:
