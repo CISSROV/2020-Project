@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.2" />
-<title>motor2020 API documentation</title>
+<title>core.motor2020 API documentation</title>
 <meta name="description" content="Author: Jonathan Rotter …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
@@ -17,7 +17,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>motor2020</code></h1>
+<h1 class="title">Module <code>core.motor2020</code></h1>
 </header>
 <section id="section-intro">
 <p>Author: Jonathan Rotter</p>
@@ -371,19 +371,19 @@ if __name__ == &#39;__main__&#39;:
 <section>
 <h2 class="section-title" id="header-variables">Global variables</h2>
 <dl>
-<dt id="motor2020.PORT"><code class="name">var <span class="ident">PORT</span></code></dt>
+<dt id="core.motor2020.PORT"><code class="name">var <span class="ident">PORT</span></code></dt>
 <dd>
 <section class="desc"><p>Location where the Arduino Mega can be found for pyfirmata</p></section>
 </dd>
-<dt id="motor2020.axis"><code class="name">var <span class="ident">axis</span></code></dt>
+<dt id="core.motor2020.axis"><code class="name">var <span class="ident">axis</span></code></dt>
 <dd>
 <section class="desc"><p>List of axis controls on the XBox controllers</p></section>
 </dd>
-<dt id="motor2020.buttons"><code class="name">var <span class="ident">buttons</span></code></dt>
+<dt id="core.motor2020.buttons"><code class="name">var <span class="ident">buttons</span></code></dt>
 <dd>
 <section class="desc"><p>List of buttons on the XBox controllers</p></section>
 </dd>
-<dt id="motor2020.emergencyPower"><code class="name">var <span class="ident">emergencyPower</span></code></dt>
+<dt id="core.motor2020.emergencyPower"><code class="name">var <span class="ident">emergencyPower</span></code></dt>
 <dd>
 <section class="desc"><p>Controls whether or not the vertical thrusters
 are restrained in their power usage as the
@@ -391,13 +391,13 @@ low quality motor controllers make them cause
 a voltage drop that can and has caused a brown-out
 in the raspberry pis</p></section>
 </dd>
-<dt id="motor2020.justPressed"><code class="name">var <span class="ident">justPressed</span></code></dt>
+<dt id="core.motor2020.justPressed"><code class="name">var <span class="ident">justPressed</span></code></dt>
 <dd>
 <section class="desc"><p>Stores which buttons are currently pressed
 so that code activates only once per
 button press and does not repeat</p></section>
 </dd>
-<dt id="motor2020.trimUp"><code class="name">var <span class="ident">trimUp</span></code></dt>
+<dt id="core.motor2020.trimUp"><code class="name">var <span class="ident">trimUp</span></code></dt>
 <dd>
 <section class="desc"><p>Stores the default power level of the vertical thrusters.
 As the ROV does not have perfect density,
@@ -409,7 +409,7 @@ to keep the ROV at constant depth when at rest</p></section>
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="motor2020.buttonPressed"><code class="name flex">
+<dt id="core.motor2020.buttonPressed"><code class="name flex">
 <span>def <span class="ident">buttonPressed</span></span>(<span>button, num)</span>
 </code></dt>
 <dd>
@@ -448,7 +448,7 @@ to keep the ROV at constant depth when at rest</p></section>
             emergencyPower = False</code></pre>
 </details>
 </dd>
-<dt id="motor2020.process"><code class="name flex">
+<dt id="core.motor2020.process"><code class="name flex">
 <span>def <span class="ident">process</span></span>(<span>data)</span>
 </code></dt>
 <dd>
@@ -670,20 +670,25 @@ the second twelve are controller 2</p>
 <ul></ul>
 </div>
 <ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="core" href="index.html">core</a></code></li>
+</ul>
+</li>
 <li><h3><a href="#header-variables">Global variables</a></h3>
 <ul class="two-column">
-<li><code><a title="motor2020.PORT" href="#motor2020.PORT">PORT</a></code></li>
-<li><code><a title="motor2020.axis" href="#motor2020.axis">axis</a></code></li>
-<li><code><a title="motor2020.buttons" href="#motor2020.buttons">buttons</a></code></li>
-<li><code><a title="motor2020.emergencyPower" href="#motor2020.emergencyPower">emergencyPower</a></code></li>
-<li><code><a title="motor2020.justPressed" href="#motor2020.justPressed">justPressed</a></code></li>
-<li><code><a title="motor2020.trimUp" href="#motor2020.trimUp">trimUp</a></code></li>
+<li><code><a title="core.motor2020.PORT" href="#core.motor2020.PORT">PORT</a></code></li>
+<li><code><a title="core.motor2020.axis" href="#core.motor2020.axis">axis</a></code></li>
+<li><code><a title="core.motor2020.buttons" href="#core.motor2020.buttons">buttons</a></code></li>
+<li><code><a title="core.motor2020.emergencyPower" href="#core.motor2020.emergencyPower">emergencyPower</a></code></li>
+<li><code><a title="core.motor2020.justPressed" href="#core.motor2020.justPressed">justPressed</a></code></li>
+<li><code><a title="core.motor2020.trimUp" href="#core.motor2020.trimUp">trimUp</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="motor2020.buttonPressed" href="#motor2020.buttonPressed">buttonPressed</a></code></li>
-<li><code><a title="motor2020.process" href="#motor2020.process">process</a></code></li>
+<li><code><a title="core.motor2020.buttonPressed" href="#core.motor2020.buttonPressed">buttonPressed</a></code></li>
+<li><code><a title="core.motor2020.process" href="#core.motor2020.process">process</a></code></li>
 </ul>
 </li>
 </ul>

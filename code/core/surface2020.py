@@ -24,14 +24,15 @@ import json
 # axis = ['xLeft', 'yLeft', 'triggerLeft', 'xRight', 'yRight', 'triggerRight']
 # buttons = ['A', 'B', 'X', 'Y', 'LB', 'RB']
 
-pygame.init()
+if __name__ == '__main__':
+    pygame.init()
 
-# Setup joysticks
-joysticks = [pygame.joystick.Joystick(i) for i in range(2)]
-'''Represents the XBox controllers'''
+    # Setup joysticks
+    joysticks = [pygame.joystick.Joystick(i) for i in range(2)]
+    '''Represents the XBox controllers'''
 
-for stick in joysticks:
-    stick.init()  # do we need this?
+    for stick in joysticks:
+        stick.init()  # do we need this?
 
 
 def getData():
@@ -81,6 +82,8 @@ def getData():
 
     return json.dumps(allData)  # returns values as json string
 
+
 # start a web socket client
 # type is "surface", handling function is getData
-webSocketClient.start('surface', getData)
+if __name__ == '__main__':
+    webSocketClient.start('surface', getData)
