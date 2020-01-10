@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.2" />
-<title>core.server2020 API documentation</title>
+<title>code.core.server2020 API documentation</title>
 <meta name="description" content="Author: Jonathan Rotter …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
@@ -17,7 +17,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>core.server2020</code></h1>
+<h1 class="title">Module <code>code.core.server2020</code></h1>
 </header>
 <section id="section-intro">
 <p>Author: Jonathan Rotter</p>
@@ -258,11 +258,11 @@ if __name__ == &#39;__main__&#39;:
 <section>
 <h2 class="section-title" id="header-variables">Global variables</h2>
 <dl>
-<dt id="core.server2020.IP"><code class="name">var <span class="ident">IP</span></code></dt>
+<dt id="code.core.server2020.IP"><code class="name">var <span class="ident">IP</span></code></dt>
 <dd>
 <section class="desc"><p>ip is localhost, does not need to be changed</p></section>
 </dd>
-<dt id="core.server2020.PORT"><code class="name">var <span class="ident">PORT</span></code></dt>
+<dt id="code.core.server2020.PORT"><code class="name">var <span class="ident">PORT</span></code></dt>
 <dd>
 <section class="desc"><p>Make sure the port set here and in webSocketClient are the same</p></section>
 </dd>
@@ -273,7 +273,7 @@ if __name__ == &#39;__main__&#39;:
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="core.server2020.ServerFactory"><code class="flex name class">
+<dt id="code.core.server2020.ServerFactory"><code class="flex name class">
 <span>class <span class="ident">ServerFactory</span></span>
 <span>(</span><span>url)</span>
 </code></dt>
@@ -398,7 +398,7 @@ if __name__ == &#39;__main__&#39;:
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="core.server2020.ServerFactory.broadcast"><code class="name flex">
+<dt id="code.core.server2020.ServerFactory.broadcast"><code class="name flex">
 <span>def <span class="ident">broadcast</span></span>(<span>self, client, msg, isBinary)</span>
 </code></dt>
 <dd>
@@ -407,7 +407,7 @@ This is how surface pi sends the
 state of the XBox controller to motor pi</p>
 <h2 id="arg">Arg</h2>
 <dl>
-<dt><strong><code>client</code></strong> :&ensp;<a title="core.server2020.ServerProtocol" href="#core.server2020.ServerProtocol"><code>ServerProtocol</code></a></dt>
+<dt><strong><code>client</code></strong> :&ensp;<a title="code.core.server2020.ServerProtocol" href="#code.core.server2020.ServerProtocol"><code>ServerProtocol</code></a></dt>
 <dd>The source of the message</dd>
 <dt><strong><code>msg</code></strong> :&ensp;<code>str</code> or <code>bytes</code></dt>
 <dd>The message to relay</dd>
@@ -449,16 +449,16 @@ state of the XBox controller to motor pi</p>
         print(&#39;Mini ROV isn\&#39;t supposed to send stuff&#39;)</code></pre>
 </details>
 </dd>
-<dt id="core.server2020.ServerFactory.register"><code class="name flex">
+<dt id="code.core.server2020.ServerFactory.register"><code class="name flex">
 <span>def <span class="ident">register</span></span>(<span>self, client, clientTypeRequest)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Called in <a title="core.server2020.ServerProtocol.onConnect" href="#core.server2020.ServerProtocol.onConnect"><code>ServerProtocol.onConnect()</code></a>
+<section class="desc"><p>Called in <a title="code.core.server2020.ServerProtocol.onConnect" href="#code.core.server2020.ServerProtocol.onConnect"><code>ServerProtocol.onConnect()</code></a>
 Remembers a connecting client so that
 later data can be received from or broadcast to the client</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>client</code></strong> :&ensp;<a title="core.server2020.ServerProtocol" href="#core.server2020.ServerProtocol"><code>ServerProtocol</code></a></dt>
+<dt><strong><code>client</code></strong> :&ensp;<a title="code.core.server2020.ServerProtocol" href="#code.core.server2020.ServerProtocol"><code>ServerProtocol</code></a></dt>
 <dd>A instance representing the connection</dd>
 <dt><strong><code>clientTypeRequest</code></strong> :&ensp;<code>str</code></dt>
 <dd>Whether the client is surface or motor pi</dd>
@@ -494,16 +494,16 @@ later data can be received from or broadcast to the client</p>
         client._closeConnection()</code></pre>
 </details>
 </dd>
-<dt id="core.server2020.ServerFactory.unregister"><code class="name flex">
+<dt id="code.core.server2020.ServerFactory.unregister"><code class="name flex">
 <span>def <span class="ident">unregister</span></span>(<span>self, client)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Called in <a title="core.server2020.ServerProtocol.onClose" href="#core.server2020.ServerProtocol.onClose"><code>ServerProtocol.onClose()</code></a>
+<section class="desc"><p>Called in <a title="code.core.server2020.ServerProtocol.onClose" href="#code.core.server2020.ServerProtocol.onClose"><code>ServerProtocol.onClose()</code></a>
 Removes a client from the list of clients
 as it is disconnecting from the server</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>client</code></strong> :&ensp;<a title="core.server2020.ServerProtocol" href="#core.server2020.ServerProtocol"><code>ServerProtocol</code></a></dt>
+<dt><strong><code>client</code></strong> :&ensp;<a title="code.core.server2020.ServerProtocol" href="#code.core.server2020.ServerProtocol"><code>ServerProtocol</code></a></dt>
 <dd>The connection to remove</dd>
 </dl></section>
 <details class="source">
@@ -535,7 +535,7 @@ as it is disconnecting from the server</p>
 </dd>
 </dl>
 </dd>
-<dt id="core.server2020.ServerProtocol"><code class="flex name class">
+<dt id="code.core.server2020.ServerProtocol"><code class="flex name class">
 <span>class <span class="ident">ServerProtocol</span></span>
 </code></dt>
 <dd>
@@ -621,7 +621,7 @@ ws = new WebSocket('ws://localhost:8008/surface')</p></section>
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="core.server2020.ServerProtocol.onClose"><code class="name flex">
+<dt id="code.core.server2020.ServerProtocol.onClose"><code class="name flex">
 <span>def <span class="ident">onClose</span></span>(<span>self, wasClean, code, reason)</span>
 </code></dt>
 <dd>
@@ -642,7 +642,7 @@ a client disconnects</p></section>
     self.factory.unregister(self)</code></pre>
 </details>
 </dd>
-<dt id="core.server2020.ServerProtocol.onConnect"><code class="name flex">
+<dt id="code.core.server2020.ServerProtocol.onConnect"><code class="name flex">
 <span>def <span class="ident">onConnect</span></span>(<span>self, request)</span>
 </code></dt>
 <dd>
@@ -678,7 +678,7 @@ whether they are motor2020 or surface2020</p></section>
     self.factory.register(self, clientTypeRequest)</code></pre>
 </details>
 </dd>
-<dt id="core.server2020.ServerProtocol.onMessage"><code class="name flex">
+<dt id="code.core.server2020.ServerProtocol.onMessage"><code class="name flex">
 <span>def <span class="ident">onMessage</span></span>(<span>self, msg, isBinary)</span>
 </code></dt>
 <dd>
@@ -703,7 +703,7 @@ other connected clients</p></section>
     self.factory.broadcast(self, msg, isBinary)</code></pre>
 </details>
 </dd>
-<dt id="core.server2020.ServerProtocol.onOpen"><code class="name flex">
+<dt id="code.core.server2020.ServerProtocol.onOpen"><code class="name flex">
 <span>def <span class="ident">onOpen</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -734,32 +734,32 @@ Only prints debug info</p></section>
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="core" href="index.html">core</a></code></li>
+<li><code><a title="code.core" href="index.html">code.core</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-variables">Global variables</a></h3>
 <ul class="">
-<li><code><a title="core.server2020.IP" href="#core.server2020.IP">IP</a></code></li>
-<li><code><a title="core.server2020.PORT" href="#core.server2020.PORT">PORT</a></code></li>
+<li><code><a title="code.core.server2020.IP" href="#code.core.server2020.IP">IP</a></code></li>
+<li><code><a title="code.core.server2020.PORT" href="#code.core.server2020.PORT">PORT</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="core.server2020.ServerFactory" href="#core.server2020.ServerFactory">ServerFactory</a></code></h4>
+<h4><code><a title="code.core.server2020.ServerFactory" href="#code.core.server2020.ServerFactory">ServerFactory</a></code></h4>
 <ul class="">
-<li><code><a title="core.server2020.ServerFactory.broadcast" href="#core.server2020.ServerFactory.broadcast">broadcast</a></code></li>
-<li><code><a title="core.server2020.ServerFactory.register" href="#core.server2020.ServerFactory.register">register</a></code></li>
-<li><code><a title="core.server2020.ServerFactory.unregister" href="#core.server2020.ServerFactory.unregister">unregister</a></code></li>
+<li><code><a title="code.core.server2020.ServerFactory.broadcast" href="#code.core.server2020.ServerFactory.broadcast">broadcast</a></code></li>
+<li><code><a title="code.core.server2020.ServerFactory.register" href="#code.core.server2020.ServerFactory.register">register</a></code></li>
+<li><code><a title="code.core.server2020.ServerFactory.unregister" href="#code.core.server2020.ServerFactory.unregister">unregister</a></code></li>
 </ul>
 </li>
 <li>
-<h4><code><a title="core.server2020.ServerProtocol" href="#core.server2020.ServerProtocol">ServerProtocol</a></code></h4>
+<h4><code><a title="code.core.server2020.ServerProtocol" href="#code.core.server2020.ServerProtocol">ServerProtocol</a></code></h4>
 <ul class="">
-<li><code><a title="core.server2020.ServerProtocol.onClose" href="#core.server2020.ServerProtocol.onClose">onClose</a></code></li>
-<li><code><a title="core.server2020.ServerProtocol.onConnect" href="#core.server2020.ServerProtocol.onConnect">onConnect</a></code></li>
-<li><code><a title="core.server2020.ServerProtocol.onMessage" href="#core.server2020.ServerProtocol.onMessage">onMessage</a></code></li>
-<li><code><a title="core.server2020.ServerProtocol.onOpen" href="#core.server2020.ServerProtocol.onOpen">onOpen</a></code></li>
+<li><code><a title="code.core.server2020.ServerProtocol.onClose" href="#code.core.server2020.ServerProtocol.onClose">onClose</a></code></li>
+<li><code><a title="code.core.server2020.ServerProtocol.onConnect" href="#code.core.server2020.ServerProtocol.onConnect">onConnect</a></code></li>
+<li><code><a title="code.core.server2020.ServerProtocol.onMessage" href="#code.core.server2020.ServerProtocol.onMessage">onMessage</a></code></li>
+<li><code><a title="code.core.server2020.ServerProtocol.onOpen" href="#code.core.server2020.ServerProtocol.onOpen">onOpen</a></code></li>
 </ul>
 </li>
 </ul>

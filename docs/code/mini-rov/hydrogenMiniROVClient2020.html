@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.2" />
-<title>mini-rov.hydrogenMiniROVClient2020 API documentation</title>
+<title>code.mini-rov.hydrogenMiniROVClient2020 API documentation</title>
 <meta name="description" content="Author: Jonathan Rotter …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
@@ -17,7 +17,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>mini-rov.hydrogenMiniROVClient2020</code></h1>
+<h1 class="title">Module <code>code.mini-rov.hydrogenMiniROVClient2020</code></h1>
 </header>
 <section id="section-intro">
 <p>Author: Jonathan Rotter</p>
@@ -366,34 +366,34 @@ if __name__ == &#39;__main__&#39;:
 <section>
 <h2 class="section-title" id="header-variables">Global variables</h2>
 <dl>
-<dt id="mini-rov.hydrogenMiniROVClient2020.axis"><code class="name">var <span class="ident">axis</span></code></dt>
+<dt id="code.mini-rov.hydrogenMiniROVClient2020.axis"><code class="name">var <span class="ident">axis</span></code></dt>
 <dd>
 <section class="desc"><p>List of axis controls on the XBox controllers</p></section>
 </dd>
-<dt id="mini-rov.hydrogenMiniROVClient2020.buttons"><code class="name">var <span class="ident">buttons</span></code></dt>
+<dt id="code.mini-rov.hydrogenMiniROVClient2020.buttons"><code class="name">var <span class="ident">buttons</span></code></dt>
 <dd>
 <section class="desc"><p>List of buttons on the XBox controllers</p></section>
 </dd>
-<dt id="mini-rov.hydrogenMiniROVClient2020.justPressed"><code class="name">var <span class="ident">justPressed</span></code></dt>
+<dt id="code.mini-rov.hydrogenMiniROVClient2020.justPressed"><code class="name">var <span class="ident">justPressed</span></code></dt>
 <dd>
 <section class="desc"><p>Stores which buttons are currently pressed
 so that code activates only once per
 button press and does not repeat</p></section>
 </dd>
-<dt id="mini-rov.hydrogenMiniROVClient2020.m1"><code class="name">var <span class="ident">m1</span></code></dt>
+<dt id="code.mini-rov.hydrogenMiniROVClient2020.m1"><code class="name">var <span class="ident">m1</span></code></dt>
 <dd>
 <section class="desc"><p>This motor is IN3/4 on the edge of the motor controller
 these pins are based on how the 2019 miniROV was wired up</p></section>
 </dd>
-<dt id="mini-rov.hydrogenMiniROVClient2020.m3"><code class="name">var <span class="ident">m3</span></code></dt>
+<dt id="code.mini-rov.hydrogenMiniROVClient2020.m3"><code class="name">var <span class="ident">m3</span></code></dt>
 <dd>
 <section class="desc"><p>object representing the side motor (maybe left)</p></section>
 </dd>
-<dt id="mini-rov.hydrogenMiniROVClient2020.m4"><code class="name">var <span class="ident">m4</span></code></dt>
+<dt id="code.mini-rov.hydrogenMiniROVClient2020.m4"><code class="name">var <span class="ident">m4</span></code></dt>
 <dd>
 <section class="desc"><p>object representing the side motor (maybe right)</p></section>
 </dd>
-<dt id="mini-rov.hydrogenMiniROVClient2020.trimUp"><code class="name">var <span class="ident">trimUp</span></code></dt>
+<dt id="code.mini-rov.hydrogenMiniROVClient2020.trimUp"><code class="name">var <span class="ident">trimUp</span></code></dt>
 <dd>
 <section class="desc"><p>Stores the default power level of the vertical thrusters.
 As the ROV does not have perfect density,
@@ -405,7 +405,7 @@ to keep the ROV at constant depth when at rest</p></section>
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="mini-rov.hydrogenMiniROVClient2020.buttonPressed"><code class="name flex">
+<dt id="code.mini-rov.hydrogenMiniROVClient2020.buttonPressed"><code class="name flex">
 <span>def <span class="ident">buttonPressed</span></span>(<span>button, num)</span>
 </code></dt>
 <dd>
@@ -444,11 +444,11 @@ All button related features should be added here.</p>
             trimUp[&#39;center&#39;] -= 1  # trim down when RB is pressed</code></pre>
 </details>
 </dd>
-<dt id="mini-rov.hydrogenMiniROVClient2020.move1"><code class="name flex">
+<dt id="code.mini-rov.hydrogenMiniROVClient2020.move1"><code class="name flex">
 <span>def <span class="ident">move1</span></span>(<span>pow)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Sets the power level of <a title="mini-rov.hydrogenMiniROVClient2020.m1" href="#mini-rov.hydrogenMiniROVClient2020.m1"><code>m1</code></a></p></section>
+<section class="desc"><p>Sets the power level of <a title="code.mini-rov.hydrogenMiniROVClient2020.m1" href="#code.mini-rov.hydrogenMiniROVClient2020.m1"><code>m1</code></a></p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -458,7 +458,7 @@ All button related features should be added here.</p>
     m1.set(pow)</code></pre>
 </details>
 </dd>
-<dt id="mini-rov.hydrogenMiniROVClient2020.move2"><code class="name flex">
+<dt id="code.mini-rov.hydrogenMiniROVClient2020.move2"><code class="name flex">
 <span>def <span class="ident">move2</span></span>(<span>pow)</span>
 </code></dt>
 <dd>
@@ -472,11 +472,11 @@ All button related features should be added here.</p>
     m2.set(pow)</code></pre>
 </details>
 </dd>
-<dt id="mini-rov.hydrogenMiniROVClient2020.move3"><code class="name flex">
+<dt id="code.mini-rov.hydrogenMiniROVClient2020.move3"><code class="name flex">
 <span>def <span class="ident">move3</span></span>(<span>pow)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Sets the power level of <a title="mini-rov.hydrogenMiniROVClient2020.m3" href="#mini-rov.hydrogenMiniROVClient2020.m3"><code>m3</code></a></p></section>
+<section class="desc"><p>Sets the power level of <a title="code.mini-rov.hydrogenMiniROVClient2020.m3" href="#code.mini-rov.hydrogenMiniROVClient2020.m3"><code>m3</code></a></p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -486,11 +486,11 @@ All button related features should be added here.</p>
     m3.set(pow)</code></pre>
 </details>
 </dd>
-<dt id="mini-rov.hydrogenMiniROVClient2020.move4"><code class="name flex">
+<dt id="code.mini-rov.hydrogenMiniROVClient2020.move4"><code class="name flex">
 <span>def <span class="ident">move4</span></span>(<span>pow)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Sets the power level of <a title="mini-rov.hydrogenMiniROVClient2020.m4" href="#mini-rov.hydrogenMiniROVClient2020.m4"><code>m4</code></a></p></section>
+<section class="desc"><p>Sets the power level of <a title="code.mini-rov.hydrogenMiniROVClient2020.m4" href="#code.mini-rov.hydrogenMiniROVClient2020.m4"><code>m4</code></a></p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -500,7 +500,7 @@ All button related features should be added here.</p>
     m4.set(pow)</code></pre>
 </details>
 </dd>
-<dt id="mini-rov.hydrogenMiniROVClient2020.process"><code class="name flex">
+<dt id="code.mini-rov.hydrogenMiniROVClient2020.process"><code class="name flex">
 <span>def <span class="ident">process</span></span>(<span>data)</span>
 </code></dt>
 <dd>
@@ -723,28 +723,28 @@ the second twelve are controller 2</p>
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="mini-rov" href="index.html">mini-rov</a></code></li>
+<li><code><a title="code.mini-rov" href="index.html">code.mini-rov</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-variables">Global variables</a></h3>
 <ul class="two-column">
-<li><code><a title="mini-rov.hydrogenMiniROVClient2020.axis" href="#mini-rov.hydrogenMiniROVClient2020.axis">axis</a></code></li>
-<li><code><a title="mini-rov.hydrogenMiniROVClient2020.buttons" href="#mini-rov.hydrogenMiniROVClient2020.buttons">buttons</a></code></li>
-<li><code><a title="mini-rov.hydrogenMiniROVClient2020.justPressed" href="#mini-rov.hydrogenMiniROVClient2020.justPressed">justPressed</a></code></li>
-<li><code><a title="mini-rov.hydrogenMiniROVClient2020.m1" href="#mini-rov.hydrogenMiniROVClient2020.m1">m1</a></code></li>
-<li><code><a title="mini-rov.hydrogenMiniROVClient2020.m3" href="#mini-rov.hydrogenMiniROVClient2020.m3">m3</a></code></li>
-<li><code><a title="mini-rov.hydrogenMiniROVClient2020.m4" href="#mini-rov.hydrogenMiniROVClient2020.m4">m4</a></code></li>
-<li><code><a title="mini-rov.hydrogenMiniROVClient2020.trimUp" href="#mini-rov.hydrogenMiniROVClient2020.trimUp">trimUp</a></code></li>
+<li><code><a title="code.mini-rov.hydrogenMiniROVClient2020.axis" href="#code.mini-rov.hydrogenMiniROVClient2020.axis">axis</a></code></li>
+<li><code><a title="code.mini-rov.hydrogenMiniROVClient2020.buttons" href="#code.mini-rov.hydrogenMiniROVClient2020.buttons">buttons</a></code></li>
+<li><code><a title="code.mini-rov.hydrogenMiniROVClient2020.justPressed" href="#code.mini-rov.hydrogenMiniROVClient2020.justPressed">justPressed</a></code></li>
+<li><code><a title="code.mini-rov.hydrogenMiniROVClient2020.m1" href="#code.mini-rov.hydrogenMiniROVClient2020.m1">m1</a></code></li>
+<li><code><a title="code.mini-rov.hydrogenMiniROVClient2020.m3" href="#code.mini-rov.hydrogenMiniROVClient2020.m3">m3</a></code></li>
+<li><code><a title="code.mini-rov.hydrogenMiniROVClient2020.m4" href="#code.mini-rov.hydrogenMiniROVClient2020.m4">m4</a></code></li>
+<li><code><a title="code.mini-rov.hydrogenMiniROVClient2020.trimUp" href="#code.mini-rov.hydrogenMiniROVClient2020.trimUp">trimUp</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="two-column">
-<li><code><a title="mini-rov.hydrogenMiniROVClient2020.buttonPressed" href="#mini-rov.hydrogenMiniROVClient2020.buttonPressed">buttonPressed</a></code></li>
-<li><code><a title="mini-rov.hydrogenMiniROVClient2020.move1" href="#mini-rov.hydrogenMiniROVClient2020.move1">move1</a></code></li>
-<li><code><a title="mini-rov.hydrogenMiniROVClient2020.move2" href="#mini-rov.hydrogenMiniROVClient2020.move2">move2</a></code></li>
-<li><code><a title="mini-rov.hydrogenMiniROVClient2020.move3" href="#mini-rov.hydrogenMiniROVClient2020.move3">move3</a></code></li>
-<li><code><a title="mini-rov.hydrogenMiniROVClient2020.move4" href="#mini-rov.hydrogenMiniROVClient2020.move4">move4</a></code></li>
-<li><code><a title="mini-rov.hydrogenMiniROVClient2020.process" href="#mini-rov.hydrogenMiniROVClient2020.process">process</a></code></li>
+<li><code><a title="code.mini-rov.hydrogenMiniROVClient2020.buttonPressed" href="#code.mini-rov.hydrogenMiniROVClient2020.buttonPressed">buttonPressed</a></code></li>
+<li><code><a title="code.mini-rov.hydrogenMiniROVClient2020.move1" href="#code.mini-rov.hydrogenMiniROVClient2020.move1">move1</a></code></li>
+<li><code><a title="code.mini-rov.hydrogenMiniROVClient2020.move2" href="#code.mini-rov.hydrogenMiniROVClient2020.move2">move2</a></code></li>
+<li><code><a title="code.mini-rov.hydrogenMiniROVClient2020.move3" href="#code.mini-rov.hydrogenMiniROVClient2020.move3">move3</a></code></li>
+<li><code><a title="code.mini-rov.hydrogenMiniROVClient2020.move4" href="#code.mini-rov.hydrogenMiniROVClient2020.move4">move4</a></code></li>
+<li><code><a title="code.mini-rov.hydrogenMiniROVClient2020.process" href="#code.mini-rov.hydrogenMiniROVClient2020.process">process</a></code></li>
 </ul>
 </li>
 </ul>

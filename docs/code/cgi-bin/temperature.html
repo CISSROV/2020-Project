@@ -4,11 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.2" />
-<title>core API documentation</title>
-<meta name="description" content="The core part of the ROV software, connecting the
-XBox controller of the base station to the motors
-of the ROV. All movement control and
-…" />
+<title>code.cgi-bin.temperature API documentation</title>
+<meta name="description" content="Author: Jonathan Rotter …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,57 +17,58 @@ of the ROV. All movement control and
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>core</code></h1>
+<h1 class="title">Module <code>code.cgi-bin.temperature</code></h1>
 </header>
 <section id="section-intro">
-<p>The core part of the ROV software, connecting the
-XBox controller of the base station to the motors
-of the ROV. All movement control and communication
-happens in this module.</p>
+<p>Author: Jonathan Rotter</p>
+<p>Uses tempSensor.py located
+in <code>/var/www/scripts</code> to fetch
+the temperature from the
+external thermometer.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">&#39;&#39;&#39;
-The core part of the ROV software, connecting the
-XBox controller of the base station to the motors
-of the ROV. All movement control and communication
-happens in this module.
+<pre><code class="python">#!/usr/bin/env python3.4
+&#39;&#39;&#39;
+Author: Jonathan Rotter
+
+Uses tempSensor.py located
+in `/var/www/scripts` to fetch
+the temperature from the
+external thermometer.
 &#39;&#39;&#39;
 
-import sys
-print(sys.path[0])
-sys.path.append(sys.path[0] + &#39;/core&#39;)</code></pre>
+if __name__ == &#39;__main__&#39;:
+    # Add a location for python to search for modules to import
+    from sys import path
+    path.append(&#39;/var/www/scripts&#39;)
+
+    # Import tempSensor module located in &#34;/var/www/scripts&#34;
+    try:
+        import tempSensor
+    except ModuleNotFoundError:
+        raise ModuleNotFoundError(&#34;tempSensor.py is missing in /var/www/scripts&#34;)
+
+    # Print header specifying file type
+    print(&#34;Content-type: text/html\n\n&#34;)
+
+    # Open and read the html file
+    f = open(&#39;temperature.html&#39;)
+    txt = f.read()
+    f.close()
+
+    # Get the temperature using the tempSensor module
+    data = tempSensor.getTemp()
+
+    # Put the temperature into the html file where the comment &#34;&lt;!-- tag --&gt;&#34; is
+    txt = txt.replace(&#39;&lt;!-- tag --&gt;&#39;, str(data))
+
+    # Print final html
+    print(txt)</code></pre>
 </details>
 </section>
 <section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
-<dl>
-<dt><code class="name"><a title="core.motor2020" href="motor2020.html">core.motor2020</a></code></dt>
-<dd>
-<section class="desc"><p>Author: Jonathan Rotter …</p></section>
-</dd>
-<dt><code class="name"><a title="core.motor2020++" href="motor2020++.html">core.motor2020++</a></code></dt>
-<dd>
-<section class="desc"><p>Author: Jonathan Rotter …</p></section>
-</dd>
-<dt><code class="name"><a title="core.server2020" href="server2020.html">core.server2020</a></code></dt>
-<dd>
-<section class="desc"><p>Author: Jonathan Rotter …</p></section>
-</dd>
-<dt><code class="name"><a title="core.surface2020" href="surface2020.html">core.surface2020</a></code></dt>
-<dd>
-<section class="desc"><p>Author: Jonathan Rotter …</p></section>
-</dd>
-<dt><code class="name"><a title="core.test" href="test.html">core.test</a></code></dt>
-<dd>
-<section class="desc"><p>Author: Jonathan Rotter &amp; Danny Kong &amp; Yiluo Li</p></section>
-</dd>
-<dt><code class="name"><a title="core.webSocketClient" href="webSocketClient.html">core.webSocketClient</a></code></dt>
-<dd>
-<section class="desc"><p>Author: Jonathan Rotter …</p></section>
-</dd>
-</dl>
 </section>
 <section>
 </section>
@@ -85,14 +83,9 @@ sys.path.append(sys.path[0] + &#39;/core&#39;)</code></pre>
 <ul></ul>
 </div>
 <ul id="index">
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<li><h3>Super-module</h3>
 <ul>
-<li><code><a title="core.motor2020" href="motor2020.html">core.motor2020</a></code></li>
-<li><code><a title="core.motor2020++" href="motor2020++.html">core.motor2020++</a></code></li>
-<li><code><a title="core.server2020" href="server2020.html">core.server2020</a></code></li>
-<li><code><a title="core.surface2020" href="surface2020.html">core.surface2020</a></code></li>
-<li><code><a title="core.test" href="test.html">core.test</a></code></li>
-<li><code><a title="core.webSocketClient" href="webSocketClient.html">core.webSocketClient</a></code></li>
+<li><code><a title="code.cgi-bin" href="index.html">code.cgi-bin</a></code></li>
 </ul>
 </li>
 </ul>

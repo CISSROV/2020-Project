@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.2" />
-<title>cgi-bin.temperature API documentation</title>
-<meta name="description" content="Author: Jonathan Rotter …" />
+<title>code.core.test API documentation</title>
+<meta name="description" content="Author: Jonathan Rotter &amp; Danny Kong &amp; Yiluo Li" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -17,55 +17,105 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>cgi-bin.temperature</code></h1>
+<h1 class="title">Module <code>code.core.test</code></h1>
 </header>
 <section id="section-intro">
-<p>Author: Jonathan Rotter</p>
-<p>Uses tempSensor.py located
-in <code>/var/www/scripts</code> to fetch
-the temperature from the
-external thermometer.</p>
+<p>Author: Jonathan Rotter &amp; Danny Kong &amp; Yiluo Li</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">#!/usr/bin/env python3.4
-&#39;&#39;&#39;
-Author: Jonathan Rotter
+&#39;&#39;&#39;Author: Jonathan Rotter &amp; Danny Kong &amp; Yiluo Li&#39;&#39;&#39;
 
-Uses tempSensor.py located
-in `/var/www/scripts` to fetch
-the temperature from the
-external thermometer.
-&#39;&#39;&#39;
+import time
+import pyfirmata
 
 if __name__ == &#39;__main__&#39;:
-    # Add a location for python to search for modules to import
-    from sys import path
-    path.append(&#39;/var/www/scripts&#39;)
+    # idk what this is
+    port = &#39;/dev/ttyACM0&#39;
 
-    # Import tempSensor module located in &#34;/var/www/scripts&#34;
-    try:
-        import tempSensor
-    except ModuleNotFoundError:
-        raise ModuleNotFoundError(&#34;tempSensor.py is missing in /var/www/scripts&#34;)
+    # Setup pyFirmata
+    board =  pyfirmata.Arduino(port)
 
-    # Print header specifying file type
-    print(&#34;Content-type: text/html\n\n&#34;)
+    # Setup an iterator for safety
+    iter8 = pyfirmata.util.Iterator(board)
+    iter8.start()
 
-    # Open and read the html file
-    f = open(&#39;temperature.html&#39;)
-    txt = f.read()
-    f.close()
+    # Locate pins
+    pin2 = board.get_pin(&#39;d:2:s&#39;) 
+    pin3 = board.get_pin(&#39;d:3:s&#39;) 
+    pin4 = board.get_pin(&#39;d:4:s&#39;)
+    pin5 = board.get_pin(&#39;d:5:s&#39;)
+    pin6 = board.get_pin(&#39;d:6:s&#39;)
+    pin7 = board.get_pin(&#39;d:7:s&#39;)
+    pin8 = board.get_pin(&#39;d:8:s&#39;)
+    pin9 = board.get_pin(&#39;d:9:s&#39;)
+    pin10 = board.get_pin(&#39;d:10:s&#39;)
+    pin12 = board.get_pin(&#39;d:12:s&#39;)
 
-    # Get the temperature using the tempSensor module
-    data = tempSensor.getTemp()
+    # functions for setting pins
+    def move2(a):
+        pin2.write(a) # motor
 
-    # Put the temperature into the html file where the comment &#34;&lt;!-- tag --&gt;&#34; is
-    txt = txt.replace(&#39;&lt;!-- tag --&gt;&#39;, str(data))
+    def move3(a):
+        pin3.write(a) # motor
 
-    # Print final html
-    print(txt)</code></pre>
+    def move4(a):
+        pin4.write(a) # motor
+
+    def move5(a):
+        pin5.write(a) # motor
+
+    def move6(a):
+        pin6.write(a) # vertical thruster
+
+    def move7(a):
+        pin7.write(a) # vertial thruster
+
+    def move8(a):
+        pin8.write(a)
+
+    def move9(a):
+        pin9.write(a)
+
+    def move10(a):
+        pin10.write(a)
+
+    def move12(a):
+        pin12.write(a)
+
+    # main loop
+    while True:
+        # motor number is the pin number the motor is connected to
+        # must be an integer otherwise it will crash
+        n = int(input(&#39;Motor number: &#39;))
+        # usually between 30 - 130? I think?
+        # motors won&#39;t work when set to the extremes of 0, 180
+        d = int(input(&#39;Power Level: &#39;))
+        if n == 2:
+            move2(d)
+        elif n == 3:
+            move3(d)
+        elif n == 4:
+            move4(d)
+        elif n == 5:
+            move5(d)
+        elif n == 6:
+            move6(d)
+        elif n == 7:
+            move7(d)
+        elif n == 8:
+            move8(d)
+        elif n == 9:
+            move9(d)
+        elif n == 10:
+            move10(d)
+        elif n == 12:
+            move12(d)
+        
+        # wait five seconds for some reason
+        time.sleep(5)</code></pre>
 </details>
 </section>
 <section>
@@ -85,7 +135,7 @@ if __name__ == &#39;__main__&#39;:
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="cgi-bin" href="index.html">cgi-bin</a></code></li>
+<li><code><a title="code.core" href="index.html">code.core</a></code></li>
 </ul>
 </li>
 </ul>

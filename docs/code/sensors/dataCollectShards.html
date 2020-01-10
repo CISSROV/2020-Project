@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.2" />
+<title>code.sensors.dataCollectShards API documentation</title>
+<meta name="description" content="Author: Jonathan Rotter …" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>code.sensors.dataCollectShards</code></h1>
+</header>
+<section id="section-intro">
+<p>Author: Jonathan Rotter</p>
+<p>Collects data from the various
+sensors and combines it.</p>
+<p>Features lots of try-except
+so that data collection can
+continue even if one or two
+sensors fail</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/env python3.4
+&#39;&#39;&#39;
+Author: Jonathan Rotter
+
+Collects data from the various
+sensors and combines it.
+
+Features lots of try-except
+so that data collection can
+continue even if one or two
+sensors fail
+&#39;&#39;&#39;
+
+import time
+import os
+import sys
+
+TEMPSENSOR = True
+&#39;&#39;&#39;
+For specifying whenever the temperature sensors should be used.
+set it to False if it is broken or the wires are disconnected for example
+&#39;&#39;&#39;
+
+if TEMPSENSOR:
+    import tempSensor  # contains code for collecting tempSensor data
+
+if __name__ == &#39;__main__&#39;:
+    # add this path to sys.path so that Adafruit_BNO055 can be imported
+    sys.path.append(&#39;/home/pi/Adafruit_Python_BNO055&#39;)
+
+    # 3rd-party libary from somewhere on github
+    from Adafruit_BNO055 import BNO055
+
+
+silent = True
+&#39;&#39;&#39;
+Specify if the data should be printed each time
+it is collected
+&#39;&#39;&#39;
+
+bno = None
+&#39;&#39;&#39;
+Holds an object representing the
+Adafruit BNO055 gyroscope sensor
+&#39;&#39;&#39;
+
+defaultRotation = {&#39;heading&#39;: 0, &#39;roll&#39;: 0, &#39;pitch&#39;: 0}
+&#39;&#39;&#39;
+Set on gyroscope startup and is used for setting the initial
+rotation to be zero
+&#39;&#39;&#39;
+defaultAcc = {&#39;x&#39;: 0, &#39;y&#39;: 0, &#39;z&#39;: 0}
+&#39;&#39;&#39;
+Set on gyroscope startup and is used for setting the initial
+acceleration to be zero
+&#39;&#39;&#39;
+
+gyroRunning = True
+&#39;&#39;&#39;
+If the gyro is running. The variable is used to message that it needs a reboot
+&#39;&#39;&#39;
+
+hasSetupOnce = False
+&#39;&#39;&#39;
+If the gyro has gone through setup at least once
+&#39;&#39;&#39;
+
+
+def setup():
+    &#39;&#39;&#39;
+    Gyroscope startup code. Sets calibration
+    values `defaultAcc` and `defaultRotation`
+    and prints info regarding the sensor
+    &#39;&#39;&#39;
+    # ---------------------------
+    # ---- Gyro Startup Code ----
+    # ---------------------------
+    global bno, gyroRunning, hasSetupOnce
+
+    # make a BNO055 object representing the gyro
+    # No idea what rst is or why it is set to 18
+    bno = BNO055.BNO055(serial_port=&#39;/dev/serial0&#39;, rst=18)
+
+    # Register read errors come after this (for debugging)
+
+    # variables used in gyro setup
+    disconnected = False
+    failureCount = 0
+
+    # Initialize the BNO055 and stop if something went wrong.
+    # Crashes occurs here; Register read error
+    while True:
+        try:
+            # try to start the gyro
+            disconnected = not bno.begin()
+        except Exception as e:
+            # catch an exception and increment the failed start counter
+            print(e)
+
+            # wait a bit
+            time.sleep(0.1)
+
+            failureCount += 1
+
+            if failureCount &gt; 10:
+                # give up after 10 tries
+                print(&#39;You\&#39;re a failure, just like this code&#39;)
+                gyroRunning = False
+
+                break  # haven&#39;t tested if this break statement works
+
+        else:
+            # all things good on startup
+            break
+
+        if disconnected:
+            # failed to init the gyro
+            print(&#39;Failed to initialize BNO055! Is the sensor connected?&#39;)
+            gyroRunning = False
+
+    # if the gyro managed to start well without crashing
+    if gyroRunning:
+
+        # Print system status and self test result.
+        status, self_test, error = bno.get_system_status()
+        print(&#39;System status: {0}&#39;.format(status))
+        print(&#39;Self test result (0x0F is normal): 0x{0:02X}&#39;.format(self_test))
+
+        # Print out an error if system status is in error mode.
+        if status == 0x01:
+            raise RuntimeError(&#39;System error: {0}&#39;.format(error) +
+                &#39;\nSee datasheet section 4.3.59 for the meaning.&#39;)
+
+        # Print BNO055 software revision and other diagnostic data.
+        sw, bl, accel, mag, gyro = bno.get_revision()
+        print(&#39;Software version:   {0}&#39;.format(sw))
+        print(&#39;Bootloader version: {0}&#39;.format(bl))
+        print(&#39;Accelerometer ID:   0x{0:02X}&#39;.format(accel))
+        print(&#39;Magnetometer ID:    0x{0:02X}&#39;.format(mag))
+        print(&#39;Gyroscope ID:       0x{0:02X}\n&#39;.format(gyro))
+
+        if hasSetupOnce:
+            # don&#39;t get default values again so a reboot
+            # doesn&#39;t mess up the displayed values
+            return
+
+        # number of measurements to average
+        MEASUREMENTS = 10
+
+        # the first few readings tend to be zero so get rid of those
+        for i in range(5):
+            bno.read_euler()
+            bno.read_linear_acceleration()
+            time.sleep(0.1)
+
+        global defaultRotation, defaultAcc
+
+        defaultRotation = {&#39;heading&#39;: 0, &#39;roll&#39;: 0, &#39;pitch&#39;: 0}
+        defaultAcc = {&#39;x&#39;: 0, &#39;y&#39;: 0, &#39;z&#39;: 0}
+
+        # take ten measurements and average them
+
+        for i in range(MEASUREMENTS):
+            # get orientation
+            heading, roll, pitch = bno.read_euler()
+            print(heading, roll, pitch, end=&#39; &#39;)
+
+            # sum values, will be divided by the number of measurements later
+            defaultRotation[&#39;heading&#39;] += heading
+            defaultRotation[&#39;roll&#39;] += roll
+            defaultRotation[&#39;pitch&#39;] += pitch
+
+            # linear acceleration
+            x, y, z = bno.read_linear_acceleration()
+            print(x, y, z)
+
+            # sum values, will be divided by the number of measurements later
+            defaultAcc[&#39;x&#39;] += x
+            defaultAcc[&#39;y&#39;] += y
+            defaultAcc[&#39;z&#39;] += z
+
+            # pause for 100ms
+            time.sleep(0.1)
+
+        # divide the sum of readings by
+        # the number of measurements to get the average
+        defaultRotation[&#39;heading&#39;] /= MEASUREMENTS
+        defaultRotation[&#39;roll&#39;] /= MEASUREMENTS
+        defaultRotation[&#39;pitch&#39;] /= MEASUREMENTS
+
+        defaultAcc[&#39;x&#39;] /= MEASUREMENTS
+        defaultAcc[&#39;y&#39;] /= MEASUREMENTS
+        defaultAcc[&#39;z&#39;] /= MEASUREMENTS
+
+        print(defaultAcc)
+        print(defaultRotation)
+
+        # for making sure these values aren&#39;t altered if the gyro reboots
+        hasSetupOnce = True
+
+
+# ------------------------
+# ---- Main Function -----
+# ------------------------
+
+def getDataFragment():
+    &#39;&#39;&#39;
+    Collects data from the various sensors and returns them as a list
+
+    Return:
+        data: A list of all the different sensor values
+    &#39;&#39;&#39;
+    global gyroRunning
+
+    # get the current time
+    t = time.localtime()
+    t = &#39;:&#39;.join([str(i).zfill(2) for i in [t.tm_hour, t.tm_min, t.tm_sec]])
+
+    # try to get the data from the temperature probe if it is enabled
+    try:
+        if TEMPSENSOR:
+            externalTemp = round(tempSensor.getTemp(), 2)
+        else:
+            # no temperature probe data
+            externalTemp = -1
+    except:
+        # some error occurred
+        externalTemp = &#39;Error&#39;
+
+    try:
+        # try to get the core temperature of the raspberry pi
+        coreTemp = os.popen(&#39;/opt/vc/bin/vcgencmd measure_temp&#39;).read()
+        coreTemp = round(float(coreTemp[coreTemp.index(&#39;=&#39;)+1:-3]), 2)
+    except:
+        # some error occurred
+        coreTemp = &#39;Error&#39;
+
+    # Gyro Sensors
+    try:
+        heading, roll, pitch = bno.read_euler()
+
+        # remove the initial state to get
+        # orientation relative to its start point
+        heading -= defaultRotation[&#39;heading&#39;]
+        roll -= defaultRotation[&#39;roll&#39;]
+        pitch -= defaultRotation[&#39;pitch&#39;]
+
+        # round data
+        heading = round(heading, 2)
+        roll = round(roll, 2)
+        pitch = round(pitch, 2)
+
+        # unused
+        sys, gyro, accel, mag = bno.get_calibration_status()
+
+        # read magnetic field
+        x, y, z = bno.read_magnetometer()
+
+        # take the absolute value of the magnetic field and turn it into gauss
+        magField = pow(x ** 2 + y ** 2 + z ** 2, 0.5)
+        magField = round(magField / 100, 3)  # 100 microTesla = 1 Gauss
+
+        # get linear acceleration
+        x, y, z = bno.read_linear_acceleration()
+
+        # for removing strange acceleration picked up when there is none
+        # btw read_linear_acceleration() takes out gravity already
+        x -= defaultAcc[&#39;x&#39;]
+        y -= defaultAcc[&#39;y&#39;]
+        z -= defaultAcc[&#39;z&#39;]
+
+        # round data
+        x = round(x, 3)
+        y = round(y, 3)
+        z = round(z, 3)
+
+        # round the temp too
+        # this is the temperature of the gyro,
+        # which shows internal ROV temperature
+        internalTemp = round(bno.read_temp(), 2)
+
+        #
+        # all the data will be displayed on an html page so if the
+        # values have too many decimal places it will mess up the html table
+        #
+    except:
+        # exception in getting data
+
+        heading, roll, pitch = &#39;Error&#39;, &#39;Error&#39;, &#39;Error&#39;
+        magField = &#39;Error&#39;
+        x, y, z = &#39;Error&#39;, &#39;Error&#39;, &#39;Error&#39;
+        internalTemp = &#39;Error&#39;
+        gyroRunning = False
+
+    if not gyroRunning:
+        # if the gyro has failed try to reboot it
+        print(&#39;Attempting to restart gyro&#39;)
+
+        gyroRunning = True
+        setup()
+
+    # assemble the data into a list
+    fragment = [t, externalTemp, coreTemp, internalTemp,
+                heading, roll, pitch,
+                magField, x, y, z
+                ]
+
+    # print the data if allowed
+    if not silent:
+        print(fragment)
+
+    # return the data
+    return fragment</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-variables">Global variables</h2>
+<dl>
+<dt id="code.sensors.dataCollectShards.TEMPSENSOR"><code class="name">var <span class="ident">TEMPSENSOR</span></code></dt>
+<dd>
+<section class="desc"><p>For specifying whenever the temperature sensors should be used.
+set it to False if it is broken or the wires are disconnected for example</p></section>
+</dd>
+<dt id="code.sensors.dataCollectShards.bno"><code class="name">var <span class="ident">bno</span></code></dt>
+<dd>
+<section class="desc"><p>Holds an object representing the
+Adafruit BNO055 gyroscope sensor</p></section>
+</dd>
+<dt id="code.sensors.dataCollectShards.defaultAcc"><code class="name">var <span class="ident">defaultAcc</span></code></dt>
+<dd>
+<section class="desc"><p>Set on gyroscope startup and is used for setting the initial
+acceleration to be zero</p></section>
+</dd>
+<dt id="code.sensors.dataCollectShards.defaultRotation"><code class="name">var <span class="ident">defaultRotation</span></code></dt>
+<dd>
+<section class="desc"><p>Set on gyroscope startup and is used for setting the initial
+rotation to be zero</p></section>
+</dd>
+<dt id="code.sensors.dataCollectShards.gyroRunning"><code class="name">var <span class="ident">gyroRunning</span></code></dt>
+<dd>
+<section class="desc"><p>If the gyro is running. The variable is used to message that it needs a reboot</p></section>
+</dd>
+<dt id="code.sensors.dataCollectShards.hasSetupOnce"><code class="name">var <span class="ident">hasSetupOnce</span></code></dt>
+<dd>
+<section class="desc"><p>If the gyro has gone through setup at least once</p></section>
+</dd>
+<dt id="code.sensors.dataCollectShards.silent"><code class="name">var <span class="ident">silent</span></code></dt>
+<dd>
+<section class="desc"><p>Specify if the data should be printed each time
+it is collected</p></section>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="code.sensors.dataCollectShards.getDataFragment"><code class="name flex">
+<span>def <span class="ident">getDataFragment</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Collects data from the various sensors and returns them as a list</p>
+<h2 id="return">Return</h2>
+<dl>
+<dt><strong><code>data</code></strong></dt>
+<dd>A list of all the different sensor values</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getDataFragment():
+    &#39;&#39;&#39;
+    Collects data from the various sensors and returns them as a list
+
+    Return:
+        data: A list of all the different sensor values
+    &#39;&#39;&#39;
+    global gyroRunning
+
+    # get the current time
+    t = time.localtime()
+    t = &#39;:&#39;.join([str(i).zfill(2) for i in [t.tm_hour, t.tm_min, t.tm_sec]])
+
+    # try to get the data from the temperature probe if it is enabled
+    try:
+        if TEMPSENSOR:
+            externalTemp = round(tempSensor.getTemp(), 2)
+        else:
+            # no temperature probe data
+            externalTemp = -1
+    except:
+        # some error occurred
+        externalTemp = &#39;Error&#39;
+
+    try:
+        # try to get the core temperature of the raspberry pi
+        coreTemp = os.popen(&#39;/opt/vc/bin/vcgencmd measure_temp&#39;).read()
+        coreTemp = round(float(coreTemp[coreTemp.index(&#39;=&#39;)+1:-3]), 2)
+    except:
+        # some error occurred
+        coreTemp = &#39;Error&#39;
+
+    # Gyro Sensors
+    try:
+        heading, roll, pitch = bno.read_euler()
+
+        # remove the initial state to get
+        # orientation relative to its start point
+        heading -= defaultRotation[&#39;heading&#39;]
+        roll -= defaultRotation[&#39;roll&#39;]
+        pitch -= defaultRotation[&#39;pitch&#39;]
+
+        # round data
+        heading = round(heading, 2)
+        roll = round(roll, 2)
+        pitch = round(pitch, 2)
+
+        # unused
+        sys, gyro, accel, mag = bno.get_calibration_status()
+
+        # read magnetic field
+        x, y, z = bno.read_magnetometer()
+
+        # take the absolute value of the magnetic field and turn it into gauss
+        magField = pow(x ** 2 + y ** 2 + z ** 2, 0.5)
+        magField = round(magField / 100, 3)  # 100 microTesla = 1 Gauss
+
+        # get linear acceleration
+        x, y, z = bno.read_linear_acceleration()
+
+        # for removing strange acceleration picked up when there is none
+        # btw read_linear_acceleration() takes out gravity already
+        x -= defaultAcc[&#39;x&#39;]
+        y -= defaultAcc[&#39;y&#39;]
+        z -= defaultAcc[&#39;z&#39;]
+
+        # round data
+        x = round(x, 3)
+        y = round(y, 3)
+        z = round(z, 3)
+
+        # round the temp too
+        # this is the temperature of the gyro,
+        # which shows internal ROV temperature
+        internalTemp = round(bno.read_temp(), 2)
+
+        #
+        # all the data will be displayed on an html page so if the
+        # values have too many decimal places it will mess up the html table
+        #
+    except:
+        # exception in getting data
+
+        heading, roll, pitch = &#39;Error&#39;, &#39;Error&#39;, &#39;Error&#39;
+        magField = &#39;Error&#39;
+        x, y, z = &#39;Error&#39;, &#39;Error&#39;, &#39;Error&#39;
+        internalTemp = &#39;Error&#39;
+        gyroRunning = False
+
+    if not gyroRunning:
+        # if the gyro has failed try to reboot it
+        print(&#39;Attempting to restart gyro&#39;)
+
+        gyroRunning = True
+        setup()
+
+    # assemble the data into a list
+    fragment = [t, externalTemp, coreTemp, internalTemp,
+                heading, roll, pitch,
+                magField, x, y, z
+                ]
+
+    # print the data if allowed
+    if not silent:
+        print(fragment)
+
+    # return the data
+    return fragment</code></pre>
+</details>
+</dd>
+<dt id="code.sensors.dataCollectShards.setup"><code class="name flex">
+<span>def <span class="ident">setup</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Gyroscope startup code. Sets calibration
+values <a title="code.sensors.dataCollectShards.defaultAcc" href="#code.sensors.dataCollectShards.defaultAcc"><code>defaultAcc</code></a> and <a title="code.sensors.dataCollectShards.defaultRotation" href="#code.sensors.dataCollectShards.defaultRotation"><code>defaultRotation</code></a>
+and prints info regarding the sensor</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setup():
+    &#39;&#39;&#39;
+    Gyroscope startup code. Sets calibration
+    values `defaultAcc` and `defaultRotation`
+    and prints info regarding the sensor
+    &#39;&#39;&#39;
+    # ---------------------------
+    # ---- Gyro Startup Code ----
+    # ---------------------------
+    global bno, gyroRunning, hasSetupOnce
+
+    # make a BNO055 object representing the gyro
+    # No idea what rst is or why it is set to 18
+    bno = BNO055.BNO055(serial_port=&#39;/dev/serial0&#39;, rst=18)
+
+    # Register read errors come after this (for debugging)
+
+    # variables used in gyro setup
+    disconnected = False
+    failureCount = 0
+
+    # Initialize the BNO055 and stop if something went wrong.
+    # Crashes occurs here; Register read error
+    while True:
+        try:
+            # try to start the gyro
+            disconnected = not bno.begin()
+        except Exception as e:
+            # catch an exception and increment the failed start counter
+            print(e)
+
+            # wait a bit
+            time.sleep(0.1)
+
+            failureCount += 1
+
+            if failureCount &gt; 10:
+                # give up after 10 tries
+                print(&#39;You\&#39;re a failure, just like this code&#39;)
+                gyroRunning = False
+
+                break  # haven&#39;t tested if this break statement works
+
+        else:
+            # all things good on startup
+            break
+
+        if disconnected:
+            # failed to init the gyro
+            print(&#39;Failed to initialize BNO055! Is the sensor connected?&#39;)
+            gyroRunning = False
+
+    # if the gyro managed to start well without crashing
+    if gyroRunning:
+
+        # Print system status and self test result.
+        status, self_test, error = bno.get_system_status()
+        print(&#39;System status: {0}&#39;.format(status))
+        print(&#39;Self test result (0x0F is normal): 0x{0:02X}&#39;.format(self_test))
+
+        # Print out an error if system status is in error mode.
+        if status == 0x01:
+            raise RuntimeError(&#39;System error: {0}&#39;.format(error) +
+                &#39;\nSee datasheet section 4.3.59 for the meaning.&#39;)
+
+        # Print BNO055 software revision and other diagnostic data.
+        sw, bl, accel, mag, gyro = bno.get_revision()
+        print(&#39;Software version:   {0}&#39;.format(sw))
+        print(&#39;Bootloader version: {0}&#39;.format(bl))
+        print(&#39;Accelerometer ID:   0x{0:02X}&#39;.format(accel))
+        print(&#39;Magnetometer ID:    0x{0:02X}&#39;.format(mag))
+        print(&#39;Gyroscope ID:       0x{0:02X}\n&#39;.format(gyro))
+
+        if hasSetupOnce:
+            # don&#39;t get default values again so a reboot
+            # doesn&#39;t mess up the displayed values
+            return
+
+        # number of measurements to average
+        MEASUREMENTS = 10
+
+        # the first few readings tend to be zero so get rid of those
+        for i in range(5):
+            bno.read_euler()
+            bno.read_linear_acceleration()
+            time.sleep(0.1)
+
+        global defaultRotation, defaultAcc
+
+        defaultRotation = {&#39;heading&#39;: 0, &#39;roll&#39;: 0, &#39;pitch&#39;: 0}
+        defaultAcc = {&#39;x&#39;: 0, &#39;y&#39;: 0, &#39;z&#39;: 0}
+
+        # take ten measurements and average them
+
+        for i in range(MEASUREMENTS):
+            # get orientation
+            heading, roll, pitch = bno.read_euler()
+            print(heading, roll, pitch, end=&#39; &#39;)
+
+            # sum values, will be divided by the number of measurements later
+            defaultRotation[&#39;heading&#39;] += heading
+            defaultRotation[&#39;roll&#39;] += roll
+            defaultRotation[&#39;pitch&#39;] += pitch
+
+            # linear acceleration
+            x, y, z = bno.read_linear_acceleration()
+            print(x, y, z)
+
+            # sum values, will be divided by the number of measurements later
+            defaultAcc[&#39;x&#39;] += x
+            defaultAcc[&#39;y&#39;] += y
+            defaultAcc[&#39;z&#39;] += z
+
+            # pause for 100ms
+            time.sleep(0.1)
+
+        # divide the sum of readings by
+        # the number of measurements to get the average
+        defaultRotation[&#39;heading&#39;] /= MEASUREMENTS
+        defaultRotation[&#39;roll&#39;] /= MEASUREMENTS
+        defaultRotation[&#39;pitch&#39;] /= MEASUREMENTS
+
+        defaultAcc[&#39;x&#39;] /= MEASUREMENTS
+        defaultAcc[&#39;y&#39;] /= MEASUREMENTS
+        defaultAcc[&#39;z&#39;] /= MEASUREMENTS
+
+        print(defaultAcc)
+        print(defaultRotation)
+
+        # for making sure these values aren&#39;t altered if the gyro reboots
+        hasSetupOnce = True</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="code.sensors" href="index.html">code.sensors</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-variables">Global variables</a></h3>
+<ul class="two-column">
+<li><code><a title="code.sensors.dataCollectShards.TEMPSENSOR" href="#code.sensors.dataCollectShards.TEMPSENSOR">TEMPSENSOR</a></code></li>
+<li><code><a title="code.sensors.dataCollectShards.bno" href="#code.sensors.dataCollectShards.bno">bno</a></code></li>
+<li><code><a title="code.sensors.dataCollectShards.defaultAcc" href="#code.sensors.dataCollectShards.defaultAcc">defaultAcc</a></code></li>
+<li><code><a title="code.sensors.dataCollectShards.defaultRotation" href="#code.sensors.dataCollectShards.defaultRotation">defaultRotation</a></code></li>
+<li><code><a title="code.sensors.dataCollectShards.gyroRunning" href="#code.sensors.dataCollectShards.gyroRunning">gyroRunning</a></code></li>
+<li><code><a title="code.sensors.dataCollectShards.hasSetupOnce" href="#code.sensors.dataCollectShards.hasSetupOnce">hasSetupOnce</a></code></li>
+<li><code><a title="code.sensors.dataCollectShards.silent" href="#code.sensors.dataCollectShards.silent">silent</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="code.sensors.dataCollectShards.getDataFragment" href="#code.sensors.dataCollectShards.getDataFragment">getDataFragment</a></code></li>
+<li><code><a title="code.sensors.dataCollectShards.setup" href="#code.sensors.dataCollectShards.setup">setup</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

@@ -4,8 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.2" />
-<title>core.test API documentation</title>
-<meta name="description" content="Author: Jonathan Rotter &amp; Danny Kong &amp; Yiluo Li" />
+<title>code.core API documentation</title>
+<meta name="description" content="The core part of the ROV software, connecting the
+XBox controller of the base station to the motors
+of the ROV. All movement control and
+…" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -17,108 +20,56 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>core.test</code></h1>
+<h1 class="title">Module <code>code.core</code></h1>
 </header>
 <section id="section-intro">
-<p>Author: Jonathan Rotter &amp; Danny Kong &amp; Yiluo Li</p>
+<p>The core part of the ROV software, connecting the
+XBox controller of the base station to the motors
+of the ROV. All movement control and communication
+happens in this module.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">#!/usr/bin/env python3.4
-&#39;&#39;&#39;Author: Jonathan Rotter &amp; Danny Kong &amp; Yiluo Li&#39;&#39;&#39;
+<pre><code class="python">&#39;&#39;&#39;
+The core part of the ROV software, connecting the
+XBox controller of the base station to the motors
+of the ROV. All movement control and communication
+happens in this module.
+&#39;&#39;&#39;
 
-import time
-import pyfirmata
-
-if __name__ == &#39;__main__&#39;:
-    # idk what this is
-    port = &#39;/dev/ttyACM0&#39;
-
-    # Setup pyFirmata
-    board =  pyfirmata.Arduino(port)
-
-    # Setup an iterator for safety
-    iter8 = pyfirmata.util.Iterator(board)
-    iter8.start()
-
-    # Locate pins
-    pin2 = board.get_pin(&#39;d:2:s&#39;) 
-    pin3 = board.get_pin(&#39;d:3:s&#39;) 
-    pin4 = board.get_pin(&#39;d:4:s&#39;)
-    pin5 = board.get_pin(&#39;d:5:s&#39;)
-    pin6 = board.get_pin(&#39;d:6:s&#39;)
-    pin7 = board.get_pin(&#39;d:7:s&#39;)
-    pin8 = board.get_pin(&#39;d:8:s&#39;)
-    pin9 = board.get_pin(&#39;d:9:s&#39;)
-    pin10 = board.get_pin(&#39;d:10:s&#39;)
-    pin12 = board.get_pin(&#39;d:12:s&#39;)
-
-    # functions for setting pins
-    def move2(a):
-        pin2.write(a) # motor
-
-    def move3(a):
-        pin3.write(a) # motor
-
-    def move4(a):
-        pin4.write(a) # motor
-
-    def move5(a):
-        pin5.write(a) # motor
-
-    def move6(a):
-        pin6.write(a) # vertical thruster
-
-    def move7(a):
-        pin7.write(a) # vertial thruster
-
-    def move8(a):
-        pin8.write(a)
-
-    def move9(a):
-        pin9.write(a)
-
-    def move10(a):
-        pin10.write(a)
-
-    def move12(a):
-        pin12.write(a)
-
-    # main loop
-    while True:
-        # motor number is the pin number the motor is connected to
-        # must be an integer otherwise it will crash
-        n = int(input(&#39;Motor number: &#39;))
-        # usually between 30 - 130? I think?
-        # motors won&#39;t work when set to the extremes of 0, 180
-        d = int(input(&#39;Power Level: &#39;))
-        if n == 2:
-            move2(d)
-        elif n == 3:
-            move3(d)
-        elif n == 4:
-            move4(d)
-        elif n == 5:
-            move5(d)
-        elif n == 6:
-            move6(d)
-        elif n == 7:
-            move7(d)
-        elif n == 8:
-            move8(d)
-        elif n == 9:
-            move9(d)
-        elif n == 10:
-            move10(d)
-        elif n == 12:
-            move12(d)
-        
-        # wait five seconds for some reason
-        time.sleep(5)</code></pre>
+import sys
+sys.path.append(sys.path[0] + &#39;/core&#39;)</code></pre>
 </details>
 </section>
 <section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="code.core.motor2020" href="motor2020.html">code.core.motor2020</a></code></dt>
+<dd>
+<section class="desc"><p>Author: Jonathan Rotter …</p></section>
+</dd>
+<dt><code class="name"><a title="code.core.motor2020++" href="motor2020++.html">code.core.motor2020++</a></code></dt>
+<dd>
+<section class="desc"><p>Author: Jonathan Rotter …</p></section>
+</dd>
+<dt><code class="name"><a title="code.core.server2020" href="server2020.html">code.core.server2020</a></code></dt>
+<dd>
+<section class="desc"><p>Author: Jonathan Rotter …</p></section>
+</dd>
+<dt><code class="name"><a title="code.core.surface2020" href="surface2020.html">code.core.surface2020</a></code></dt>
+<dd>
+<section class="desc"><p>Author: Jonathan Rotter …</p></section>
+</dd>
+<dt><code class="name"><a title="code.core.test" href="test.html">code.core.test</a></code></dt>
+<dd>
+<section class="desc"><p>Author: Jonathan Rotter &amp; Danny Kong &amp; Yiluo Li</p></section>
+</dd>
+<dt><code class="name"><a title="code.core.webSocketClient" href="webSocketClient.html">code.core.webSocketClient</a></code></dt>
+<dd>
+<section class="desc"><p>Author: Jonathan Rotter …</p></section>
+</dd>
+</dl>
 </section>
 <section>
 </section>
@@ -135,7 +86,17 @@ if __name__ == &#39;__main__&#39;:
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="core" href="index.html">core</a></code></li>
+<li><code><a title="code" href="../index.html">code</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="code.core.motor2020" href="motor2020.html">code.core.motor2020</a></code></li>
+<li><code><a title="code.core.motor2020++" href="motor2020++.html">code.core.motor2020++</a></code></li>
+<li><code><a title="code.core.server2020" href="server2020.html">code.core.server2020</a></code></li>
+<li><code><a title="code.core.surface2020" href="surface2020.html">code.core.surface2020</a></code></li>
+<li><code><a title="code.core.test" href="test.html">code.core.test</a></code></li>
+<li><code><a title="code.core.webSocketClient" href="webSocketClient.html">code.core.webSocketClient</a></code></li>
 </ul>
 </li>
 </ul>

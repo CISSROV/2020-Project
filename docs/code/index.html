@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.2" />
-<title>cgi-bin.statusDataCollection API documentation</title>
-<meta name="description" content="Author: Jonathan Rotter …" />
+<title>code API documentation</title>
+<meta name="description" content="The CISSROV Code module.
+All python code for CISSROV is found here, divied up into 4 groups …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -17,51 +18,114 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>cgi-bin.statusDataCollection</code></h1>
+<h1 class="title">Module <code>code</code></h1>
 </header>
 <section id="section-intro">
-<p>Author: Jonathan Rotter</p>
-<p>Finds the process id of the data
-collection program to ensure
-that it is currently running</p>
+<p>The CISSROV Code module.
+All python code for CISSROV is found here, divied up into 4 groups.</p>
+<p>cgi-bin holds scripts that can be run remotely
+using the Apache server on surface pi.</p>
+<p>core holds the code for controlling the motors
+of the ROV and the communication required between
+the pis to make it happen</p>
+<p>mini-rov is like core, but for the mini rov
+that was part of the 2019 MATE Competition.
+It likely has no more use.</p>
+<p>sensors contains code for collecting sensor
+data from the ROV, like the gyroscope and
+thermometer, and then sending it on
+to webpages that connect to the sensor
+websocket server with javascript.</p>
+<p>The code heavily relies on the
+libraries <code>autobahn</code> and <code>twisted</code>
+for websocket communication.
+Except for cgi-bin, all
+communication happens with websockets.
+The libaries have to be installed on surface pi
+and motor pi.</p>
+<p>The python version used for all code is python3.4, because
+it was the newest version on the raspberry pis used.</p>
+<p>Author: Jonathan Rotter except when specified otherwise.
+Then it is Danny or Yilou's code.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">#!/usr/bin/env python3.4
+<pre><code class="python">&#39;&#39;&#39;
+The CISSROV Code module.
+All python code for CISSROV is found here, divied up into 4 groups.
+
+cgi-bin holds scripts that can be run remotely
+using the Apache server on surface pi.
+
+core holds the code for controlling the motors
+of the ROV and the communication required between
+the pis to make it happen
+
+mini-rov is like core, but for the mini rov
+that was part of the 2019 MATE Competition.
+It likely has no more use.
+
+sensors contains code for collecting sensor
+data from the ROV, like the gyroscope and
+thermometer, and then sending it on
+to webpages that connect to the sensor
+websocket server with javascript.
+
+The code heavily relies on the
+libraries `autobahn` and `twisted`
+for websocket communication.
+Except for cgi-bin, all
+communication happens with websockets.
+The libaries have to be installed on surface pi
+and motor pi.
+
+The python version used for all code is python3.4, because
+it was the newest version on the raspberry pis used.
+
+Author: Jonathan Rotter except when specified otherwise.
+Then it is Danny or Yilou&#39;s code.
 &#39;&#39;&#39;
-Author: Jonathan Rotter
 
-Finds the process id of the data
-collection program to ensure
-that it is currently running
-&#39;&#39;&#39;
-import os
-
-# Print header specifying file type
-print(&#34;Content-type: text/html\n\n&#34;)
-
-# Search for a process name beginning with &#34;sudo python3.4 data&#34;
-# Runs it in a subshell and returns the result
-f = os.popen(&#39;pgrep -f &#34;sudo python3.4 data&#34;&#39;)
-result = f.read()
-f.close()
-
-# Analyze output from pgrep command
-if result.strip() == &#39;&#39;:
-    result = &#39;None&#39; # No process found
-result = result.split() # ?
-if len(result) == 1:
-    result = &#39;None&#39; # No process found
-else:
-    result = result[0]
-
-# Print report in html
-print(&#39;&lt;h3&gt;dataCollection Status&lt;/h3&gt;&#39;)
-print(&#39;&lt;p id=&#34;PID&#34;&gt;PID: &#39; + str(result) + &#39;&lt;/p&gt;&#39;)</code></pre>
+import sys
+sys.path.append(sys.path[0] + &#39;/code/core&#39;)
+sys.path.append(sys.path[0] + &#39;/code/mini-rov&#39;)
+sys.path.append(sys.path[0] + &#39;/code/cgi-bin&#39;)
+sys.path.append(sys.path[0] + &#39;/code/sensors&#39;)</code></pre>
 </details>
 </section>
 <section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="code.cgi-bin" href="cgi-bin/index.html">code.cgi-bin</a></code></dt>
+<dd>
+<section class="desc"><p>cgi-bin is for fetching data
+for the webserver hosted on surface pi.
+It contains a collection of scripts that are
+accessed and executed by going to …</p></section>
+</dd>
+<dt><code class="name"><a title="code.core" href="core/index.html">code.core</a></code></dt>
+<dd>
+<section class="desc"><p>The core part of the ROV software, connecting the
+XBox controller of the base station to the motors
+of the ROV. All movement control and
+…</p></section>
+</dd>
+<dt><code class="name"><a title="code.mini-rov" href="mini-rov/index.html">code.mini-rov</a></code></dt>
+<dd>
+<section class="desc"><p>mini-rov contains the code for
+controlling the mini-rov that
+was part of the 2019 MATE competition.
+It is likely no longer of use.</p></section>
+</dd>
+<dt><code class="name"><a title="code.sensors" href="sensors/index.html">code.sensors</a></code></dt>
+<dd>
+<section class="desc"><p>Sensors is the module for communicating with
+the ROV's sensor, collecting the information,
+and passing it on so that the operators of
+the ROV can view …</p></section>
+</dd>
+</dl>
 </section>
 <section>
 </section>
@@ -76,9 +140,12 @@ print(&#39;&lt;p id=&#34;PID&#34;&gt;PID: &#39; + str(result) + &#39;&lt;/p&gt;&
 <ul></ul>
 </div>
 <ul id="index">
-<li><h3>Super-module</h3>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
-<li><code><a title="cgi-bin" href="index.html">cgi-bin</a></code></li>
+<li><code><a title="code.cgi-bin" href="cgi-bin/index.html">code.cgi-bin</a></code></li>
+<li><code><a title="code.core" href="core/index.html">code.core</a></code></li>
+<li><code><a title="code.mini-rov" href="mini-rov/index.html">code.mini-rov</a></code></li>
+<li><code><a title="code.sensors" href="sensors/index.html">code.sensors</a></code></li>
 </ul>
 </li>
 </ul>

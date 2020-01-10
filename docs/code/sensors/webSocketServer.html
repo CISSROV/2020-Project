@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.2" />
+<title>code.sensors.webSocketServer API documentation</title>
+<meta name="description" content="Author: Jonathan Rotter …" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>code.sensors.webSocketServer</code></h1>
+</header>
+<section id="section-intro">
+<p>Author: Jonathan Rotter</p>
+<p>Makes a websocket server that broadcasts
+the sensor data from the ROV to any connected
+client. It is used in the webpage to display
+sensor data.</p>
+<p>&mdash; !!!
+IMPORTANT
+!!! &mdash;
+This process HAS TO BE RUN AS ROOT (with sudo)
+for it to function properly</p>
+<pre><code>Also the serial connection must be set up BEFORE the twisted stuff
+because upon hitting an error it must shutdown the program and
+should not be ignored or silenced because twisted will do that
+if handled it must call sys.exit or something else to terminate the program
+</code></pre>
+<p>Required 3rd-party libraries:
+<code>autobahn</code>
+<code>twisted</code></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/env python3.4
+&#39;&#39;&#39;
+Author: Jonathan Rotter
+
+Makes a websocket server that broadcasts
+the sensor data from the ROV to any connected
+client. It is used in the webpage to display
+sensor data.
+
+ --- !!!  IMPORTANT  !!! ---
+    This process HAS TO BE RUN AS ROOT (with sudo)
+    for it to function properly
+
+    Also the serial connection must be set up BEFORE the twisted stuff
+    because upon hitting an error it must shutdown the program and
+    should not be ignored or silenced because twisted will do that
+    if handled it must call sys.exit or something else to terminate the program
+
+Required 3rd-party libraries:
+`autobahn`
+`twisted`
+&#39;&#39;&#39;
+
+from autobahn.twisted.websocket import WebSocketServerProtocol, \
+    WebSocketServerFactory
+
+import sys
+import time
+import json
+
+# 3rd-party library called twisted for asynchronous
+from twisted.python import log
+from twisted.internet import task, reactor
+
+# --- !!!  IMPORTANT  !!! --- This process must be - run and owned by root
+
+if __name__ == &#39;__main__&#39;:
+    import dataCollectShards as dataShards
+
+    try:
+        # try setting up the sensors
+        dataShards.setup()
+    except Exception as e:
+        print(e)
+        sys.exit(1)
+    else:
+        print(&#39;Successful Gyroscope Startup&#39;)
+
+
+def getDateISO8601():
+    &#39;&#39;&#39;
+    Gets the current date in the format YYYY-MM-DD
+
+    Return:
+        date: In the format of YYYY-MM-DD
+    &#39;&#39;&#39;
+    tmp = time.localtime()
+    return &#39;{}-{:0&gt;2}-{:0&gt;2}&#39;.format(tmp.tm_year, tmp.tm_mon, tmp.tm_mday)
+
+
+IP = &#39;127.0.0.1&#39;
+&#39;&#39;&#39;
+The IP of the server.
+Can be set to localhost and it will still work
+&#39;&#39;&#39;
+PORT = 5005
+&#39;&#39;&#39;
+Make sure systems using this server as their data source
+are set to the right port
+&#39;&#39;&#39;
+
+# then use getDataFragment()
+
+#  --- !!!  IMPORTANT  !!! --- the serial connection must be set up BEFORE the twisted stuff
+# because upon hitting an error it must shutdown the program and should not be ignored or silenced
+# cause twisted does that
+# if handled it must call sys.exit or something else to terminate the program
+
+# Fetch data every x seconds
+timeout = 1.0  # in seconds
+&#39;&#39;&#39;Time in seconds it should wait between fetching data&#39;&#39;&#39;
+
+
+class ServerProtocol(WebSocketServerProtocol):
+    &#39;&#39;&#39;
+    Object created for each connection. It handles
+    the communcation with one client.
+    &#39;&#39;&#39;
+
+    def onConnect(self, request):
+        &#39;&#39;&#39;
+        Called automatically when someone connects.
+        Adds them to the list of connections and prints debug info
+        &#39;&#39;&#39;
+
+        print(&#39;Client connecting &amp; registering: {0}&#39;.format(request.peer))
+        # remember the connection
+        self.factory.register(self)
+
+    def onOpen(self):
+        &#39;&#39;&#39;
+        Called automatically when someone connects.
+        Prints debug info
+        &#39;&#39;&#39;
+        print(&#39;WebSocket connection open&#39;)
+
+    def onClose(self, wasClean, code, reason):
+        &#39;&#39;&#39;
+        Called automatically when someone disconnects.
+        Prints debug info and removes them from the list of connected clients
+        &#39;&#39;&#39;
+
+        print(&#39;WebSocket connection closed &amp; unregistering: {0}&#39;.format(reason))
+        # forget the connection
+        self.factory.unregister(self)
+
+    def onMessage(self, msg, isBinary):
+        &#39;&#39;&#39;
+        Called automatically when a message is received
+        Only used for debugging.
+        If sent `hi`, the server will respond with `Hello World!`.
+        This feature is used to determine whenever a connection
+        to this server is alive and good
+        &#39;&#39;&#39;
+
+        if msg == b&#39;hi&#39;:
+            self.sendMessage(b&#39;Hello World!&#39;)
+
+
+class ServerFactory(WebSocketServerFactory):
+    &#39;&#39;&#39;
+    Keeps track of all connections and
+    broadcasts sensor data to them
+    &#39;&#39;&#39;
+
+    def __init__(self, url):
+        &#39;&#39;&#39;
+        Initializes the class
+
+        Arg:
+            url (str): Should be in the format ws://127.0.0.1:5005
+        &#39;&#39;&#39;
+        WebSocketServerFactory.__init__(self, url)
+        # list of clients / remembered connections
+        self.clients = []
+
+    def register(self, client):
+        &#39;&#39;&#39;
+        Called by `ServerProtocol.onConnect`
+        to add a client to the list of clients
+        &#39;&#39;&#39;
+
+        if client not in self.clients:
+            self.clients.append(client)
+
+    def unregister(self, client):
+        &#39;&#39;&#39;
+        Called by `ServerProtocol.onClose`
+        to remove a client from the list of clients
+        &#39;&#39;&#39;
+
+        if client in self.clients:
+            self.clients.remove(client)
+
+    def broadcast(self):
+        &#39;&#39;&#39;
+        Calls `dataShards.getDataFragment` to get
+        sensor data and then sends that data to
+        all connected clients as in json.
+        &#39;&#39;&#39;
+
+        # collect sensor data and turn it into a json string
+        msg = json.dumps(dataShards.getDataFragment())
+
+        print(&#34;broadcasting message &#39;{}&#39; ..&#34;.format(msg))
+
+        # send the data to each client
+        for c in self.clients:
+            c.sendMessage(msg.encode(&#39;utf8&#39;))
+
+# get date in YYYY-MM-DD
+date = getDateISO8601()
+&#39;&#39;&#39;Today&#39;s date in YYYY-MM-DD, fetched from `getDateISO8601`&#39;&#39;&#39;
+
+
+#
+# Log files are locating in /var/log/MATE/
+# and have the name websocketYYYY-MM-DD.log where the date is the day
+# the code was run and the log file created
+# As the raspberry pis don&#39;t actually have the right time this date may be off
+#
+
+if __name__ == &#39;__main__&#39;:
+    try:
+        # try to open the log file in appending mode
+        f = open(&#39;/var/log/MATE/websocket{}.log&#39;.format(date), &#39;a&#39;)
+    except FileNotFoundError:
+        # if the log file doesn&#39;t exist yet, make a new one and open that one
+        f = open(&#39;/var/log/MATE/websocket{}.log&#39;.format(date), &#39;w&#39;)
+
+    # start sending info to the log file
+    log.startLogging(f)
+
+    # url in the format of ws://127.0.0.1:5005
+    server = ServerFactory(u&#39;ws://{}:{}&#39;.format(IP , PORT)) # update this! &lt;- Note: idk why this
+    server.protocol = ServerProtocol
+
+    # listen for tcp connections on the port
+    reactor.listenTCP(PORT, server)
+
+    # wait till the next whole 5 seconds
+    time.sleep(abs(time.time() % -5)) 
+
+    # this doesn&#39;t seem to have a purpose
+    starttime = time.time()
+
+    # call server.broadcast() every timeout number of seconds to broadcast sensor data to clients
+    l = task.LoopingCall(server.broadcast)
+    l.start(timeout)
+
+    try:
+        # start doing stuff
+        reactor.run()
+    finally:
+        # close the file no matter what
+        f.close()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-variables">Global variables</h2>
+<dl>
+<dt id="code.sensors.webSocketServer.IP"><code class="name">var <span class="ident">IP</span></code></dt>
+<dd>
+<section class="desc"><p>The IP of the server.
+Can be set to localhost and it will still work</p></section>
+</dd>
+<dt id="code.sensors.webSocketServer.PORT"><code class="name">var <span class="ident">PORT</span></code></dt>
+<dd>
+<section class="desc"><p>Make sure systems using this server as their data source
+are set to the right port</p></section>
+</dd>
+<dt id="code.sensors.webSocketServer.date"><code class="name">var <span class="ident">date</span></code></dt>
+<dd>
+<section class="desc"><p>Today's date in YYYY-MM-DD, fetched from <a title="code.sensors.webSocketServer.getDateISO8601" href="#code.sensors.webSocketServer.getDateISO8601"><code>getDateISO8601()</code></a></p></section>
+</dd>
+<dt id="code.sensors.webSocketServer.timeout"><code class="name">var <span class="ident">timeout</span></code></dt>
+<dd>
+<section class="desc"><p>Time in seconds it should wait between fetching data</p></section>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="code.sensors.webSocketServer.getDateISO8601"><code class="name flex">
+<span>def <span class="ident">getDateISO8601</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Gets the current date in the format YYYY-MM-DD</p>
+<h2 id="return">Return</h2>
+<dl>
+<dt><strong><a title="code.sensors.webSocketServer.date" href="#code.sensors.webSocketServer.date"><code>date</code></a></strong></dt>
+<dd>In the format of YYYY-MM-DD</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getDateISO8601():
+    &#39;&#39;&#39;
+    Gets the current date in the format YYYY-MM-DD
+
+    Return:
+        date: In the format of YYYY-MM-DD
+    &#39;&#39;&#39;
+    tmp = time.localtime()
+    return &#39;{}-{:0&gt;2}-{:0&gt;2}&#39;.format(tmp.tm_year, tmp.tm_mon, tmp.tm_mday)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="code.sensors.webSocketServer.ServerFactory"><code class="flex name class">
+<span>class <span class="ident">ServerFactory</span></span>
+<span>(</span><span>url)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Keeps track of all connections and
+broadcasts sensor data to them</p>
+<p>Initializes the class</p>
+<h2 id="arg">Arg</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>Should be in the format ws://127.0.0.1:5005</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ServerFactory(WebSocketServerFactory):
+    &#39;&#39;&#39;
+    Keeps track of all connections and
+    broadcasts sensor data to them
+    &#39;&#39;&#39;
+
+    def __init__(self, url):
+        &#39;&#39;&#39;
+        Initializes the class
+
+        Arg:
+            url (str): Should be in the format ws://127.0.0.1:5005
+        &#39;&#39;&#39;
+        WebSocketServerFactory.__init__(self, url)
+        # list of clients / remembered connections
+        self.clients = []
+
+    def register(self, client):
+        &#39;&#39;&#39;
+        Called by `ServerProtocol.onConnect`
+        to add a client to the list of clients
+        &#39;&#39;&#39;
+
+        if client not in self.clients:
+            self.clients.append(client)
+
+    def unregister(self, client):
+        &#39;&#39;&#39;
+        Called by `ServerProtocol.onClose`
+        to remove a client from the list of clients
+        &#39;&#39;&#39;
+
+        if client in self.clients:
+            self.clients.remove(client)
+
+    def broadcast(self):
+        &#39;&#39;&#39;
+        Calls `dataShards.getDataFragment` to get
+        sensor data and then sends that data to
+        all connected clients as in json.
+        &#39;&#39;&#39;
+
+        # collect sensor data and turn it into a json string
+        msg = json.dumps(dataShards.getDataFragment())
+
+        print(&#34;broadcasting message &#39;{}&#39; ..&#34;.format(msg))
+
+        # send the data to each client
+        for c in self.clients:
+            c.sendMessage(msg.encode(&#39;utf8&#39;))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>autobahn.twisted.websocket.WebSocketServerFactory</li>
+<li>autobahn.twisted.websocket.WebSocketAdapterFactory</li>
+<li>autobahn.websocket.protocol.WebSocketServerFactory</li>
+<li>autobahn.websocket.protocol.WebSocketFactory</li>
+<li>twisted.internet.protocol.ServerFactory</li>
+<li>twisted.internet.protocol.Factory</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="code.sensors.webSocketServer.ServerFactory.broadcast"><code class="name flex">
+<span>def <span class="ident">broadcast</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Calls <code>dataShards.getDataFragment</code> to get
+sensor data and then sends that data to
+all connected clients as in json.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def broadcast(self):
+    &#39;&#39;&#39;
+    Calls `dataShards.getDataFragment` to get
+    sensor data and then sends that data to
+    all connected clients as in json.
+    &#39;&#39;&#39;
+
+    # collect sensor data and turn it into a json string
+    msg = json.dumps(dataShards.getDataFragment())
+
+    print(&#34;broadcasting message &#39;{}&#39; ..&#34;.format(msg))
+
+    # send the data to each client
+    for c in self.clients:
+        c.sendMessage(msg.encode(&#39;utf8&#39;))</code></pre>
+</details>
+</dd>
+<dt id="code.sensors.webSocketServer.ServerFactory.register"><code class="name flex">
+<span>def <span class="ident">register</span></span>(<span>self, client)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called by <a title="code.sensors.webSocketServer.ServerProtocol.onConnect" href="#code.sensors.webSocketServer.ServerProtocol.onConnect"><code>ServerProtocol.onConnect()</code></a>
+to add a client to the list of clients</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def register(self, client):
+    &#39;&#39;&#39;
+    Called by `ServerProtocol.onConnect`
+    to add a client to the list of clients
+    &#39;&#39;&#39;
+
+    if client not in self.clients:
+        self.clients.append(client)</code></pre>
+</details>
+</dd>
+<dt id="code.sensors.webSocketServer.ServerFactory.unregister"><code class="name flex">
+<span>def <span class="ident">unregister</span></span>(<span>self, client)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called by <a title="code.sensors.webSocketServer.ServerProtocol.onClose" href="#code.sensors.webSocketServer.ServerProtocol.onClose"><code>ServerProtocol.onClose()</code></a>
+to remove a client from the list of clients</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def unregister(self, client):
+    &#39;&#39;&#39;
+    Called by `ServerProtocol.onClose`
+    to remove a client from the list of clients
+    &#39;&#39;&#39;
+
+    if client in self.clients:
+        self.clients.remove(client)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="code.sensors.webSocketServer.ServerProtocol"><code class="flex name class">
+<span>class <span class="ident">ServerProtocol</span></span>
+</code></dt>
+<dd>
+<section class="desc"><p>Object created for each connection. It handles
+the communcation with one client.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ServerProtocol(WebSocketServerProtocol):
+    &#39;&#39;&#39;
+    Object created for each connection. It handles
+    the communcation with one client.
+    &#39;&#39;&#39;
+
+    def onConnect(self, request):
+        &#39;&#39;&#39;
+        Called automatically when someone connects.
+        Adds them to the list of connections and prints debug info
+        &#39;&#39;&#39;
+
+        print(&#39;Client connecting &amp; registering: {0}&#39;.format(request.peer))
+        # remember the connection
+        self.factory.register(self)
+
+    def onOpen(self):
+        &#39;&#39;&#39;
+        Called automatically when someone connects.
+        Prints debug info
+        &#39;&#39;&#39;
+        print(&#39;WebSocket connection open&#39;)
+
+    def onClose(self, wasClean, code, reason):
+        &#39;&#39;&#39;
+        Called automatically when someone disconnects.
+        Prints debug info and removes them from the list of connected clients
+        &#39;&#39;&#39;
+
+        print(&#39;WebSocket connection closed &amp; unregistering: {0}&#39;.format(reason))
+        # forget the connection
+        self.factory.unregister(self)
+
+    def onMessage(self, msg, isBinary):
+        &#39;&#39;&#39;
+        Called automatically when a message is received
+        Only used for debugging.
+        If sent `hi`, the server will respond with `Hello World!`.
+        This feature is used to determine whenever a connection
+        to this server is alive and good
+        &#39;&#39;&#39;
+
+        if msg == b&#39;hi&#39;:
+            self.sendMessage(b&#39;Hello World!&#39;)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>autobahn.twisted.websocket.WebSocketServerProtocol</li>
+<li>autobahn.twisted.websocket.WebSocketAdapterProtocol</li>
+<li>twisted.internet.protocol.Protocol</li>
+<li>twisted.internet.protocol.BaseProtocol</li>
+<li>autobahn.websocket.protocol.WebSocketServerProtocol</li>
+<li>autobahn.websocket.protocol.WebSocketProtocol</li>
+<li>autobahn.util.ObservableMixin</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="code.sensors.webSocketServer.ServerProtocol.onClose"><code class="name flex">
+<span>def <span class="ident">onClose</span></span>(<span>self, wasClean, code, reason)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called automatically when someone disconnects.
+Prints debug info and removes them from the list of connected clients</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def onClose(self, wasClean, code, reason):
+    &#39;&#39;&#39;
+    Called automatically when someone disconnects.
+    Prints debug info and removes them from the list of connected clients
+    &#39;&#39;&#39;
+
+    print(&#39;WebSocket connection closed &amp; unregistering: {0}&#39;.format(reason))
+    # forget the connection
+    self.factory.unregister(self)</code></pre>
+</details>
+</dd>
+<dt id="code.sensors.webSocketServer.ServerProtocol.onConnect"><code class="name flex">
+<span>def <span class="ident">onConnect</span></span>(<span>self, request)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called automatically when someone connects.
+Adds them to the list of connections and prints debug info</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def onConnect(self, request):
+    &#39;&#39;&#39;
+    Called automatically when someone connects.
+    Adds them to the list of connections and prints debug info
+    &#39;&#39;&#39;
+
+    print(&#39;Client connecting &amp; registering: {0}&#39;.format(request.peer))
+    # remember the connection
+    self.factory.register(self)</code></pre>
+</details>
+</dd>
+<dt id="code.sensors.webSocketServer.ServerProtocol.onMessage"><code class="name flex">
+<span>def <span class="ident">onMessage</span></span>(<span>self, msg, isBinary)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called automatically when a message is received
+Only used for debugging.
+If sent <code>hi</code>, the server will respond with <code>Hello World!</code>.
+This feature is used to determine whenever a connection
+to this server is alive and good</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def onMessage(self, msg, isBinary):
+    &#39;&#39;&#39;
+    Called automatically when a message is received
+    Only used for debugging.
+    If sent `hi`, the server will respond with `Hello World!`.
+    This feature is used to determine whenever a connection
+    to this server is alive and good
+    &#39;&#39;&#39;
+
+    if msg == b&#39;hi&#39;:
+        self.sendMessage(b&#39;Hello World!&#39;)</code></pre>
+</details>
+</dd>
+<dt id="code.sensors.webSocketServer.ServerProtocol.onOpen"><code class="name flex">
+<span>def <span class="ident">onOpen</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Called automatically when someone connects.
+Prints debug info</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def onOpen(self):
+    &#39;&#39;&#39;
+    Called automatically when someone connects.
+    Prints debug info
+    &#39;&#39;&#39;
+    print(&#39;WebSocket connection open&#39;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="code.sensors" href="index.html">code.sensors</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-variables">Global variables</a></h3>
+<ul class="">
+<li><code><a title="code.sensors.webSocketServer.IP" href="#code.sensors.webSocketServer.IP">IP</a></code></li>
+<li><code><a title="code.sensors.webSocketServer.PORT" href="#code.sensors.webSocketServer.PORT">PORT</a></code></li>
+<li><code><a title="code.sensors.webSocketServer.date" href="#code.sensors.webSocketServer.date">date</a></code></li>
+<li><code><a title="code.sensors.webSocketServer.timeout" href="#code.sensors.webSocketServer.timeout">timeout</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="code.sensors.webSocketServer.getDateISO8601" href="#code.sensors.webSocketServer.getDateISO8601">getDateISO8601</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="code.sensors.webSocketServer.ServerFactory" href="#code.sensors.webSocketServer.ServerFactory">ServerFactory</a></code></h4>
+<ul class="">
+<li><code><a title="code.sensors.webSocketServer.ServerFactory.broadcast" href="#code.sensors.webSocketServer.ServerFactory.broadcast">broadcast</a></code></li>
+<li><code><a title="code.sensors.webSocketServer.ServerFactory.register" href="#code.sensors.webSocketServer.ServerFactory.register">register</a></code></li>
+<li><code><a title="code.sensors.webSocketServer.ServerFactory.unregister" href="#code.sensors.webSocketServer.ServerFactory.unregister">unregister</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="code.sensors.webSocketServer.ServerProtocol" href="#code.sensors.webSocketServer.ServerProtocol">ServerProtocol</a></code></h4>
+<ul class="">
+<li><code><a title="code.sensors.webSocketServer.ServerProtocol.onClose" href="#code.sensors.webSocketServer.ServerProtocol.onClose">onClose</a></code></li>
+<li><code><a title="code.sensors.webSocketServer.ServerProtocol.onConnect" href="#code.sensors.webSocketServer.ServerProtocol.onConnect">onConnect</a></code></li>
+<li><code><a title="code.sensors.webSocketServer.ServerProtocol.onMessage" href="#code.sensors.webSocketServer.ServerProtocol.onMessage">onMessage</a></code></li>
+<li><code><a title="code.sensors.webSocketServer.ServerProtocol.onOpen" href="#code.sensors.webSocketServer.ServerProtocol.onOpen">onOpen</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

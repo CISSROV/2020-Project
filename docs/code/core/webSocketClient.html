@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.2" />
-<title>core.webSocketClient API documentation</title>
+<title>code.core.webSocketClient API documentation</title>
 <meta name="description" content="Author: Jonathan Rotter …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
@@ -17,7 +17,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>core.webSocketClient</code></h1>
+<h1 class="title">Module <code>code.core.webSocketClient</code></h1>
 </header>
 <section id="section-intro">
 <p>Author: Jonathan Rotter</p>
@@ -272,15 +272,15 @@ if __name__ == &#39;__main__&#39;:
 <section>
 <h2 class="section-title" id="header-variables">Global variables</h2>
 <dl>
-<dt id="core.webSocketClient.IP"><code class="name">var <span class="ident">IP</span></code></dt>
+<dt id="code.core.webSocketClient.IP"><code class="name">var <span class="ident">IP</span></code></dt>
 <dd>
 <section class="desc"><p>ip is localhost, does not need to be changed</p></section>
 </dd>
-<dt id="core.webSocketClient.PORT"><code class="name">var <span class="ident">PORT</span></code></dt>
+<dt id="code.core.webSocketClient.PORT"><code class="name">var <span class="ident">PORT</span></code></dt>
 <dd>
 <section class="desc"><p>needs the be the same here as in server2020</p></section>
 </dd>
-<dt id="core.webSocketClient.TIMEOUT"><code class="name">var <span class="ident">TIMEOUT</span></code></dt>
+<dt id="code.core.webSocketClient.TIMEOUT"><code class="name">var <span class="ident">TIMEOUT</span></code></dt>
 <dd>
 <section class="desc"><p>time between surface2020 being run in seconds</p></section>
 </dd>
@@ -289,7 +289,7 @@ if __name__ == &#39;__main__&#39;:
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="core.webSocketClient.connectTCP"><code class="name flex">
+<dt id="code.core.webSocketClient.connectTCP"><code class="name flex">
 <span>def <span class="ident">connectTCP</span></span>(<span>factory)</span>
 </code></dt>
 <dd>
@@ -306,7 +306,7 @@ if __name__ == &#39;__main__&#39;:
     reactor.connectTCP(IP, PORT, factory)</code></pre>
 </details>
 </dd>
-<dt id="core.webSocketClient.start"><code class="name flex">
+<dt id="code.core.webSocketClient.start"><code class="name flex">
 <span>def <span class="ident">start</span></span>(<span>clientType, func, ip=None)</span>
 </code></dt>
 <dd>
@@ -371,7 +371,7 @@ to use this module</p>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="core.webSocketClient.ClientFactory"><code class="flex name class">
+<dt id="code.core.webSocketClient.ClientFactory"><code class="flex name class">
 <span>class <span class="ident">ClientFactory</span></span>
 <span>(</span><span>url, clientType, func)</span>
 </code></dt>
@@ -472,7 +472,7 @@ to use this module</p>
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="core.webSocketClient.ClientFactory.broadcast"><code class="name flex">
+<dt id="code.core.webSocketClient.ClientFactory.broadcast"><code class="name flex">
 <span>def <span class="ident">broadcast</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -501,7 +501,7 @@ Only for surface pi</p></section>
         c.sendMessage(txt.encode())</code></pre>
 </details>
 </dd>
-<dt id="core.webSocketClient.ClientFactory.clientConnectionFailed"><code class="name flex">
+<dt id="code.core.webSocketClient.ClientFactory.clientConnectionFailed"><code class="name flex">
 <span>def <span class="ident">clientConnectionFailed</span></span>(<span>self, connector, error)</span>
 </code></dt>
 <dd>
@@ -528,11 +528,11 @@ to try to reconnect in 3 seconds</p></section>
     reactor.callLater(3, connectTCP, self)</code></pre>
 </details>
 </dd>
-<dt id="core.webSocketClient.ClientFactory.register"><code class="name flex">
+<dt id="code.core.webSocketClient.ClientFactory.register"><code class="name flex">
 <span>def <span class="ident">register</span></span>(<span>self, client)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Called in <a title="core.webSocketClient.ClientProtocol.onConnect" href="#core.webSocketClient.ClientProtocol.onConnect"><code>ClientProtocol.onConnect()</code></a>
+<section class="desc"><p>Called in <a title="code.core.webSocketClient.ClientProtocol.onConnect" href="#code.core.webSocketClient.ClientProtocol.onConnect"><code>ClientProtocol.onConnect()</code></a>
 Remember this connection</p></section>
 <details class="source">
 <summary>
@@ -547,11 +547,11 @@ Remember this connection</p></section>
         self.connections.append(client)</code></pre>
 </details>
 </dd>
-<dt id="core.webSocketClient.ClientFactory.unregister"><code class="name flex">
+<dt id="code.core.webSocketClient.ClientFactory.unregister"><code class="name flex">
 <span>def <span class="ident">unregister</span></span>(<span>self, client)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Called in <a title="core.webSocketClient.ClientProtocol.onClose" href="#core.webSocketClient.ClientProtocol.onClose"><code>ClientProtocol.onClose()</code></a>
+<section class="desc"><p>Called in <a title="code.core.webSocketClient.ClientProtocol.onClose" href="#code.core.webSocketClient.ClientProtocol.onClose"><code>ClientProtocol.onClose()</code></a>
 Forget this connection</p></section>
 <details class="source">
 <summary>
@@ -568,7 +568,7 @@ Forget this connection</p></section>
 </dd>
 </dl>
 </dd>
-<dt id="core.webSocketClient.ClientProtocol"><code class="flex name class">
+<dt id="code.core.webSocketClient.ClientProtocol"><code class="flex name class">
 <span>class <span class="ident">ClientProtocol</span></span>
 </code></dt>
 <dd>
@@ -651,7 +651,7 @@ Forget this connection</p></section>
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="core.webSocketClient.ClientProtocol.onClose"><code class="name flex">
+<dt id="code.core.webSocketClient.ClientProtocol.onClose"><code class="name flex">
 <span>def <span class="ident">onClose</span></span>(<span>self, wasClean, code, reason)</span>
 </code></dt>
 <dd>
@@ -670,7 +670,7 @@ Forget this connection</p></section>
     self.factory.unregister(self)</code></pre>
 </details>
 </dd>
-<dt id="core.webSocketClient.ClientProtocol.onConnect"><code class="name flex">
+<dt id="code.core.webSocketClient.ClientProtocol.onConnect"><code class="name flex">
 <span>def <span class="ident">onConnect</span></span>(<span>self, response)</span>
 </code></dt>
 <dd>
@@ -690,7 +690,7 @@ connecting</p></section>
     self.factory.register(self)</code></pre>
 </details>
 </dd>
-<dt id="core.webSocketClient.ClientProtocol.onConnecting"><code class="name flex">
+<dt id="code.core.webSocketClient.ClientProtocol.onConnecting"><code class="name flex">
 <span>def <span class="ident">onConnecting</span></span>(<span>self, transport_details)</span>
 </code></dt>
 <dd>
@@ -709,7 +709,7 @@ connecting</p></section>
     return None</code></pre>
 </details>
 </dd>
-<dt id="core.webSocketClient.ClientProtocol.onMessage"><code class="name flex">
+<dt id="code.core.webSocketClient.ClientProtocol.onMessage"><code class="name flex">
 <span>def <span class="ident">onMessage</span></span>(<span>self, payload, isBinary)</span>
 </code></dt>
 <dd>
@@ -751,7 +751,7 @@ receiving a message</p>
         raise ValueError(&#39;Only motor pi / Mini ROV should receive data&#39;)</code></pre>
 </details>
 </dd>
-<dt id="core.webSocketClient.ClientProtocol.onOpen"><code class="name flex">
+<dt id="code.core.webSocketClient.ClientProtocol.onOpen"><code class="name flex">
 <span>def <span class="ident">onOpen</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -782,41 +782,41 @@ the connection is open</p></section>
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="core" href="index.html">core</a></code></li>
+<li><code><a title="code.core" href="index.html">code.core</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-variables">Global variables</a></h3>
 <ul class="">
-<li><code><a title="core.webSocketClient.IP" href="#core.webSocketClient.IP">IP</a></code></li>
-<li><code><a title="core.webSocketClient.PORT" href="#core.webSocketClient.PORT">PORT</a></code></li>
-<li><code><a title="core.webSocketClient.TIMEOUT" href="#core.webSocketClient.TIMEOUT">TIMEOUT</a></code></li>
+<li><code><a title="code.core.webSocketClient.IP" href="#code.core.webSocketClient.IP">IP</a></code></li>
+<li><code><a title="code.core.webSocketClient.PORT" href="#code.core.webSocketClient.PORT">PORT</a></code></li>
+<li><code><a title="code.core.webSocketClient.TIMEOUT" href="#code.core.webSocketClient.TIMEOUT">TIMEOUT</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="core.webSocketClient.connectTCP" href="#core.webSocketClient.connectTCP">connectTCP</a></code></li>
-<li><code><a title="core.webSocketClient.start" href="#core.webSocketClient.start">start</a></code></li>
+<li><code><a title="code.core.webSocketClient.connectTCP" href="#code.core.webSocketClient.connectTCP">connectTCP</a></code></li>
+<li><code><a title="code.core.webSocketClient.start" href="#code.core.webSocketClient.start">start</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="core.webSocketClient.ClientFactory" href="#core.webSocketClient.ClientFactory">ClientFactory</a></code></h4>
+<h4><code><a title="code.core.webSocketClient.ClientFactory" href="#code.core.webSocketClient.ClientFactory">ClientFactory</a></code></h4>
 <ul class="">
-<li><code><a title="core.webSocketClient.ClientFactory.broadcast" href="#core.webSocketClient.ClientFactory.broadcast">broadcast</a></code></li>
-<li><code><a title="core.webSocketClient.ClientFactory.clientConnectionFailed" href="#core.webSocketClient.ClientFactory.clientConnectionFailed">clientConnectionFailed</a></code></li>
-<li><code><a title="core.webSocketClient.ClientFactory.register" href="#core.webSocketClient.ClientFactory.register">register</a></code></li>
-<li><code><a title="core.webSocketClient.ClientFactory.unregister" href="#core.webSocketClient.ClientFactory.unregister">unregister</a></code></li>
+<li><code><a title="code.core.webSocketClient.ClientFactory.broadcast" href="#code.core.webSocketClient.ClientFactory.broadcast">broadcast</a></code></li>
+<li><code><a title="code.core.webSocketClient.ClientFactory.clientConnectionFailed" href="#code.core.webSocketClient.ClientFactory.clientConnectionFailed">clientConnectionFailed</a></code></li>
+<li><code><a title="code.core.webSocketClient.ClientFactory.register" href="#code.core.webSocketClient.ClientFactory.register">register</a></code></li>
+<li><code><a title="code.core.webSocketClient.ClientFactory.unregister" href="#code.core.webSocketClient.ClientFactory.unregister">unregister</a></code></li>
 </ul>
 </li>
 <li>
-<h4><code><a title="core.webSocketClient.ClientProtocol" href="#core.webSocketClient.ClientProtocol">ClientProtocol</a></code></h4>
+<h4><code><a title="code.core.webSocketClient.ClientProtocol" href="#code.core.webSocketClient.ClientProtocol">ClientProtocol</a></code></h4>
 <ul class="">
-<li><code><a title="core.webSocketClient.ClientProtocol.onClose" href="#core.webSocketClient.ClientProtocol.onClose">onClose</a></code></li>
-<li><code><a title="core.webSocketClient.ClientProtocol.onConnect" href="#core.webSocketClient.ClientProtocol.onConnect">onConnect</a></code></li>
-<li><code><a title="core.webSocketClient.ClientProtocol.onConnecting" href="#core.webSocketClient.ClientProtocol.onConnecting">onConnecting</a></code></li>
-<li><code><a title="core.webSocketClient.ClientProtocol.onMessage" href="#core.webSocketClient.ClientProtocol.onMessage">onMessage</a></code></li>
-<li><code><a title="core.webSocketClient.ClientProtocol.onOpen" href="#core.webSocketClient.ClientProtocol.onOpen">onOpen</a></code></li>
+<li><code><a title="code.core.webSocketClient.ClientProtocol.onClose" href="#code.core.webSocketClient.ClientProtocol.onClose">onClose</a></code></li>
+<li><code><a title="code.core.webSocketClient.ClientProtocol.onConnect" href="#code.core.webSocketClient.ClientProtocol.onConnect">onConnect</a></code></li>
+<li><code><a title="code.core.webSocketClient.ClientProtocol.onConnecting" href="#code.core.webSocketClient.ClientProtocol.onConnecting">onConnecting</a></code></li>
+<li><code><a title="code.core.webSocketClient.ClientProtocol.onMessage" href="#code.core.webSocketClient.ClientProtocol.onMessage">onMessage</a></code></li>
+<li><code><a title="code.core.webSocketClient.ClientProtocol.onOpen" href="#code.core.webSocketClient.ClientProtocol.onOpen">onOpen</a></code></li>
 </ul>
 </li>
 </ul>

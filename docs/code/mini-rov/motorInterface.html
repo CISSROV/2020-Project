@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.2" />
-<title>mini-rov.motorInterface API documentation</title>
+<title>code.mini-rov.motorInterface API documentation</title>
 <meta name="description" content="Author: Jonathan Rotter …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
@@ -17,7 +17,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>mini-rov.motorInterface</code></h1>
+<h1 class="title">Module <code>code.mini-rov.motorInterface</code></h1>
 </header>
 <section id="section-intro">
 <p>Author: Jonathan Rotter</p>
@@ -175,7 +175,7 @@ if __name__ == &#39;__main__&#39;:
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="mini-rov.motorInterface.cleanup"><code class="name flex">
+<dt id="code.mini-rov.motorInterface.cleanup"><code class="name flex">
 <span>def <span class="ident">cleanup</span></span>(<span>)</span>
 </code></dt>
 <dd>
@@ -206,7 +206,7 @@ terminates.</p></section>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="mini-rov.motorInterface.GPIO"><code class="flex name class">
+<dt id="code.mini-rov.motorInterface.GPIO"><code class="flex name class">
 <span>class <span class="ident">GPIO</span></span>
 <span>(</span><span>*args, **kwargs)</span>
 </code></dt>
@@ -229,22 +229,22 @@ terminates.</p></section>
 </details>
 <h3>Class variables</h3>
 <dl>
-<dt id="mini-rov.motorInterface.GPIO.HIGH"><code class="name">var <span class="ident">HIGH</span></code></dt>
+<dt id="code.mini-rov.motorInterface.GPIO.HIGH"><code class="name">var <span class="ident">HIGH</span></code></dt>
 <dd>
 <section class="desc"></section>
 </dd>
-<dt id="mini-rov.motorInterface.GPIO.LOW"><code class="name">var <span class="ident">LOW</span></code></dt>
+<dt id="code.mini-rov.motorInterface.GPIO.LOW"><code class="name">var <span class="ident">LOW</span></code></dt>
 <dd>
 <section class="desc"></section>
 </dd>
-<dt id="mini-rov.motorInterface.GPIO.OUT"><code class="name">var <span class="ident">OUT</span></code></dt>
+<dt id="code.mini-rov.motorInterface.GPIO.OUT"><code class="name">var <span class="ident">OUT</span></code></dt>
 <dd>
 <section class="desc"></section>
 </dd>
 </dl>
 <h3>Methods</h3>
 <dl>
-<dt id="mini-rov.motorInterface.GPIO.PWM"><code class="name flex">
+<dt id="code.mini-rov.motorInterface.GPIO.PWM"><code class="name flex">
 <span>def <span class="ident">PWM</span></span>(<span>*args, **kwargs)</span>
 </code></dt>
 <dd>
@@ -259,7 +259,7 @@ terminates.</p></section>
     return PWM</code></pre>
 </details>
 </dd>
-<dt id="mini-rov.motorInterface.GPIO.output"><code class="name flex">
+<dt id="code.mini-rov.motorInterface.GPIO.output"><code class="name flex">
 <span>def <span class="ident">output</span></span>(<span>*args, **kwargs)</span>
 </code></dt>
 <dd>
@@ -271,7 +271,7 @@ terminates.</p></section>
 <pre><code class="python">def output(*args, **kwargs): pass</code></pre>
 </details>
 </dd>
-<dt id="mini-rov.motorInterface.GPIO.setup"><code class="name flex">
+<dt id="code.mini-rov.motorInterface.GPIO.setup"><code class="name flex">
 <span>def <span class="ident">setup</span></span>(<span>*args, **kwargs)</span>
 </code></dt>
 <dd>
@@ -285,7 +285,7 @@ terminates.</p></section>
 </dd>
 </dl>
 </dd>
-<dt id="mini-rov.motorInterface.motor"><code class="flex name class">
+<dt id="code.mini-rov.motorInterface.motor"><code class="flex name class">
 <span>class <span class="ident">motor</span></span>
 <span>(</span><span>IN1, IN2)</span>
 </code></dt>
@@ -400,7 +400,7 @@ self.IN2 = IN2</p></section>
 </details>
 <h3>Class variables</h3>
 <dl>
-<dt id="mini-rov.motorInterface.motor.motorList"><code class="name">var <span class="ident">motorList</span></code></dt>
+<dt id="code.mini-rov.motorInterface.motor.motorList"><code class="name">var <span class="ident">motorList</span></code></dt>
 <dd>
 <section class="desc"><p>list of all the connected motors.
 this is a static variable!</p></section>
@@ -408,13 +408,13 @@ this is a static variable!</p></section>
 </dl>
 <h3>Methods</h3>
 <dl>
-<dt id="mini-rov.motorInterface.motor.cleanup"><code class="name flex">
+<dt id="code.mini-rov.motorInterface.motor.cleanup"><code class="name flex">
 <span>def <span class="ident">cleanup</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Stops the PWM and sets the pins
 to low. The module-level function
-<a title="mini-rov.motorInterface.cleanup" href="#mini-rov.motorInterface.cleanup"><code>cleanup()</code></a> call this method on
+<a title="code.mini-rov.motorInterface.cleanup" href="#code.mini-rov.motorInterface.cleanup"><code>cleanup()</code></a> call this method on
 all motor objects</p></section>
 <details class="source">
 <summary>
@@ -433,7 +433,7 @@ all motor objects</p></section>
     self.p.stop()</code></pre>
 </details>
 </dd>
-<dt id="mini-rov.motorInterface.motor.set"><code class="name flex">
+<dt id="code.mini-rov.motorInterface.motor.set"><code class="name flex">
 <span>def <span class="ident">set</span></span>(<span>self, power)</span>
 </code></dt>
 <dd>
@@ -492,33 +492,33 @@ A power level of 0 is stop</p>
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="mini-rov" href="index.html">mini-rov</a></code></li>
+<li><code><a title="code.mini-rov" href="index.html">code.mini-rov</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="mini-rov.motorInterface.cleanup" href="#mini-rov.motorInterface.cleanup">cleanup</a></code></li>
+<li><code><a title="code.mini-rov.motorInterface.cleanup" href="#code.mini-rov.motorInterface.cleanup">cleanup</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="mini-rov.motorInterface.GPIO" href="#mini-rov.motorInterface.GPIO">GPIO</a></code></h4>
+<h4><code><a title="code.mini-rov.motorInterface.GPIO" href="#code.mini-rov.motorInterface.GPIO">GPIO</a></code></h4>
 <ul class="two-column">
-<li><code><a title="mini-rov.motorInterface.GPIO.HIGH" href="#mini-rov.motorInterface.GPIO.HIGH">HIGH</a></code></li>
-<li><code><a title="mini-rov.motorInterface.GPIO.LOW" href="#mini-rov.motorInterface.GPIO.LOW">LOW</a></code></li>
-<li><code><a title="mini-rov.motorInterface.GPIO.OUT" href="#mini-rov.motorInterface.GPIO.OUT">OUT</a></code></li>
-<li><code><a title="mini-rov.motorInterface.GPIO.PWM" href="#mini-rov.motorInterface.GPIO.PWM">PWM</a></code></li>
-<li><code><a title="mini-rov.motorInterface.GPIO.output" href="#mini-rov.motorInterface.GPIO.output">output</a></code></li>
-<li><code><a title="mini-rov.motorInterface.GPIO.setup" href="#mini-rov.motorInterface.GPIO.setup">setup</a></code></li>
+<li><code><a title="code.mini-rov.motorInterface.GPIO.HIGH" href="#code.mini-rov.motorInterface.GPIO.HIGH">HIGH</a></code></li>
+<li><code><a title="code.mini-rov.motorInterface.GPIO.LOW" href="#code.mini-rov.motorInterface.GPIO.LOW">LOW</a></code></li>
+<li><code><a title="code.mini-rov.motorInterface.GPIO.OUT" href="#code.mini-rov.motorInterface.GPIO.OUT">OUT</a></code></li>
+<li><code><a title="code.mini-rov.motorInterface.GPIO.PWM" href="#code.mini-rov.motorInterface.GPIO.PWM">PWM</a></code></li>
+<li><code><a title="code.mini-rov.motorInterface.GPIO.output" href="#code.mini-rov.motorInterface.GPIO.output">output</a></code></li>
+<li><code><a title="code.mini-rov.motorInterface.GPIO.setup" href="#code.mini-rov.motorInterface.GPIO.setup">setup</a></code></li>
 </ul>
 </li>
 <li>
-<h4><code><a title="mini-rov.motorInterface.motor" href="#mini-rov.motorInterface.motor">motor</a></code></h4>
+<h4><code><a title="code.mini-rov.motorInterface.motor" href="#code.mini-rov.motorInterface.motor">motor</a></code></h4>
 <ul class="">
-<li><code><a title="mini-rov.motorInterface.motor.cleanup" href="#mini-rov.motorInterface.motor.cleanup">cleanup</a></code></li>
-<li><code><a title="mini-rov.motorInterface.motor.motorList" href="#mini-rov.motorInterface.motor.motorList">motorList</a></code></li>
-<li><code><a title="mini-rov.motorInterface.motor.set" href="#mini-rov.motorInterface.motor.set">set</a></code></li>
+<li><code><a title="code.mini-rov.motorInterface.motor.cleanup" href="#code.mini-rov.motorInterface.motor.cleanup">cleanup</a></code></li>
+<li><code><a title="code.mini-rov.motorInterface.motor.motorList" href="#code.mini-rov.motorInterface.motor.motorList">motorList</a></code></li>
+<li><code><a title="code.mini-rov.motorInterface.motor.set" href="#code.mini-rov.motorInterface.motor.set">set</a></code></li>
 </ul>
 </li>
 </ul>

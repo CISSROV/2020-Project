@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.2" />
-<title>cgi-bin API documentation</title>
-<meta name="description" content="cgi-bin is for fetching data
-for the webserver hosted on surface pi.
-It contains a collection of scripts that are
-accessed and executed by going to …" />
+<title>code.sensors API documentation</title>
+<meta name="description" content="Sensors is the module for communicating with
+the ROV&#39;s sensor, collecting the information,
+and passing it on so that the operators of
+the ROV can view …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,47 +20,40 @@ accessed and executed by going to …" />
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>cgi-bin</code></h1>
+<h1 class="title">Module <code>code.sensors</code></h1>
 </header>
 <section id="section-intro">
-<p>cgi-bin is for fetching data
-for the webserver hosted on surface pi.
-It contains a collection of scripts that are
-accessed and executed by going to /cgi-bin/<name of script>
-in the page hosted on surface pi.</p>
+<p>Sensors is the module for communicating with
+the ROV's sensor, collecting the information,
+and passing it on so that the operators of
+the ROV can view it.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">&#39;&#39;&#39;
-cgi-bin is for fetching data
-for the webserver hosted on surface pi.
-It contains a collection of scripts that are
-accessed and executed by going to /cgi-bin/&lt;name of script&gt;
-in the page hosted on surface pi.
+Sensors is the module for communicating with
+the ROV&#39;s sensor, collecting the information,
+and passing it on so that the operators of
+the ROV can view it.
 &#39;&#39;&#39;
 
 import sys
-print(sys.path[0])
-sys.path.append(sys.path[0] + &#39;/core&#39;)</code></pre>
+sys.path.append(sys.path[0] + &#39;/sensors&#39;)</code></pre>
 </details>
 </section>
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
-<dt><code class="name"><a title="cgi-bin.getLog" href="getLog.html">cgi-bin.getLog</a></code></dt>
+<dt><code class="name"><a title="code.sensors.dataCollectShards" href="dataCollectShards.html">code.sensors.dataCollectShards</a></code></dt>
 <dd>
 <section class="desc"><p>Author: Jonathan Rotter …</p></section>
 </dd>
-<dt><code class="name"><a title="cgi-bin.getLog2" href="getLog2.html">cgi-bin.getLog2</a></code></dt>
+<dt><code class="name"><a title="code.sensors.tempSensor" href="tempSensor.html">code.sensors.tempSensor</a></code></dt>
 <dd>
 <section class="desc"><p>Author: Jonathan Rotter …</p></section>
 </dd>
-<dt><code class="name"><a title="cgi-bin.statusDataCollection" href="statusDataCollection.html">cgi-bin.statusDataCollection</a></code></dt>
-<dd>
-<section class="desc"><p>Author: Jonathan Rotter …</p></section>
-</dd>
-<dt><code class="name"><a title="cgi-bin.temperature" href="temperature.html">cgi-bin.temperature</a></code></dt>
+<dt><code class="name"><a title="code.sensors.webSocketServer" href="webSocketServer.html">code.sensors.webSocketServer</a></code></dt>
 <dd>
 <section class="desc"><p>Author: Jonathan Rotter …</p></section>
 </dd>
@@ -79,12 +72,16 @@ sys.path.append(sys.path[0] + &#39;/core&#39;)</code></pre>
 <ul></ul>
 </div>
 <ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="code" href="../index.html">code</a></code></li>
+</ul>
+</li>
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
-<li><code><a title="cgi-bin.getLog" href="getLog.html">cgi-bin.getLog</a></code></li>
-<li><code><a title="cgi-bin.getLog2" href="getLog2.html">cgi-bin.getLog2</a></code></li>
-<li><code><a title="cgi-bin.statusDataCollection" href="statusDataCollection.html">cgi-bin.statusDataCollection</a></code></li>
-<li><code><a title="cgi-bin.temperature" href="temperature.html">cgi-bin.temperature</a></code></li>
+<li><code><a title="code.sensors.dataCollectShards" href="dataCollectShards.html">code.sensors.dataCollectShards</a></code></li>
+<li><code><a title="code.sensors.tempSensor" href="tempSensor.html">code.sensors.tempSensor</a></code></li>
+<li><code><a title="code.sensors.webSocketServer" href="webSocketServer.html">code.sensors.webSocketServer</a></code></li>
 </ul>
 </li>
 </ul>
