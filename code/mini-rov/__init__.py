@@ -1,9 +1,8 @@
 '''
-cgi-bin is for fetching data
-for the webserver hosted on surface pi.
-It contains a collection of scripts that are
-accessed and executed by going to /cgi-bin/<name of script>
-in the page hosted on surface pi.
+mini-rov contains the code for
+controlling the mini-rov that
+was part of the 2019 MATE competition.
+It is likely no longer of use.
 '''
 
 import sys

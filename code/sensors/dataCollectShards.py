@@ -1,42 +1,77 @@
 #!/usr/bin/env python3.4
+'''
+Author: Jonathan Rotter
 
-# For specifying whenever the temperature sensors should be used
-# set it to False if it is broken or the wires are disconnected for example
-TEMPSENSOR = True
+Collects data from the various
+sensors and combines it.
 
-if TEMPSENSOR:
-    import tempSensor # contains code for collecting tempSensor data
+Features lots of try-except
+so that data collection can
+continue even if one or two
+sensors fail
+'''
 
 import time
-import json
 import os
 import sys
 
-# add this path to sys.path so that Adafruit_BNO055 can be imported
-sys.path.append('/home/pi/Adafruit_Python_BNO055')
+TEMPSENSOR = True
+'''
+For specifying whenever the temperature sensors should be used.
+set it to False if it is broken or the wires are disconnected for example
+'''
 
-# 3rd-party libary from somewhere on github
-from Adafruit_BNO055 import BNO055
+if TEMPSENSOR:
+    import tempSensor  # contains code for collecting tempSensor data
 
-# Specify if the data should be printed each time
-# it is collected
+if __name__ == '__main__':
+    # add this path to sys.path so that Adafruit_BNO055 can be imported
+    sys.path.append('/home/pi/Adafruit_Python_BNO055')
+
+    # 3rd-party libary from somewhere on github
+    from Adafruit_BNO055 import BNO055
+
+
 silent = True
+'''
+Specify if the data should be printed each time
+it is collected
+'''
 
-# global variable which will hold an object
 bno = None
+'''
+Holds an object representing the
+Adafruit BNO055 gyroscope sensor
+'''
 
-# for zeroing the gyroscope, these are set when
-# the gyro starts up
 defaultRotation = {'heading': 0, 'roll': 0, 'pitch': 0}
+'''
+Set on gyroscope startup and is used for setting the initial
+rotation to be zero
+'''
 defaultAcc = {'x': 0, 'y': 0, 'z': 0}
+'''
+Set on gyroscope startup and is used for setting the initial
+acceleration to be zero
+'''
 
-# if the gyro is running, used to message that it needs a reboot
 gyroRunning = True
+'''
+If the gyro is running. The variable is used to message that it needs a reboot
+'''
 
-# if the gyro has setup at least once
 hasSetupOnce = False
+'''
+If the gyro has gone through setup at least once
+'''
+
 
 def setup():
+    '''
+    Gyroscope startup code. Sets calibration
+    values `defaultAcc` and `defaultRotation`
+    and prints info regarding the sensor
+    '''
     # ---------------------------
     # ---- Gyro Startup Code ----
     # ---------------------------
@@ -72,8 +107,8 @@ def setup():
                 print('You\'re a failure, just like this code')
                 gyroRunning = False
 
-                break # haven't tested if this break statement works
-                
+                break  # haven't tested if this break statement works
+
         else:
             # all things good on startup
             break
@@ -93,7 +128,7 @@ def setup():
 
         # Print out an error if system status is in error mode.
         if status == 0x01:
-            raise RuntimeError('System error: {0}'.format(error) +\
+            raise RuntimeError('System error: {0}'.format(error) +
                 '\nSee datasheet section 4.3.59 for the meaning.')
 
         # Print BNO055 software revision and other diagnostic data.
@@ -105,8 +140,9 @@ def setup():
         print('Gyroscope ID:       0x{0:02X}\n'.format(gyro))
 
         if hasSetupOnce:
-            # don't get default values again so a reboot doesn't mess up the displayed values
-            return 
+            # don't get default values again so a reboot
+            # doesn't mess up the displayed values
+            return
 
         # number of measurements to average
         MEASUREMENTS = 10
@@ -146,7 +182,8 @@ def setup():
             # pause for 100ms
             time.sleep(0.1)
 
-        # divide the sum of readings by the number of measurements to get the average
+        # divide the sum of readings by
+        # the number of measurements to get the average
         defaultRotation['heading'] /= MEASUREMENTS
         defaultRotation['roll'] /= MEASUREMENTS
         defaultRotation['pitch'] /= MEASUREMENTS
@@ -167,6 +204,12 @@ def setup():
 # ------------------------
 
 def getDataFragment():
+    '''
+    Collects data from the various sensors and returns them as a list
+
+    Return:
+        data: A list of all the different sensor values
+    '''
     global gyroRunning
 
     # get the current time
@@ -181,7 +224,7 @@ def getDataFragment():
             # no temperature probe data
             externalTemp = -1
     except:
-        # some error occured
+        # some error occurred
         externalTemp = 'Error'
 
     try:
@@ -189,14 +232,15 @@ def getDataFragment():
         coreTemp = os.popen('/opt/vc/bin/vcgencmd measure_temp').read()
         coreTemp = round(float(coreTemp[coreTemp.index('=')+1:-3]), 2)
     except:
-        # some error occured
+        # some error occurred
         coreTemp = 'Error'
 
     # Gyro Sensors
     try:
         heading, roll, pitch = bno.read_euler()
 
-        # remove the intial state to get orientation relative to its start point
+        # remove the initial state to get
+        # orientation relative to its start point
         heading -= defaultRotation['heading']
         roll -= defaultRotation['roll']
         pitch -= defaultRotation['pitch']
@@ -214,7 +258,7 @@ def getDataFragment():
 
         # take the absolute value of the magnetic field and turn it into gauss
         magField = pow(x ** 2 + y ** 2 + z ** 2, 0.5)
-        magField = round(magField / 100, 3) # 100 microTesla = 1 Gauss
+        magField = round(magField / 100, 3)  # 100 microTesla = 1 Gauss
 
         # get linear acceleration
         x, y, z = bno.read_linear_acceleration()
@@ -231,11 +275,12 @@ def getDataFragment():
         z = round(z, 3)
 
         # round the temp too
-        # this is the temperature of the gyro, which shows internal ROV temperature
+        # this is the temperature of the gyro,
+        # which shows internal ROV temperature
         internalTemp = round(bno.read_temp(), 2)
 
         #
-        # all the data will be displayed on an html page so if the 
+        # all the data will be displayed on an html page so if the
         # values have too many decimal places it will mess up the html table
         #
     except:
@@ -255,9 +300,10 @@ def getDataFragment():
         setup()
 
     # assemble the data into a list
-    fragment = [t, externalTemp, coreTemp, internalTemp, \
-                      heading, roll, pitch, \
-                      magField, x, y, z]
+    fragment = [t, externalTemp, coreTemp, internalTemp,
+                heading, roll, pitch,
+                magField, x, y, z
+                ]
 
     # print the data if allowed
     if not silent:
