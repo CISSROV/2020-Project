@@ -8,6 +8,9 @@ CISS ROV-MATE 2020 <br>
 
 Documentation: https://drive.google.com/drive/folders/1_E8WjAePvzNWnD8-W-GRQ3ELVlIdNNk-?usp=sharing
 
-### Coding Problems
+### Coding Problems & Code Documentation
+
+Documentation: https://cissrov.github.io/2020-Project/code/
+
 For questions about the code used in 2019 and moved to this repository,  
-contact hydrogen602 at hydrogen31415@gmail.com
+contact Jonathan Rotter (hydrogen602) at jonathan.p.rotter@gmail.com
